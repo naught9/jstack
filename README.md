@@ -58,6 +58,7 @@ There is no install binary yet. Prefer symlink or copy; keep jstack as the sourc
 | `parallel-plan` | CreatePlan-style plan for parallel worker waves (no code) |
 | `parallelize` | Orchestrate sequential/parallel subagent workers; review + integrate |
 | `ship` | Stage + commit; ask before push (single branch) |
+| `branch-and-pr` | Move dirty work to a new branch and open a PR |
 | `cleanup-branches` | Audit stale/merged branches; delete only after approval |
 | `frontend-design` | Distinctive UI work |
 | `supabase` | Supabase workflows + MCP |

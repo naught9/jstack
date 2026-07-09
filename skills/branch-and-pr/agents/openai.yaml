@@ -1,0 +1,4 @@
+interface:
+  display_name: "Branch and PR"
+  short_description: "Move dirty work onto a new PR branch"
+  default_prompt: "Use $branch-and-pr to move the unstaged work from a given branch onto a new branch and open a pull request."
