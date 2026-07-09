@@ -1,7 +1,7 @@
 {
   "$schema": "./manifest.schema.json",
   "version": 2,
-  "updatedAt": "2026-07-09T09:40:00Z",
+  "updatedAt": "2026-07-09T09:45:00Z",
   "root": "/Users/jake/source/jstack",
   "projects": {
     "jstack": "/Users/jake/source/jstack",
@@ -88,6 +88,11 @@
       "id": "ship",
       "scope": "global",
       "path": "skills/ship/SKILL.md"
+    },
+    {
+      "id": "cleanup-branches",
+      "scope": "global",
+      "path": "skills/cleanup-branches/SKILL.md"
     },
     {
       "id": "plan-phased-feature",

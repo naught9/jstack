@@ -50,6 +50,7 @@ There is no install binary yet. Prefer symlink or copy; keep jstack as the sourc
 | `summarize-for-handoff` | Cold-start handoff for a new session |
 | `plan` | CreatePlan-style task plan (research → clarify → concrete plan; no code) |
 | `ship` | Stage + commit; ask before push (single branch) |
+| `cleanup-branches` | Audit stale/merged branches; delete only after approval |
 | `frontend-design` | Distinctive UI work |
 | `supabase` | Supabase workflows + MCP |
 | `supabase-postgres-best-practices` | Postgres performance rules |
