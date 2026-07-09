@@ -28,7 +28,7 @@ Skills name **roles** (e.g. `thermo-review`, `thermo-quality`). Map the role to 
 | Pi (pi-subagents / nicobailon) | `subagent({ agent: "<role>", task, async? })` | package `agents/` or project agents |
 | OpenCode | `task` tool or `@<role>` | `.opencode/agents/<role>.md` (`mode: subagent`) |
 | oh-my-pi | `task({ agent: "<role>", tasks: [...] })` | `.omp/agents/<role>.md` |
-| Codex | spawn by agent `name` (explicit user request) | `~/.codex/agents/<role>.toml` |
+| Codex | spawn by agent `name` (explicit user request) | `.codex/agents/<role>.toml` |
 
 **Parallel / background:** Prefer launching independent specialists in one turn. Use background/async when the host supports it (`run_in_background`, `async: true`, etc.). If the host has no subagents, run the role prompts **inline** in the parent session (sequential is fine).
 

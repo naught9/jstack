@@ -1,12 +1,8 @@
 {
   "$schema": "./manifest.schema.json",
-  "version": 2,
-  "updatedAt": "2026-07-09T10:40:00Z",
+  "version": 3,
+  "updatedAt": "2026-07-09T11:30:00Z",
   "root": "/Users/jake/source/jstack",
-  "projects": {
-    "jstack": "/Users/jake/source/jstack",
-    "muse-monorepo": "/Users/jake/source/muse-monorepo"
-  },
   "mcp": [
     {
       "id": "linear",
@@ -26,141 +22,117 @@
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp"],
       "path": "mcp.json"
+    },
+    {
+      "id": "playwright",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "path": "mcp.json"
     }
   ],
   "skills": [
     {
-      "id": "supabase",
-      "scope": "global",
-      "path": "skills/supabase/SKILL.md"
+      "id": "build",
+      "path": "skills/build/SKILL.md"
     },
     {
-      "id": "supabase-postgres-best-practices",
-      "scope": "global",
-      "path": "skills/supabase-postgres-best-practices/SKILL.md"
+      "id": "build-epic",
+      "path": "skills/build-epic/SKILL.md"
     },
     {
-      "id": "thermos",
-      "scope": "global",
-      "path": "skills/thermos/SKILL.md"
-    },
-    {
-      "id": "thermo-nuclear-review",
-      "scope": "global",
-      "path": "skills/thermo-nuclear-review/SKILL.md"
-    },
-    {
-      "id": "thermo-nuclear-code-quality-review",
-      "scope": "global",
-      "path": "skills/thermo-nuclear-code-quality-review/SKILL.md"
-    },
-    {
-      "id": "frontend-design",
-      "scope": "global",
-      "path": "skills/frontend-design/SKILL.md"
+      "id": "cleanup-branches",
+      "path": "skills/cleanup-branches/SKILL.md"
     },
     {
       "id": "deslop",
-      "scope": "global",
       "path": "skills/deslop/SKILL.md"
     },
     {
       "id": "docs",
-      "scope": "global",
       "path": "skills/docs/SKILL.md"
     },
     {
-      "id": "quick-review",
-      "scope": "global",
-      "path": "skills/quick-review/SKILL.md"
-    },
-    {
-      "id": "summarize-for-handoff",
-      "scope": "global",
-      "path": "skills/summarize-for-handoff/SKILL.md"
-    },
-    {
-      "id": "plan",
-      "scope": "global",
-      "path": "skills/plan/SKILL.md"
-    },
-    {
-      "id": "build",
-      "scope": "global",
-      "path": "skills/build/SKILL.md"
-    },
-    {
-      "id": "investigate",
-      "scope": "global",
-      "path": "skills/investigate/SKILL.md"
-    },
-    {
-      "id": "parallel-plan",
-      "scope": "global",
-      "path": "skills/parallel-plan/SKILL.md"
-    },
-    {
-      "id": "parallelize",
-      "scope": "global",
-      "path": "skills/parallelize/SKILL.md"
-    },
-    {
-      "id": "ship",
-      "scope": "global",
-      "path": "skills/ship/SKILL.md"
-    },
-    {
-      "id": "cleanup-branches",
-      "scope": "global",
-      "path": "skills/cleanup-branches/SKILL.md"
-    },
-    {
-      "id": "plan-epic",
-      "scope": "project",
-      "project": "muse-monorepo",
-      "path": "skills/plan-epic/SKILL.md"
-    },
-    {
-      "id": "ship-stack",
-      "scope": "project",
-      "project": "muse-monorepo",
-      "path": "skills/ship-stack/SKILL.md"
-    },
-    {
-      "id": "heal-stack",
-      "scope": "project",
-      "project": "muse-monorepo",
-      "path": "skills/heal-stack/SKILL.md"
-    },
-    {
-      "id": "build-epic",
-      "scope": "project",
-      "project": "muse-monorepo",
-      "path": "skills/build-epic/SKILL.md"
+      "id": "frontend-design",
+      "path": "skills/frontend-design/SKILL.md"
     },
     {
       "id": "grind-epic",
-      "scope": "project",
-      "project": "muse-monorepo",
       "path": "skills/grind-epic/SKILL.md"
     },
     {
       "id": "grind-to-green",
-      "scope": "project",
-      "project": "muse-monorepo",
       "path": "skills/grind-to-green/SKILL.md"
+    },
+    {
+      "id": "heal-stack",
+      "path": "skills/heal-stack/SKILL.md"
+    },
+    {
+      "id": "investigate",
+      "path": "skills/investigate/SKILL.md"
+    },
+    {
+      "id": "parallel-plan",
+      "path": "skills/parallel-plan/SKILL.md"
+    },
+    {
+      "id": "parallelize",
+      "path": "skills/parallelize/SKILL.md"
+    },
+    {
+      "id": "plan",
+      "path": "skills/plan/SKILL.md"
+    },
+    {
+      "id": "plan-epic",
+      "path": "skills/plan-epic/SKILL.md"
+    },
+    {
+      "id": "quick-review",
+      "path": "skills/quick-review/SKILL.md"
+    },
+    {
+      "id": "ship",
+      "path": "skills/ship/SKILL.md"
+    },
+    {
+      "id": "ship-stack",
+      "path": "skills/ship-stack/SKILL.md"
+    },
+    {
+      "id": "summarize-for-handoff",
+      "path": "skills/summarize-for-handoff/SKILL.md"
+    },
+    {
+      "id": "supabase",
+      "path": "skills/supabase/SKILL.md"
+    },
+    {
+      "id": "supabase-postgres-best-practices",
+      "path": "skills/supabase-postgres-best-practices/SKILL.md"
+    },
+    {
+      "id": "thermo-nuclear-code-quality-review",
+      "path": "skills/thermo-nuclear-code-quality-review/SKILL.md"
+    },
+    {
+      "id": "thermo-nuclear-review",
+      "path": "skills/thermo-nuclear-review/SKILL.md"
+    },
+    {
+      "id": "thermos",
+      "path": "skills/thermos/SKILL.md"
     }
   ],
   "subagents": [
     {
-      "id": "thermo-review",
-      "scope": "global",
-      "path": "subagents/thermo-review.md"
+      "id": "thermo-quality",
+      "path": "subagents/thermo-quality.md"
     },
     {
-      "id": "thermo-quality",
-      "scope": "global",
-      "path": "subagents/thermo-quality.md"
+      "id": "thermo-review",
+      "path": "subagents/thermo-review.md"
     }
   ]
 }

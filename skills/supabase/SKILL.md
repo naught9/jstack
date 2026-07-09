@@ -72,7 +72,7 @@ For setup instructions, server URL, and configuration, see the [MCP setup guide]
    A `401` is expected (no token) and means the server is up. Timeout or "connection refused" means it may be down.
 
 2. **Check MCP configuration for this host:**
-   Confirm Supabase MCP is configured (jstack ships `mcp.json` with `https://mcp.supabase.com/mcp`). Host paths differ — e.g. Cursor project `.cursor/mcp.json` / `~/.cursor/mcp.json`, Codex `~/.codex/config.toml`, Pi/OpenCode/Droid their respective MCP config files. If missing, add a server entry pointing at `https://mcp.supabase.com/mcp`.
+   Confirm Supabase MCP is configured (jstack ships `mcp.json` with `https://mcp.supabase.com/mcp`). Host paths differ — e.g. Cursor `.cursor/mcp.json`, Codex `.codex/config.toml`, Pi/OpenCode/Droid their respective project MCP config files. If missing, add a server entry pointing at `https://mcp.supabase.com/mcp`.
 
 3. **Authenticate the MCP server:**
    If the server is reachable and config is correct but tools aren't visible, the user needs to authenticate. The Supabase MCP server uses OAuth 2.1 — tell the user to trigger the auth flow in their agent, complete it in the browser, and reload the session.
