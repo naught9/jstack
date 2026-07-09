@@ -5,7 +5,7 @@ description: >-
   commit to one decomposition, and write sequential vs parallel waves with file
   ownership and review gates. Use for parallel-plan, parallelize planning, or
   before spawning multiple implementation workers. Planning only — pair with
-  parallelize-work to execute.
+  parallelize to execute.
 disable-model-invocation: true
 ---
 
@@ -13,11 +13,11 @@ disable-model-invocation: true
 
 CreatePlan-style planning for **parallel specialist execution**. Research, clarify, commit to one wave decomposition, write a reviewable plan, then **stop** — do not implement or spawn workers.
 
-**Pair with:** [parallelize-work](../parallelize-work/SKILL.md) to execute the plan.
+**Pair with:** [parallelize](../parallelize/SKILL.md) to execute the plan.
 
 **When to use [plan](../plan/SKILL.md) instead:** a single-agent concrete plan without specialist-wave decomposition.
 
-**Escalate when:** multi-phase epic with Linear / Graphite → [plan-phased-feature](../plan-phased-feature/SKILL.md); phased orchestration → [orchestrate-phased-feature](../orchestrate-phased-feature/SKILL.md).
+**Escalate when:** multi-phase epic with Linear / Graphite → [plan-epic](../plan-epic/SKILL.md); phased orchestration → [build-epic](../build-epic/SKILL.md).
 
 Host question / spawn details: [host-conventions.md](../../references/host-conventions.md).
 
@@ -29,7 +29,7 @@ Host question / spawn details: [host-conventions.md](../../references/host-conve
 - **Research before writing.** Prefer parallel explore/read of relevant files; cite real paths.
 - **Proportional.** If the task is small enough for one agent, say so and point to [plan](../plan/SKILL.md) — do not invent fake parallelism.
 - **One file owner per worker** when possible — serialize shared files/interfaces.
-- **Stop after the plan.** Present the plan and wait for approval / `/parallelize-work` — do not auto-execute.
+- **Stop after the plan.** Present the plan and wait for approval / `/parallelize` — do not auto-execute.
 
 ### Cursor note
 
@@ -38,13 +38,13 @@ If already in Cursor Plan mode with `CreatePlan` available, prefer the native to
 ## Workflow
 
 ```
-1. Intake     → parse request; if clearly a multi-phase epic, hand off to plan-phased-feature
+1. Intake     → parse request; if clearly a multi-phase epic, hand off to plan-epic
 2. Clarify    → 1–2 questions if needed; wait
 3. Research   → codebase + docs; optional parallel explore agents
 4. Decompose  → tasks with inputs, outputs, file ownership
 5. Classify   → sequential | parallel | user gate; collision risks; review checkpoints
 6. Write plan → markdown artifact (format below)
-7. Stop       → user reviews; execution is parallelize-work
+7. Stop       → user reviews; execution is parallelize
 ```
 
 ## Plan artifact
@@ -97,7 +97,7 @@ Launch in a single turn (one specialist per row):
 - After Phase 2: verify <what> before Phase 3
 
 ## Definition of done
-- <how parallelize-work / the user knows the feature is complete>
+- <how parallelize / the user knows the feature is complete>
 
 ## Risks
 - <collision, scope creep, or unknown>
@@ -112,6 +112,6 @@ Prefer bullet lists over markdown tables when targeting Cursor CreatePlan UI par
 
 ## Out of scope
 
-- Spawning workers / integrating results → [parallelize-work](../parallelize-work/SKILL.md)
+- Spawning workers / integrating results → [parallelize](../parallelize/SKILL.md)
 - Single-agent daily plan → [plan](../plan/SKILL.md)
-- Linear / Graphite epics → [plan-phased-feature](../plan-phased-feature/SKILL.md)
+- Linear / Graphite epics → [plan-epic](../plan-epic/SKILL.md)

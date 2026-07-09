@@ -1,16 +1,16 @@
 ---
-name: orchestrate-phased-feature
+name: build-epic
 description: >-
   Orchestrate large phased features by spawning implementation and review
   specialists per phase, managing Graphite PR stacks and Linear progress until
   merge-ready. Use when launching a parent agent for a multi-phase epic,
   grinding P0–Pn implementation with thermos reviews, or when the user mentions
-  orchestrator, phased subagents, stack scaffold, or grinding a feature to
-  merge-ready.
+  build-epic, orchestrate-phased-feature, orchestrator, phased subagents, stack
+  scaffold, or grinding a feature to merge-ready.
 disable-model-invocation: true
 ---
 
-# Orchestrate Phased Feature
+# Build Epic
 
 You are the **orchestrator and integrator** for a large phased feature. You do **not** implement phases yourself. You spawn specialists, keep the PR stack coherent, update Linear, and grind until every in-scope phase is merge-ready.
 
@@ -21,7 +21,7 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 - Soft default: capable/fast model for the parent orchestrator and implementation workers; high-reasoning for thermos review roles.
 - Honor user overrides for parent or any child role (e.g. "use grok 4.5 for implementers").
 
-**Pair with:** [orchestrate-phased-review](../orchestrate-phased-review/SKILL.md) for post-implementation epic review grinding (thermo clean + test-green across the full stack).
+**Pair with:** [grind-epic](../grind-epic/SKILL.md) for post-implementation epic review grinding (thermo clean + test-green across the full stack).
 
 ## Before you start
 
@@ -43,7 +43,7 @@ Read the plan of record and parent issue fully before spawning any specialist.
 - One branch + one PR per phase, daisy-chained on `dev` (P0 base = `dev`, Pn base = P(n−1) branch).
 - Prefer **existing scaffold branches** when present — do not create parallel branches.
 - Use Linear-suggested branch names (e.g. `jake/muse-614-audio-tracks-p0-...`).
-- Restack descendants after each phase (`gt restack`, `gt submit` as needed). For a full-stack publish, use [ship-stack](../ship-stack/SKILL.md); if PRs are orphaned or bases are wrong, use [heal-gt-stack](../heal-gt-stack/SKILL.md) first.
+- Restack descendants after each phase (`gt restack`, `gt submit` as needed). For a full-stack publish, use [ship-stack](../ship-stack/SKILL.md); if PRs are orphaned or bases are wrong, use [heal-stack](../heal-stack/SKILL.md) first.
 - **Do not merge** unless the user explicitly asks. Deliverable = merge-ready PRs.
 
 ## Per-phase loop

@@ -47,7 +47,7 @@ Skills name **roles** (e.g. `thermo-review`, `thermo-quality`). Map the role to 
 |---------|---------|
 | `thermo-review` | Diff-scoped bugs / security / breaking / devex / feature-gate audit |
 | `thermo-quality` | Diff-scoped maintainability / structure / code-judo audit |
-| `implementation-worker` | Muse phased implementation (project) |
-| `review-worker` | Muse phased review helper (project) |
 
 Canonical definitions live in `subagents/<role>.md`. Host setup (see root `README.md`) may add frontmatter or wrap Codex TOML; the **body** stays the source of truth.
+
+For implementation/fix work, spawn the host's **general-purpose** worker with a self-contained prompt (templates under `skills/build-epic/`, `skills/grind-epic/`, `skills/grind-to-green/`, `skills/parallelize/`). Do not register separate `*-worker` role IDs.

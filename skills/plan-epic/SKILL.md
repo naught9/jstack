@@ -1,16 +1,16 @@
 ---
-name: plan-phased-feature
+name: plan-epic
 description: >-
   Plan large phased features interactively: clarify scope with structured
   questions, write the plan of record in work/planning, create a Linear epic
   with sub-issues, and optionally scaffold a Graphite PR stack. Use when
   starting a new epic, hardening a planning doc, creating phased Linear issues,
-  scaffolding a PR stack, or when the user mentions plan of record, MUSE-XXX
-  planning, or phased rollout.
+  scaffolding a PR stack, or when the user mentions plan-epic,
+  plan-phased-feature, plan of record, MUSE-XXX planning, or phased rollout.
 disable-model-invocation: true
 ---
 
-# Plan Phased Feature
+# Plan Epic
 
 Interactive planning workflow for large features. Produce three artifacts (when requested):
 
@@ -20,7 +20,7 @@ Interactive planning workflow for large features. Produce three artifacts (when 
 
 **When to use [plan](../plan/SKILL.md) instead:** daily / single-task planning without Linear, Graphite, or a multi-phase plan of record.
 
-**Pair with:** [orchestrate-phased-feature](../orchestrate-phased-feature/SKILL.md) for implementation; [orchestrate-phased-review](../orchestrate-phased-review/SKILL.md) for epic review grinding after the stack lands; [ship-stack](../ship-stack/SKILL.md) / [heal-gt-stack](../heal-gt-stack/SKILL.md) to publish or repair the Graphite stack.
+**Pair with:** [build-epic](../build-epic/SKILL.md) for implementation; [grind-epic](../grind-epic/SKILL.md) for epic review grinding after the stack lands; [ship-stack](../ship-stack/SKILL.md) / [heal-stack](../heal-stack/SKILL.md) to publish or repair the Graphite stack.
 
 Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
 
@@ -182,7 +182,7 @@ When done, report:
 | Sub-issues | P0…Pn identifiers |
 | Stack | PR numbers + branch names (if scaffolded) |
 
-Suggest next step: launch orchestrator with `orchestrate-phased-feature` skill.
+Suggest next step: launch orchestrator with `build-epic` skill.
 
 ---
 

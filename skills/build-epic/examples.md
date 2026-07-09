@@ -7,7 +7,7 @@ Orchestrator launch prompt (filled):
 ```markdown
 You are the orchestrator for **MUSE-537** (Audio Track Support).
 
-Follow the `orchestrate-phased-feature` skill.
+Follow the `build-epic` skill.
 
 ## Ground truth
 - Parent: MUSE-537 — https://linear.app/muse-art/issue/MUSE-537

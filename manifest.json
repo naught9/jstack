@@ -1,7 +1,7 @@
 {
   "$schema": "./manifest.schema.json",
   "version": 2,
-  "updatedAt": "2026-07-09T10:18:00Z",
+  "updatedAt": "2026-07-09T10:40:00Z",
   "root": "/Users/jake/source/jstack",
   "projects": {
     "jstack": "/Users/jake/source/jstack",
@@ -85,14 +85,24 @@
       "path": "skills/plan/SKILL.md"
     },
     {
+      "id": "build",
+      "scope": "global",
+      "path": "skills/build/SKILL.md"
+    },
+    {
+      "id": "investigate",
+      "scope": "global",
+      "path": "skills/investigate/SKILL.md"
+    },
+    {
       "id": "parallel-plan",
       "scope": "global",
       "path": "skills/parallel-plan/SKILL.md"
     },
     {
-      "id": "parallelize-work",
+      "id": "parallelize",
       "scope": "global",
-      "path": "skills/parallelize-work/SKILL.md"
+      "path": "skills/parallelize/SKILL.md"
     },
     {
       "id": "ship",
@@ -105,10 +115,10 @@
       "path": "skills/cleanup-branches/SKILL.md"
     },
     {
-      "id": "plan-phased-feature",
+      "id": "plan-epic",
       "scope": "project",
       "project": "muse-monorepo",
-      "path": "skills/plan-phased-feature/SKILL.md"
+      "path": "skills/plan-epic/SKILL.md"
     },
     {
       "id": "ship-stack",
@@ -117,22 +127,22 @@
       "path": "skills/ship-stack/SKILL.md"
     },
     {
-      "id": "heal-gt-stack",
+      "id": "heal-stack",
       "scope": "project",
       "project": "muse-monorepo",
-      "path": "skills/heal-gt-stack/SKILL.md"
+      "path": "skills/heal-stack/SKILL.md"
     },
     {
-      "id": "orchestrate-phased-feature",
+      "id": "build-epic",
       "scope": "project",
       "project": "muse-monorepo",
-      "path": "skills/orchestrate-phased-feature/SKILL.md"
+      "path": "skills/build-epic/SKILL.md"
     },
     {
-      "id": "orchestrate-phased-review",
+      "id": "grind-epic",
       "scope": "project",
       "project": "muse-monorepo",
-      "path": "skills/orchestrate-phased-review/SKILL.md"
+      "path": "skills/grind-epic/SKILL.md"
     },
     {
       "id": "grind-to-green",
@@ -151,20 +161,6 @@
       "id": "thermo-quality",
       "scope": "global",
       "path": "subagents/thermo-quality.md"
-    },
-    {
-      "id": "implementation-worker",
-      "scope": "project",
-      "project": "muse-monorepo",
-      "path": "subagents/implementation-worker.md",
-      "note": "Prompt templates for phased orchestration; revisit when hardening workers"
-    },
-    {
-      "id": "review-worker",
-      "scope": "project",
-      "project": "muse-monorepo",
-      "path": "subagents/review-worker.md",
-      "note": "Prompt templates for phased orchestration; revisit when hardening workers"
     }
   ]
 }

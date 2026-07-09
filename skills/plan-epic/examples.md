@@ -44,7 +44,7 @@
 ### Launch prompt for planning skill
 
 ```markdown
-Plan a new phased feature using the `plan-phased-feature` skill.
+Plan a new phased feature using the `plan-epic` skill.
 
 Feature: <describe>
 Starting context: <links, constraints>
@@ -57,5 +57,5 @@ Scaffold Graphite stack: yes/no
 ### Next step
 
 ```markdown
-Orchestrate MUSE-537 using the `orchestrate-phased-feature` skill.
+Orchestrate MUSE-537 using the `build-epic` skill.
 ```

@@ -1,15 +1,16 @@
 ---
-name: orchestrate-phased-review
+name: grind-epic
 description: >-
   Grind a stacked phased epic to thermo-clean and test-green via repeated
   thermo-review → fix → verify cycles on the cumulative epic diff.
   Use when the implementation stack is landed but needs epic-level review grinding,
-  thermo cleanup across P0–Pn, or when the user mentions review orchestrator,
-  epic review grind, thermo clean stack, or full-stack review before merge.
+  thermo cleanup across P0–Pn, or when the user mentions grind-epic,
+  orchestrate-phased-review, review orchestrator, epic review grind, thermo
+  clean stack, or full-stack review before merge.
 disable-model-invocation: true
 ---
 
-# Orchestrate Phased Review
+# Grind Epic
 
 You are the **epic review orchestrator** for a stacked phased feature. You do **not** implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the entire epic diff is thermo-clean and test-green.
 
@@ -20,7 +21,7 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 - Soft default: high-reasoning for `thermo-review` (and thermos when used); capable/fast for fix workers; capable parent orchestrator.
 - Honor user overrides (e.g. "use opus for thermo-review").
 
-**Pair with:** [orchestrate-phased-feature](../orchestrate-phased-feature/SKILL.md) for per-phase implementation; this skill is for **post-implementation epic review grinding**.
+**Pair with:** [build-epic](../build-epic/SKILL.md) for per-phase implementation; this skill is for **post-implementation epic review grinding**.
 
 ## Before you start
 

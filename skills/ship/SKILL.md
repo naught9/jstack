@@ -13,8 +13,9 @@ Everyday single-branch land: stage → commit → **ask before push**. No merge.
 
 **Escalate when:**
 
+- Still implementing → [build](../build/SKILL.md) / [parallelize](../parallelize/SKILL.md)
 - Graphite phased stack publish → [ship-stack](../ship-stack/SKILL.md)
-- Broken / orphan stack repair → [heal-gt-stack](../heal-gt-stack/SKILL.md)
+- Broken / orphan stack repair → [heal-stack](../heal-stack/SKILL.md)
 
 Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
 
@@ -87,4 +88,4 @@ On no: stop after commit; report SHA and that push was skipped.
 - Creating PRs or Graphite stacks
 - Merging
 - Multi-branch restack / submit → `ship-stack`
-- Stack repair → `heal-gt-stack`
+- Stack repair → `heal-stack`

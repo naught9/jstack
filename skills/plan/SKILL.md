@@ -14,8 +14,8 @@ Portable CreatePlan / Cursor Plan mode workflow for daily task planning. Researc
 
 **Escalate when:**
 
-- Multi-phase epic with Linear / Graphite → [plan-phased-feature](../plan-phased-feature/SKILL.md)
-- Parallel specialist worker waves → [parallel-plan](../parallel-plan/SKILL.md) (then [parallelize-work](../parallelize-work/SKILL.md) to execute)
+- Multi-phase epic with Linear / Graphite → [plan-epic](../plan-epic/SKILL.md)
+- Parallel specialist worker waves → [parallel-plan](../parallel-plan/SKILL.md) (then [parallelize](../parallelize/SKILL.md) to execute)
 
 Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
 
@@ -35,12 +35,12 @@ If already in Cursor Plan mode with `CreatePlan` available, prefer the native to
 ## Workflow
 
 ```
-1. Intake     → parse request; if clearly a multi-phase epic, hand off to plan-phased-feature
+1. Intake     → parse request; if clearly a multi-phase epic, hand off to plan-epic
 2. Clarify    → 1–2 questions if needed; wait
 3. Research   → codebase + docs; optional parallel explore agents
 4. Decide     → one concrete approach
 5. Write plan → markdown artifact (format below)
-6. Stop       → user reviews / edits; build is a separate step
+6. Stop       → user reviews / edits; implementation is [build](../build/SKILL.md)
 ```
 
 ## Plan artifact
@@ -81,8 +81,10 @@ todos:
 
 ## Out of scope
 
-- Linear epics / Graphite stacks → `plan-phased-feature`
-- Parallel worker wave charts → `parallel-plan`; execute waves → `parallelize-work`
-- Implementation, CI grind, thermos → build / grind skills
-- Commit / push → [ship](../ship/SKILL.md); Graphite stack publish/repair → [ship-stack](../ship-stack/SKILL.md) / [heal-gt-stack](../heal-gt-stack/SKILL.md)
+- Linear epics / Graphite stacks → `plan-epic`
+- Parallel worker wave charts → `parallel-plan`; execute waves → `parallelize`
+- Single-agent implementation → [build](../build/SKILL.md)
+- Bug / root cause → [investigate](../investigate/SKILL.md)
+- CI grind, thermos → grind / thermos skills
+- Commit / push → [ship](../ship/SKILL.md); Graphite stack publish/repair → [ship-stack](../ship-stack/SKILL.md) / [heal-stack](../heal-stack/SKILL.md)
 - Brainstorm-only architecture with no implementation intent → stay conversational; only use this skill when the user wants a buildable plan

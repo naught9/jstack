@@ -1,13 +1,14 @@
 ---
-name: heal-gt-stack
+name: heal-stack
 description: >-
   Repair a broken or incomplete Graphite stack so all phase PRs daisy-chain onto
   dev (P0→dev, Pn→P(n−1)). Use when PRs are orphaned, missing from gt log,
   bases point at the wrong parent, or the stack does not show up as one unit.
+  Also matches heal-gt-stack.
 disable-model-invocation: true
 ---
 
-# Heal GT Stack
+# Heal Stack
 
 Realign phase branches and Graphite metadata so the full stack appears as one daisy-chain on `dev`. Then optionally hand off to [ship-stack](../ship-stack/SKILL.md) to submit.
 
@@ -95,6 +96,6 @@ List before → after for each PR (old base → new base), and note any conflict
 
 ## Related
 
-- Scaffold new stacks: [graphite-scaffold.md](../plan-phased-feature/graphite-scaffold.md)
+- Scaffold new stacks: [graphite-scaffold.md](../plan-epic/graphite-scaffold.md)
 - Healthy publish: [ship-stack](../ship-stack/SKILL.md)
 - Single-branch commit: [ship](../ship/SKILL.md)

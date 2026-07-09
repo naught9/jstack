@@ -8,7 +8,7 @@ Orchestrator launch prompt (filled):
 You are the epic review orchestrator for **MUSE-537** (Audio Track Support) in muse-monorepo.
 You do not implement fixes yourself — you spawn subagents to review and fix, verify outcomes yourself, and grind until the entire epic diff is thermo-clean and test-green.
 
-Follow the `orchestrate-phased-review` skill.
+Follow the `grind-epic` skill.
 
 ## Mission
 Conduct repeated deep thermo-nuclear reviews → fix → re-review cycles on the full stacked epic (P0–P6), scoped as:

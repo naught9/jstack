@@ -92,7 +92,7 @@ Use when the user starts a new orchestrated run. Fill `{...}` from Linear + Grap
 ```markdown
 You are the orchestrator for **{parent issue}** ({title}).
 
-Follow the `orchestrate-phased-feature` skill.
+Follow the `build-epic` skill.
 
 ## Ground truth
 - Parent: {parent issue} — {linear url}

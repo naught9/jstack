@@ -1,14 +1,14 @@
 ---
-name: parallelize-work
+name: parallelize
 description: >-
   Orchestrate implementation via parallel subagent workers: plan waves if
   needed, spawn sequential then parallel specialists, review and integrate
-  between waves. Use for parallelize-work, parallelize, or executing a
+  between waves. Use for parallelize, parallelize-work, or executing a
   parallel-plan. Parent stays orchestrator — not the primary implementer.
 disable-model-invocation: true
 ---
 
-# Parallelize Work
+# Parallelize
 
 Execute work with **subagent workers** for efficiency. Your role shifts to **orchestration, code review, and integration** — not doing all the implementation yourself.
 
@@ -26,7 +26,7 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 - **One file owner per worker.** Serialize shared files; never assign two workers the same hot file in one wave.
 - **Review between waves.** After each wave: read diffs, run or request scoped checks, fix collisions, then proceed.
 - **Don't over-parallelize.** Tiny tasks stay in one worker (or the parent). Say so and keep it simple.
-- Soft model default for implementation workers: **capable/high** (prefer **grok-4.5-high** when the host offers it). Honor user overrides (e.g. `/parallelize-work use opus for workers`).
+- Soft model default for implementation workers: **capable/high** (prefer **grok-4.5-high** when the host offers it). Honor user overrides (e.g. `/parallelize use opus for workers`).
 
 ## Workflow
 
@@ -96,7 +96,8 @@ If the host has **no** subagent system: run worker prompts **inline** sequential
 ## Out of scope
 
 - Planning-only (no spawns) → [parallel-plan](../parallel-plan/SKILL.md)
-- Single-agent plan/build without workers → [plan](../plan/SKILL.md)
-- Muse phased epic orchestration / Graphite → [orchestrate-phased-feature](../orchestrate-phased-feature/SKILL.md)
+- Single-agent plan/build without workers → [plan](../plan/SKILL.md) / [build](../build/SKILL.md)
+- Bug triage → [investigate](../investigate/SKILL.md)
+- Muse phased epic orchestration / Graphite → [build-epic](../build-epic/SKILL.md)
 - Thermo grind → [thermos](../thermos/SKILL.md) / [grind-to-green](../grind-to-green/SKILL.md)
 - Commit / push → [ship](../ship/SKILL.md)

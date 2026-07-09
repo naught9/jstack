@@ -82,7 +82,7 @@ Add Linear comment listing PR numbers and branch names for orchestrator handoff.
 
 ## Repair (if stack breaks)
 
-Prefer the dedicated skill: [heal-gt-stack](../heal-gt-stack/SKILL.md). Summary:
+Prefer the dedicated skill: [heal-stack](../heal-stack/SKILL.md). Summary:
 
 1. `git fetch origin dev` and each stack branch from `origin`
 2. `gt init --trunk dev --no-interactive` if trunk metadata is wrong
@@ -94,4 +94,4 @@ Prefer the dedicated skill: [heal-gt-stack](../heal-gt-stack/SKILL.md). Summary:
 
 ## What orchestrator does later
 
-Implementation agent renames PRs from scaffold titles, removes placeholder files, and implements real work — see [orchestrate-phased-feature](../orchestrate-phased-feature/SKILL.md).
+Implementation agent renames PRs from scaffold titles, removes placeholder files, and implements real work — see [build-epic](../build-epic/SKILL.md).
