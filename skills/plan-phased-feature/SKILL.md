@@ -18,6 +18,8 @@ Interactive planning workflow for large features. Produce three artifacts (when 
 2. **Linear** — parent epic + one sub-issue per phase
 3. **Graphite stack** (optional) — daisy-chained draft PRs with scaffold placeholders
 
+**When to use [plan](../plan/SKILL.md) instead:** daily / single-task planning without Linear, Graphite, or a multi-phase plan of record.
+
 **Pair with:** [orchestrate-phased-feature](../orchestrate-phased-feature/SKILL.md) for implementation; [orchestrate-phased-review](../orchestrate-phased-review/SKILL.md) for epic review grinding after the stack lands.
 
 Host question-tool details: [host-conventions.md](../../references/host-conventions.md).

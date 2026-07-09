@@ -1,7 +1,7 @@
 {
   "$schema": "./manifest.schema.json",
   "version": 2,
-  "updatedAt": "2026-07-09T08:35:00Z",
+  "updatedAt": "2026-07-09T09:33:00Z",
   "root": "/Users/jake/source/jstack",
   "projects": {
     "jstack": "/Users/jake/source/jstack",
@@ -70,14 +70,19 @@
       "path": "skills/docs/SKILL.md"
     },
     {
-      "id": "review-branch",
+      "id": "quick-review",
       "scope": "global",
-      "path": "skills/review-branch/SKILL.md"
+      "path": "skills/quick-review/SKILL.md"
     },
     {
       "id": "summarize-for-handoff",
       "scope": "global",
       "path": "skills/summarize-for-handoff/SKILL.md"
+    },
+    {
+      "id": "plan",
+      "scope": "global",
+      "path": "skills/plan/SKILL.md"
     },
     {
       "id": "plan-phased-feature",

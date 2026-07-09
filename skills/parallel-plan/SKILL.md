@@ -12,6 +12,8 @@ disable-model-invocation: true
 
 Produce a plan structured for parallel specialist execution. Planning only — do not implement.
 
+**When to use [plan](../plan/SKILL.md) instead:** a single concrete implementation plan without specialist-wave / parallel-worker decomposition.
+
 **Pair with:** [orchestrate-phased-feature](../orchestrate-phased-feature/SKILL.md) for phased epic execution; [plan-phased-feature](../plan-phased-feature/SKILL.md) for epic-level planning with Linear/Graphite.
 
 Host spawn details: [host-conventions.md](../../references/host-conventions.md).

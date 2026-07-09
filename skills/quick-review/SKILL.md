@@ -1,22 +1,26 @@
 ---
-name: review-branch
+name: quick-review
 description: >-
-  Thorough but practical code review of the current branch vs main: understand
-  intent, check surrounding context, report real findings only.
-  Use for review-branch, branch review, or review my changes. Lighter than
-  thermo-nuclear-review — use that skill for deep security/correctness audits.
+  Thorough but practical code review of the current branch vs target: understand
+  intent, check surrounding context, report real findings only. Use for
+  quick-review, everyday branch review, or review my changes. Lighter than
+  thermos / thermo-nuclear-review — use those for deep dual-pass audits.
 disable-model-invocation: true
 ---
 
-# Branch Review
+# Quick Review
 
-Review the current branch against the default base branch (usually `main`). Focus on issues that would matter in a real PR — not style nits or pre-existing problems outside the diff.
+Everyday branch review against the default base branch (usually `main` / `dev`). Focus on issues that would matter in a real PR — not style nits or pre-existing problems outside the diff.
 
-**Not this skill:** deep security audits, feature-gate leak hunts, or exhaustive cross-package tracing → use [thermo-nuclear-review](../thermo-nuclear-review/SKILL.md).
+**Escalate when:**
+
+- Deep dual-pass bug/security + quality audit → [thermos](../thermos/SKILL.md)
+- Single deep correctness / security pass → [thermo-nuclear-review](../thermo-nuclear-review/SKILL.md)
+- Review → fix grind until green → [grind-to-green](../grind-to-green/SKILL.md)
 
 ## Workflow
 
-1. **Get the diff** — branch changes vs merge-base with main (committed + staged + unstaged unless the user asked for committed-only).
+1. **Get the diff** — branch changes vs merge-base with the target base (committed + staged + unstaged unless the user asked for committed-only).
 2. **Understand intent** — skim commit messages, PR description if available, and the overall shape of the change. State the intent in one sentence before diving in.
 3. **Deep context** — for each significant change, read surrounding code (callers, tests, related modules) so you understand impact beyond the diff hunk.
 4. **Review** — look for bugs, logic errors, missing tests, broken contracts, and regressions in the changed code.

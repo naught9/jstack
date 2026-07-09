@@ -46,8 +46,9 @@ There is no install binary yet. Prefer symlink or copy; keep jstack as the sourc
 | `thermo-nuclear-code-quality-review` | Deep maintainability / code-judo rubric |
 | `deslop` | Strip AI slop from branch vs base |
 | `docs` | Add docs matching repo style |
-| `review-branch` | Practical branch review (lighter than thermo) |
+| `quick-review` | Everyday branch review (lighter than thermos) |
 | `summarize-for-handoff` | Cold-start handoff for a new session |
+| `plan` | CreatePlan-style task plan (research → clarify → concrete plan; no code) |
 | `frontend-design` | Distinctive UI work |
 | `supabase` | Supabase workflows + MCP |
 | `supabase-postgres-best-practices` | Postgres performance rules |
