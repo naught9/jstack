@@ -1,0 +1,139 @@
+{
+  "$schema": "./manifest.schema.json",
+  "version": 2,
+  "updatedAt": "2026-07-09T08:35:00Z",
+  "root": "/Users/jake/source/jstack",
+  "projects": {
+    "jstack": "/Users/jake/source/jstack",
+    "muse-monorepo": "/Users/jake/source/muse-monorepo"
+  },
+  "mcp": [
+    {
+      "id": "linear",
+      "transport": "http",
+      "url": "https://mcp.linear.app/mcp",
+      "path": "mcp.json"
+    },
+    {
+      "id": "supabase",
+      "transport": "http",
+      "url": "https://mcp.supabase.com/mcp",
+      "path": "mcp.json"
+    },
+    {
+      "id": "context7",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "path": "mcp.json"
+    }
+  ],
+  "skills": [
+    {
+      "id": "supabase",
+      "scope": "global",
+      "path": "skills/supabase/SKILL.md"
+    },
+    {
+      "id": "supabase-postgres-best-practices",
+      "scope": "global",
+      "path": "skills/supabase-postgres-best-practices/SKILL.md"
+    },
+    {
+      "id": "thermos",
+      "scope": "global",
+      "path": "skills/thermos/SKILL.md"
+    },
+    {
+      "id": "thermo-nuclear-review",
+      "scope": "global",
+      "path": "skills/thermo-nuclear-review/SKILL.md"
+    },
+    {
+      "id": "thermo-nuclear-code-quality-review",
+      "scope": "global",
+      "path": "skills/thermo-nuclear-code-quality-review/SKILL.md"
+    },
+    {
+      "id": "frontend-design",
+      "scope": "global",
+      "path": "skills/frontend-design/SKILL.md"
+    },
+    {
+      "id": "deslop",
+      "scope": "global",
+      "path": "skills/deslop/SKILL.md"
+    },
+    {
+      "id": "docs",
+      "scope": "global",
+      "path": "skills/docs/SKILL.md"
+    },
+    {
+      "id": "review-branch",
+      "scope": "global",
+      "path": "skills/review-branch/SKILL.md"
+    },
+    {
+      "id": "summarize-for-handoff",
+      "scope": "global",
+      "path": "skills/summarize-for-handoff/SKILL.md"
+    },
+    {
+      "id": "plan-phased-feature",
+      "scope": "project",
+      "project": "muse-monorepo",
+      "path": "skills/plan-phased-feature/SKILL.md"
+    },
+    {
+      "id": "orchestrate-phased-feature",
+      "scope": "project",
+      "project": "muse-monorepo",
+      "path": "skills/orchestrate-phased-feature/SKILL.md"
+    },
+    {
+      "id": "orchestrate-phased-review",
+      "scope": "project",
+      "project": "muse-monorepo",
+      "path": "skills/orchestrate-phased-review/SKILL.md"
+    },
+    {
+      "id": "parallel-plan",
+      "scope": "project",
+      "project": "muse-monorepo",
+      "path": "skills/parallel-plan/SKILL.md"
+    },
+    {
+      "id": "grind-to-green",
+      "scope": "project",
+      "project": "muse-monorepo",
+      "path": "skills/grind-to-green/SKILL.md"
+    }
+  ],
+  "subagents": [
+    {
+      "id": "thermo-review",
+      "scope": "global",
+      "path": "subagents/thermo-review.md"
+    },
+    {
+      "id": "thermo-quality",
+      "scope": "global",
+      "path": "subagents/thermo-quality.md"
+    },
+    {
+      "id": "implementation-worker",
+      "scope": "project",
+      "project": "muse-monorepo",
+      "path": "subagents/implementation-worker.md",
+      "note": "Prompt templates for phased orchestration; revisit when hardening workers"
+    },
+    {
+      "id": "review-worker",
+      "scope": "project",
+      "project": "muse-monorepo",
+      "path": "subagents/review-worker.md",
+      "note": "Prompt templates for phased orchestration; revisit when hardening workers"
+    }
+  ]
+}
