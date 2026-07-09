@@ -49,6 +49,7 @@ There is no install binary yet. Prefer symlink or copy; keep jstack as the sourc
 | `quick-review` | Everyday branch review (lighter than thermos) |
 | `summarize-for-handoff` | Cold-start handoff for a new session |
 | `plan` | CreatePlan-style task plan (research → clarify → concrete plan; no code) |
+| `ship` | Stage + commit; ask before push (single branch) |
 | `frontend-design` | Distinctive UI work |
 | `supabase` | Supabase workflows + MCP |
 | `supabase-postgres-best-practices` | Postgres performance rules |
@@ -58,6 +59,8 @@ There is no install binary yet. Prefer symlink or copy; keep jstack as the sourc
 | Skill | Purpose |
 |-------|---------|
 | `plan-phased-feature` | Plan of record + Linear + optional Graphite scaffold |
+| `ship-stack` | Restack + `gt submit --stack` (no merge) |
+| `heal-stack` | Repair orphan/broken Graphite stacks onto `dev` |
 | `orchestrate-phased-feature` | Per-phase implement → thermos → fix grind |
 | `orchestrate-phased-review` | Epic-level thermo → fix grind |
 | `grind-to-green` | Single PR/branch thermo → fix loop (no Linear/Graphite) |

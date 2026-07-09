@@ -82,13 +82,13 @@ Add Linear comment listing PR numbers and branch names for orchestrator handoff.
 
 ## Repair (if stack breaks)
 
-Per `AGENTS.md`:
+Prefer the dedicated skill: [heal-stack](../heal-stack/SKILL.md). Summary:
 
 1. `git fetch origin dev` and each stack branch from `origin`
 2. `gt init --trunk dev --no-interactive` if trunk metadata is wrong
 3. `gt track -p <parent>` bottom-up (P0→`dev`, P1→P0, …)
 4. **Do not** `gt sync` on `dev`, `gt track --force` from the tip, or push/reset `dev`
-5. `gt log --stack --reverse` then `gt submit --stack --no-edit`
+5. `gt log --stack --reverse` then `gt submit --stack --no-edit` (or [ship-stack](../ship-stack/SKILL.md))
 
 ---
 
