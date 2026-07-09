@@ -190,5 +190,5 @@ Re-list locals/remotes. Report what was pruned, any salvage commits (SHA + wheth
 ## Out of scope
 
 - Merging PRs or shipping stacks → [ship](../ship/SKILL.md) / [ship-stack](../ship-stack/SKILL.md)
-- Repairing Graphite parent links → [heal-stack](../heal-stack/SKILL.md)
+- Repairing Graphite parent links → [heal-gt-stack](../heal-gt-stack/SKILL.md)
 - Enabling `delete_branch_on_merge` unless the user asks (mention as optional prevention tip only)

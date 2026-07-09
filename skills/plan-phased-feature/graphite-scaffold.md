@@ -82,7 +82,7 @@ Add Linear comment listing PR numbers and branch names for orchestrator handoff.
 
 ## Repair (if stack breaks)
 
-Prefer the dedicated skill: [heal-stack](../heal-stack/SKILL.md). Summary:
+Prefer the dedicated skill: [heal-gt-stack](../heal-gt-stack/SKILL.md). Summary:
 
 1. `git fetch origin dev` and each stack branch from `origin`
 2. `gt init --trunk dev --no-interactive` if trunk metadata is wrong

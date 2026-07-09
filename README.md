@@ -61,7 +61,7 @@ There is no install binary yet. Prefer symlink or copy; keep jstack as the sourc
 |-------|---------|
 | `plan-phased-feature` | Plan of record + Linear + optional Graphite scaffold |
 | `ship-stack` | Restack + `gt submit --stack` (no merge) |
-| `heal-stack` | Repair orphan/broken Graphite stacks onto `dev` |
+| `heal-gt-stack` | Repair orphan/broken Graphite stacks onto `dev` |
 | `orchestrate-phased-feature` | Per-phase implement → thermos → fix grind |
 | `orchestrate-phased-review` | Epic-level thermo → fix grind |
 | `grind-to-green` | Single PR/branch thermo → fix loop (no Linear/Graphite) |

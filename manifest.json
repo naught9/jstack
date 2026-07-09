@@ -1,7 +1,7 @@
 {
   "$schema": "./manifest.schema.json",
   "version": 2,
-  "updatedAt": "2026-07-09T09:45:00Z",
+  "updatedAt": "2026-07-09T10:13:00Z",
   "root": "/Users/jake/source/jstack",
   "projects": {
     "jstack": "/Users/jake/source/jstack",
@@ -107,10 +107,10 @@
       "path": "skills/ship-stack/SKILL.md"
     },
     {
-      "id": "heal-stack",
+      "id": "heal-gt-stack",
       "scope": "project",
       "project": "muse-monorepo",
-      "path": "skills/heal-stack/SKILL.md"
+      "path": "skills/heal-gt-stack/SKILL.md"
     },
     {
       "id": "orchestrate-phased-feature",

@@ -1,5 +1,5 @@
 ---
-name: heal-stack
+name: heal-gt-stack
 description: >-
   Repair a broken or incomplete Graphite stack so all phase PRs daisy-chain onto
   dev (P0→dev, Pn→P(n−1)). Use when PRs are orphaned, missing from gt log,
@@ -7,7 +7,7 @@ description: >-
 disable-model-invocation: true
 ---
 
-# Heal Stack
+# Heal GT Stack
 
 Realign phase branches and Graphite metadata so the full stack appears as one daisy-chain on `dev`. Then optionally hand off to [ship-stack](../ship-stack/SKILL.md) to submit.
 

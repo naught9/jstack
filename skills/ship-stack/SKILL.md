@@ -11,7 +11,7 @@ disable-model-invocation: true
 
 Publish/update a Graphite daisy-chained PR stack. Restack + submit only — **never merge** (merge stays manual in Graphite UI).
 
-**Pair with:** [heal-stack](../heal-stack/SKILL.md) if PRs are missing from the stack or bases are wrong; [ship](../ship/SKILL.md) for single-branch commit/push; [orchestrate-phased-feature](../orchestrate-phased-feature/SKILL.md) for phase implementation.
+**Pair with:** [heal-gt-stack](../heal-gt-stack/SKILL.md) if PRs are missing from the stack or bases are wrong; [ship](../ship/SKILL.md) for single-branch commit/push; [orchestrate-phased-feature](../orchestrate-phased-feature/SKILL.md) for phase implementation.
 
 ## Hard rules
 
@@ -19,7 +19,7 @@ Publish/update a Graphite daisy-chained PR stack. Restack + submit only — **ne
 - **Do not** commit on `dev`, push/reset `dev`, or run `gt sync` on `dev`. Fetch only: `git fetch origin dev`.
 - **Do not merge** unless the user explicitly asks in a separate request (out of scope for this skill).
 - Prefer **existing** stack branches — do not create parallel branches while shipping.
-- If the stack is broken or a PR is orphaned (not in `gt log --stack`), stop and run / hand off to [heal-stack](../heal-stack/SKILL.md) first.
+- If the stack is broken or a PR is orphaned (not in `gt log --stack`), stop and run / hand off to [heal-gt-stack](../heal-gt-stack/SKILL.md) first.
 
 ## When to use
 
@@ -55,7 +55,7 @@ gt log --stack --reverse
 
 Confirm: P0 parent = `dev`, each Pn parent = P(n−1) branch. Also spot-check GitHub PR bases if needed (`gh pr view`).
 
-If any PR is missing from the stack, bases point at `dev` incorrectly (except P0), or Graphite metadata disagrees with GitHub → **heal-stack**, then return here.
+If any PR is missing from the stack, bases point at `dev` incorrectly (except P0), or Graphite metadata disagrees with GitHub → **heal-gt-stack**, then return here.
 
 ### 4. Restack
 
@@ -88,4 +88,4 @@ Report: PR numbers, branch names, parent chain, draft vs ready. Pasteable stack 
 - Bottom-up merge / merge queue
 - Creating scaffold placeholders → [plan-phased-feature](../plan-phased-feature/SKILL.md) / [graphite-scaffold.md](../plan-phased-feature/graphite-scaffold.md)
 - Single-branch commit without Graphite → [ship](../ship/SKILL.md)
-- Repairing broken stacks → [heal-stack](../heal-stack/SKILL.md)
+- Repairing broken stacks → [heal-gt-stack](../heal-gt-stack/SKILL.md)

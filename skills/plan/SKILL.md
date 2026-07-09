@@ -84,5 +84,5 @@ todos:
 - Linear epics / Graphite stacks → `plan-phased-feature`
 - Parallel worker wave charts → `parallel-plan`
 - Implementation, CI grind, thermos → build / grind skills
-- Commit / push → [ship](../ship/SKILL.md); Graphite stack publish/repair → [ship-stack](../ship-stack/SKILL.md) / [heal-stack](../heal-stack/SKILL.md)
+- Commit / push → [ship](../ship/SKILL.md); Graphite stack publish/repair → [ship-stack](../ship-stack/SKILL.md) / [heal-gt-stack](../heal-gt-stack/SKILL.md)
 - Brainstorm-only architecture with no implementation intent → stay conversational; only use this skill when the user wants a buildable plan
