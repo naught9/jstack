@@ -1,0 +1,4 @@
+interface:
+  display_name: "Docs Linear GitHub Audit"
+  short_description: "Audit work docs against project state"
+  default_prompt: "Use $docs-linear-github-audit to audit work docs against Linear issues and GitHub branches, then classify and propose cleanup."

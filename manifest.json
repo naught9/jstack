@@ -53,6 +53,10 @@
       "path": "skills/docs/SKILL.md"
     },
     {
+      "id": "docs-linear-github-audit",
+      "path": "skills/docs-linear-github-audit/SKILL.md"
+    },
+    {
       "id": "frontend-design",
       "path": "skills/frontend-design/SKILL.md"
     },
