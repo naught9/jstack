@@ -37,7 +37,7 @@ Skills name **roles** (e.g. `thermo-review`, `thermo-quality`). Map the role to 
 ## Models
 
 - Do **not** hard-require a model slug in skills.
-- Soft default: prefer a **high-reasoning** model for deep review; a **fast/capable** model for implementation workers.
+- Soft default: prefer a **high-reasoning** model for deep review; a **capable/high** model for implementation workers (e.g. grok-4.5-high when available).
 - Always honor explicit user overrides, e.g. `/thermos use grok 4.5 for the review` or `use opus for thermo-quality`.
 - When the user names a model for one role only, leave the other role on the host default unless they specify both.
 

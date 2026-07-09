@@ -15,7 +15,7 @@ Portable CreatePlan / Cursor Plan mode workflow for daily task planning. Researc
 **Escalate when:**
 
 - Multi-phase epic with Linear / Graphite → [plan-phased-feature](../plan-phased-feature/SKILL.md)
-- Parallel specialist worker waves → [parallel-plan](../parallel-plan/SKILL.md)
+- Parallel specialist worker waves → [parallel-plan](../parallel-plan/SKILL.md) (then [parallelize-work](../parallelize-work/SKILL.md) to execute)
 
 Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
 
@@ -82,7 +82,7 @@ todos:
 ## Out of scope
 
 - Linear epics / Graphite stacks → `plan-phased-feature`
-- Parallel worker wave charts → `parallel-plan`
+- Parallel worker wave charts → `parallel-plan`; execute waves → `parallelize-work`
 - Implementation, CI grind, thermos → build / grind skills
 - Commit / push → [ship](../ship/SKILL.md); Graphite stack publish/repair → [ship-stack](../ship-stack/SKILL.md) / [heal-gt-stack](../heal-gt-stack/SKILL.md)
 - Brainstorm-only architecture with no implementation intent → stay conversational; only use this skill when the user wants a buildable plan

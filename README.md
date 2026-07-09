@@ -49,6 +49,8 @@ There is no install binary yet. Prefer symlink or copy; keep jstack as the sourc
 | `quick-review` | Everyday branch review (lighter than thermos) |
 | `summarize-for-handoff` | Cold-start handoff for a new session |
 | `plan` | CreatePlan-style task plan (research → clarify → concrete plan; no code) |
+| `parallel-plan` | CreatePlan-style plan for parallel worker waves (no code) |
+| `parallelize-work` | Orchestrate sequential/parallel subagent workers; review + integrate |
 | `ship` | Stage + commit; ask before push (single branch) |
 | `cleanup-branches` | Audit stale/merged branches; delete only after approval |
 | `frontend-design` | Distinctive UI work |
@@ -65,7 +67,6 @@ There is no install binary yet. Prefer symlink or copy; keep jstack as the sourc
 | `orchestrate-phased-feature` | Per-phase implement → thermos → fix grind |
 | `orchestrate-phased-review` | Epic-level thermo → fix grind |
 | `grind-to-green` | Single PR/branch thermo → fix loop (no Linear/Graphite) |
-| `parallel-plan` | Plan for parallel specialist workers |
 
 Install project skills only into muse (or repos that share those conventions).
 
@@ -126,7 +127,7 @@ Read jstack README.md § Cursor and references/host-conventions.md.
 Using JSTACK_ROOT = the directory that contains this README:
 
 1. Symlink (prefer) or copy every skills/*/ directory into ~/.cursor/skills/.
-2. For muse-monorepo project skills only (plan-phased-feature, orchestrate-phased-*, parallel-plan), also link them into muse-monorepo/.cursor/skills/.
+2. For muse-monorepo project skills only (plan-phased-feature, orchestrate-phased-*, grind-to-green, ship-stack, heal-gt-stack), also link them into muse-monorepo/.cursor/skills/.
 3. Register subagents/thermo-review.md and subagents/thermo-quality.md as Cursor custom agents so Task can spawn subagent_type thermo-review and thermo-quality. Keep bodies intact; name frontmatter must match the role id.
 4. Merge mcp.json into ~/.cursor/mcp.json without removing other servers.
 5. Summarize what you linked and how to invoke /thermos.
@@ -264,15 +265,16 @@ JSTACK_ROOT = directory containing this README.
 
 Only when working in muse-monorepo:
 
-1. Install project-scoped skills: `plan-phased-feature`, `orchestrate-phased-feature`, `orchestrate-phased-review`, `grind-to-green`, `parallel-plan`.
+1. Install project-scoped skills: `plan-phased-feature`, `orchestrate-phased-feature`, `orchestrate-phased-review`, `grind-to-green`, `ship-stack`, `heal-gt-stack`.
 2. Optionally install `implementation-worker` / `review-worker` prompt packs (still rough; thermos roles are the important ones).
 3. Keep Graphite (`gt`) and Linear MCP available — phased skills assume them; `grind-to-green` only needs git/`gh`.
+4. Daily parallel skills (`parallel-plan`, `parallelize-work`) are global — already installed with other globals.
 
 **Setup prompt add-on:**
 
 ```text
 Also wire muse project skills from jstack into this repo’s agent skills path
-(plan-phased-feature, orchestrate-phased-feature, orchestrate-phased-review, grind-to-green, parallel-plan).
+(plan-phased-feature, orchestrate-phased-feature, orchestrate-phased-review, grind-to-green, ship-stack, heal-gt-stack).
 Do not install them globally.
 ```
 

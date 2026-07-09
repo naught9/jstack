@@ -1,7 +1,7 @@
 {
   "$schema": "./manifest.schema.json",
   "version": 2,
-  "updatedAt": "2026-07-09T10:13:00Z",
+  "updatedAt": "2026-07-09T10:18:00Z",
   "root": "/Users/jake/source/jstack",
   "projects": {
     "jstack": "/Users/jake/source/jstack",
@@ -85,6 +85,16 @@
       "path": "skills/plan/SKILL.md"
     },
     {
+      "id": "parallel-plan",
+      "scope": "global",
+      "path": "skills/parallel-plan/SKILL.md"
+    },
+    {
+      "id": "parallelize-work",
+      "scope": "global",
+      "path": "skills/parallelize-work/SKILL.md"
+    },
+    {
       "id": "ship",
       "scope": "global",
       "path": "skills/ship/SKILL.md"
@@ -123,12 +133,6 @@
       "scope": "project",
       "project": "muse-monorepo",
       "path": "skills/orchestrate-phased-review/SKILL.md"
-    },
-    {
-      "id": "parallel-plan",
-      "scope": "project",
-      "project": "muse-monorepo",
-      "path": "skills/parallel-plan/SKILL.md"
     },
     {
       "id": "grind-to-green",
