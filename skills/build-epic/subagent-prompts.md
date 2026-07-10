@@ -2,12 +2,12 @@
 
 Copy and fill in `{placeholders}`. Every prompt must be self-contained.
 
-Spawn via the host's subagent API using a general-purpose / implementation worker role (see [host-conventions.md](../../references/host-conventions.md)). Soft model default: capable/fast; honor user overrides.
+Spawn via the host's subagent API using role **`worker`** (see [host-conventions.md](../../references/host-conventions.md)). Fall back to host general-purpose only if `worker` is not installed. Soft model default: capable/fast; honor user overrides.
 
 ## Implementation
 
 ```markdown
-You are implementing **{phase label}** of {parent issue} (sub-issue: **{sub-issue ID}**).
+You are the jstack `worker` implementing **{phase label}** of {parent issue} (sub-issue: **{sub-issue ID}**).
 
 ## Branch
 - Work on: `{branch}` (base: `{base branch}`)
@@ -37,8 +37,8 @@ Read these before coding:
 - Rebuild and commit `dist/` for changed packages that commit artifacts
 - Prefer scoped commands: `pnpm --filter {pkg} test`, `type-check`, `lint`
 
-## Workers
-You may spawn nested exploration workers if the host allows, for context-heavy exploration or parallel file reads.
+## Exploration
+You may spawn nested `explorer` agents if the host allows, for context-heavy exploration or parallel file reads.
 
 ## Deliverable
 Implement the phase, get CI-local checks green, push commits to `{branch}`, and reply with:
@@ -70,7 +70,7 @@ You are reviewing **{phase label}** of {parent issue} (PR #{pr number}, branch `
 ## Fix
 
 ```markdown
-You are fixing thermos review findings for **{phase label}** ({sub-issue ID}) on branch `{branch}`.
+You are the jstack `worker` fixing thermos review findings for **{phase label}** ({sub-issue ID}) on branch `{branch}`.
 
 ## Findings to address
 {paste numbered finding list from review specialist}

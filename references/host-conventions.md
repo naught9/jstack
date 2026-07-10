@@ -18,7 +18,7 @@ Batch 2–4 related questions per turn when the tool allows. If no structured to
 
 ## Spawning subagents
 
-Skills name **roles** (e.g. `thermo-review`, `thermo-quality`). Map the role to the host's spawn API:
+Skills name **roles** (e.g. `explorer`, `worker`, `thermo-review`). Map the role to the host's spawn API:
 
 | Host | Spawn shape | Custom agent path |
 |------|-------------|-------------------|
@@ -34,20 +34,30 @@ Skills name **roles** (e.g. `thermo-review`, `thermo-quality`). Map the role to 
 
 **Self-contained prompts:** Child agents do not see the parent conversation. Every spawn prompt must include the full task, paths, diff/context, and definition of done.
 
+**Fallbacks:** Prefer the jstack role when installed. If missing: `explorer` → host Explore/scout; `worker` → host general-purpose / Build / default; `planner` / `reviewer` → run the role body inline in the parent.
+
 ## Models
 
 - Do **not** hard-require a model slug in skills.
-- Soft default: prefer a **high-reasoning** model for deep review; a **capable/high** model for implementation workers (e.g. grok-4.5-high when available).
+- Soft defaults:
+  - **High-reasoning** — `thermo-review`, `thermo-quality`, `planner`, `reviewer`
+  - **Capable / fast** — `explorer`, `worker`
 - Always honor explicit user overrides, e.g. `/thermos use grok 4.5 for the review` or `use opus for thermo-quality`.
 - When the user names a model for one role only, leave the other role on the host default unless they specify both.
 
 ## jstack role IDs
 
-| Role ID | Purpose |
-|---------|---------|
-| `thermo-review` | Diff-scoped bugs / security / breaking / devex / feature-gate audit |
-| `thermo-quality` | Diff-scoped maintainability / structure / code-judo audit |
+| Role ID | Purpose | R/W intent |
+|---------|---------|------------|
+| `explorer` | Local codebase recon → compressed handoff | read |
+| `planner` | Concrete implementation plan, no product edits | read (+ plan file if asked) |
+| `worker` | Single-writer implementer for approved tasks / fixes | write |
+| `reviewer` | Everyday multi-angle review (lighter than thermos) | read |
+| `thermo-review` | Diff-scoped bugs / security / breaking / devex / feature-gate audit | read |
+| `thermo-quality` | Diff-scoped maintainability / structure / code-judo audit | read |
 
 Canonical definitions live in `subagents/<role>.md`. Host setup (see root `README.md`) may add frontmatter or wrap Codex TOML; the **body** stays the source of truth.
 
-For implementation/fix work, spawn the host's **general-purpose** worker with a self-contained prompt (templates under `skills/build-epic/`, `skills/grind-epic/`, `skills/grind-to-green/`, `skills/parallelize/`). Do not register separate `*-worker` role IDs.
+**v2 (not registered yet):** `web-researcher`, `oracle`, `debugger`.
+
+Skills may still embed specialized prompt templates (e.g. under `build-epic/`, `grind-epic/`, `grind-to-green/`, `parallelize/`). Those templates target the roles above — do not invent parallel `*-worker` IDs.

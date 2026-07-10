@@ -72,12 +72,18 @@ There is no install binary yet. Prefer symlink or copy; keep jstack as the sourc
 
 ### Subagent roles
 
-| Role ID | File |
-|---------|------|
-| `thermo-review` | `subagents/thermo-review.md` |
-| `thermo-quality` | `subagents/thermo-quality.md` |
+| Role ID | File | Purpose |
+|---------|------|---------|
+| `explorer` | `subagents/explorer.md` | Local codebase recon → compressed handoff |
+| `planner` | `subagents/planner.md` | Concrete plan, no product code edits |
+| `worker` | `subagents/worker.md` | Single-writer implementer for approved tasks / fixes |
+| `reviewer` | `subagents/reviewer.md` | Everyday multi-angle review (lighter than thermos) |
+| `thermo-review` | `subagents/thermo-review.md` | Deep correctness / security / breaking / devex |
+| `thermo-quality` | `subagents/thermo-quality.md` | Deep maintainability / code-judo |
 
-**Canonical rule:** copy the markdown **body** as-is. Only add host-specific frontmatter fields listed in the harness section. Do not invent new role IDs. Implementation/fix worker prompts live inside `build-epic` / `grind-epic` / `grind-to-green` skill folders — not as registered subagents.
+**Canonical rule:** copy the markdown **body** as-is. Only add host-specific frontmatter fields listed in the harness section. Do not invent new role IDs. Prefer these roles when spawning; if a role is not installed, fall back per [host-conventions.md](references/host-conventions.md). Specialized prompt templates under skill folders still target these role IDs.
+
+**v2 (planned):** `web-researcher`, `oracle`, `debugger`.
 
 ### Not in the active pack
 
@@ -88,7 +94,7 @@ There is no install binary yet. Prefer symlink or copy; keep jstack as the sourc
 
 ## Models
 
-Skills use **soft defaults** (high-reasoning for deep review; capable/fast for implementers). Always honor user overrides:
+Skills use **soft defaults** (high-reasoning for planner/reviewer/thermos; capable/fast for explorer/worker). Always honor user overrides:
 
 ```text
 /thermos use grok 4.5 for the review
@@ -114,7 +120,7 @@ All install targets are **project-local** under jstack (`JSTACK_ROOT` = director
 
 **Skills:** symlink or copy each `skills/<id>/` → `.cursor/skills/<id>/`.
 
-**Subagents:** install `thermo-review` and `thermo-quality` in the project agents directory. Frontmatter `name` must match the role ID. Spawn via `Task` with `subagent_type: "thermo-review"` / `"thermo-quality"`.
+**Subagents:** install every role in `subagents/` (`explorer`, `planner`, `worker`, `reviewer`, `thermo-review`, `thermo-quality`) in the project agents directory. Frontmatter `name` must match the role ID. Spawn via `Task` with `subagent_type: "<role>"`.
 
 **MCP:** merge `mcp.json` into `.cursor/mcp.json` (do not clobber unrelated servers).
 
@@ -127,9 +133,9 @@ Read jstack README.md § Cursor and references/host-conventions.md.
 Using JSTACK_ROOT = the directory that contains this README:
 
 1. Symlink (prefer) or copy every skills/*/ directory into .cursor/skills/.
-2. Register subagents/thermo-review.md and subagents/thermo-quality.md as Cursor custom agents so Task can spawn subagent_type thermo-review and thermo-quality. Keep bodies intact; name frontmatter must match the role id.
+2. Register every file in subagents/ as a Cursor custom agent (explorer, planner, worker, reviewer, thermo-review, thermo-quality) so Task can spawn those subagent_type values. Keep bodies intact; name frontmatter must match the role id.
 3. Merge mcp.json into .cursor/mcp.json without removing other servers.
-4. Summarize what you linked and how to invoke /thermos.
+4. Summarize what you linked and how to invoke /thermos plus a sample Task spawn for worker and explorer.
 ```
 
 ### Codex
@@ -146,7 +152,7 @@ developer_instructions = """
 """
 ```
 
-Repeat for `thermo-quality`. Soft-pin models in the TOML only if the user asks.
+Repeat for every role in `subagents/` (`explorer`, `planner`, `worker`, `reviewer`, `thermo-review`, `thermo-quality`). Soft-pin models in the TOML only if the user asks.
 
 **MCP:** map `mcp.json` into `.codex/config.toml` `[mcp_servers.*]` entries.
 
@@ -159,9 +165,9 @@ Read jstack README.md § Codex and references/host-conventions.md.
 JSTACK_ROOT = directory containing this README.
 
 1. Symlink or copy skills/*/ into .agents/skills/.
-2. Convert subagents/thermo-review.md and thermo-quality.md into .codex/agents/*.toml (name, description, developer_instructions = body).
+2. Convert every subagents/*.md into .codex/agents/*.toml (name, description, developer_instructions = body): explorer, planner, worker, reviewer, thermo-review, thermo-quality.
 3. Merge mcp.json servers into .codex/config.toml.
-4. Tell me how to ask Codex to spawn thermo-review and thermo-quality explicitly.
+4. Tell me how to ask Codex to spawn explorer, worker, and thermo-review explicitly.
 ```
 
 ### Pi
@@ -173,9 +179,9 @@ Recommended packages:
 
 **Skills:** symlink from jstack into `.pi/skills/` or `.agents/skills/` in this repo.
 
-**Subagents (tintinweb):** copy to `.pi/agents/thermo-review.md` and `.pi/agents/thermo-quality.md`. Keep `name` = role ID. Optional: restrict tools to read/search/bash for review-only.
+**Subagents (tintinweb):** copy every `subagents/<role>.md` to `.pi/agents/<role>.md`. Keep `name` = role ID. Optional: restrict tools to read/search/bash for read-only roles (`explorer`, `planner`, `reviewer`, `thermo-*`).
 
-**Subagents (nicobailon):** register the same role IDs in that package’s agents layout; spawn with `subagent({ agent: "thermo-review", task: "..." })`.
+**Subagents (nicobailon):** register the same role IDs in that package’s agents layout; spawn with `subagent({ agent: "<role>", task: "..." })`.
 
 **MCP:** merge into Pi’s project MCP config.
 
@@ -187,16 +193,16 @@ JSTACK_ROOT = directory containing this README.
 
 1. Confirm pi-subagents (tintinweb and/or nicobailon) and @juicesharp/rpiv-ask-user-question are installed; note which subagent package is active.
 2. Symlink skills/*/ into .pi/skills/ or .agents/skills/ in this repo.
-3. Register thermo-review and thermo-quality from subagents/ into .pi/agents/ (tintinweb) or the active package’s agents path. Keep bodies intact; name must match role id.
+3. Register every role from subagents/ into .pi/agents/ (tintinweb) or the active package’s agents path. Keep bodies intact; name must match role id.
 4. Merge mcp.json into Pi MCP config.
-5. Show an example spawn for thermos (both roles in parallel / background if supported).
+5. Show example spawns: thermos (thermo-review + thermo-quality in parallel) and a worker / explorer pair.
 ```
 
 ### OpenCode
 
 **Skills:** `.opencode/skills/<id>/SKILL.md` in this repo.
 
-**Subagents:** `.opencode/agents/<role>.md` with frontmatter including `mode: subagent`. Body = jstack subagent body. Spawn via `task` or `@thermo-review`.
+**Subagents:** `.opencode/agents/<role>.md` with frontmatter including `mode: subagent` for every jstack role. Body = jstack subagent body. Spawn via `task` or `@<role>`.
 
 **MCP:** OpenCode config MCP block — merge from `mcp.json`.
 
@@ -209,16 +215,16 @@ Read jstack README.md § OpenCode and references/host-conventions.md.
 JSTACK_ROOT = directory containing this README.
 
 1. Symlink skills into .opencode/skills/.
-2. Create .opencode/agents/thermo-review.md and thermo-quality.md with mode: subagent; body from jstack subagents/.
+2. Create .opencode/agents/<role>.md for every jstack role (explorer, planner, worker, reviewer, thermo-review, thermo-quality) with mode: subagent; body from jstack subagents/.
 3. Merge mcp.json into opencode MCP config.
-4. Confirm task/@ invocation for both roles.
+4. Confirm task/@ invocation for explorer, worker, and thermos roles.
 ```
 
 ### Droid (Factory)
 
 **Skills:** project skills path (e.g. `.agents/skills/`).
 
-**Subagents:** `.factory/droids/<role>.md`. Suggest `tools: read-only` (or equivalent) for thermo roles. Spawn via `Task` + `subagent_type`.
+**Subagents:** `.factory/droids/<role>.md` for every jstack role. Suggest `tools: read-only` (or equivalent) for `explorer`, `planner`, `reviewer`, and thermo roles; full tools for `worker`. Spawn via `Task` + `subagent_type`.
 
 **MCP:** `.factory/mcp.json`.
 
@@ -231,9 +237,9 @@ Read jstack README.md § Droid and references/host-conventions.md.
 JSTACK_ROOT = directory containing this README.
 
 1. Install skills into Droid’s project skills discovery path.
-2. Copy thermo-review and thermo-quality into .factory/droids/, tools read-only, bodies intact.
+2. Copy every subagents/*.md into .factory/droids/; read-only tools for explorer/planner/reviewer/thermo-*; full tools for worker. Bodies intact.
 3. Merge mcp.json into .factory/mcp.json.
-4. Confirm Task subagent_type names.
+4. Confirm Task subagent_type names for all six roles.
 ```
 
 ### oh-my-pi (omp)
@@ -253,9 +259,9 @@ Read jstack README.md § oh-my-pi and references/host-conventions.md.
 JSTACK_ROOT = directory containing this README.
 
 1. Symlink skills into the project skills path.
-2. Register thermo-review and thermo-quality under .omp/agents/; bodies intact.
+2. Register every jstack role under .omp/agents/; bodies intact.
 3. Merge mcp.json into omp MCP config.
-4. Show a task() example that runs both roles.
+4. Show a task() example that runs thermo-review + thermo-quality, and another for worker.
 ```
 
 ---
@@ -265,16 +271,18 @@ JSTACK_ROOT = directory containing this README.
 After setup, in a repo with a non-empty branch vs its base:
 
 ```text
-Run /thermos (or invoke the thermos skill) on the current branch.
-Use background/parallel specialists if the host supports it.
-Synthesize findings; do not restate both reports in full.
+1. Spawn explorer on a package/module and confirm a compressed handoff.
+2. Run /thermos (or invoke the thermos skill) on the current branch.
+   Use background/parallel specialists if the host supports it.
+   Synthesize findings; do not restate both reports in full.
 ```
 
 Expect:
 
-1. `thermo-review` and `thermo-quality` both run (or inline fallback if no subagents).
-2. A short combined verdict with prioritized findings.
-3. User model overrides respected when given.
+1. All six roles are registered and spawnable (`explorer`, `planner`, `worker`, `reviewer`, `thermo-review`, `thermo-quality`).
+2. `thermo-review` and `thermo-quality` both run for thermos (or inline fallback if no subagents).
+3. A short combined thermos verdict with prioritized findings.
+4. User model overrides respected when given.
 
 ---
 

@@ -18,7 +18,7 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 
 ## Models
 
-- Soft default: capable/fast model for the parent orchestrator and implementation workers; high-reasoning for thermos review roles.
+- Soft default: capable/fast model for the parent orchestrator and `worker` roles; high-reasoning for thermos review roles.
 - Honor user overrides for parent or any child role (e.g. "use grok 4.5 for implementers").
 
 **Pair with:** [grind-epic](../grind-epic/SKILL.md) for post-implementation epic review grinding (thermo clean + test-green across the full stack).
@@ -74,7 +74,7 @@ If there is no scaffold, create the branch stacked on the previous phase and ope
 
 ### 2. Implementation specialist
 
-Spawn a **fresh** general-purpose / implementation worker with a fully self-contained prompt (children cannot see your conversation). Template: [subagent-prompts.md](subagent-prompts.md#implementation).
+Spawn a **fresh** `worker` with a fully self-contained prompt (children cannot see your conversation). Fall back to host general-purpose only if `worker` is not installed. Template: [subagent-prompts.md](subagent-prompts.md#implementation).
 
 Include: sub-issue ID, exact branch, base branch, plan sections, scope boundaries, definition of done, repo conventions.
 

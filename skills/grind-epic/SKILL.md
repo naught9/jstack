@@ -18,7 +18,7 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 
 ## Models
 
-- Soft default: high-reasoning for `thermo-review` (and thermos when used); capable/fast for fix workers; capable parent orchestrator.
+- Soft default: high-reasoning for `thermo-review` (and thermos when used); capable/fast for fix `worker`s; capable parent orchestrator.
 - Honor user overrides (e.g. "use opus for thermo-review").
 
 **Pair with:** [build-epic](../build-epic/SKILL.md) for per-phase implementation; this skill is for **post-implementation epic review grinding**.
@@ -94,7 +94,7 @@ Classify findings: **BLOCKER**, **MAJOR**, **MINOR**, **NIT**. Verdict: **CLEAN*
 
 ### 3. Spawn fix specialist
 
-For each BLOCKER/MAJOR batch, spawn a **separate** general-purpose / implementation worker.
+For each BLOCKER/MAJOR batch, spawn a **separate** `worker` (host general-purpose only if `worker` is not installed).
 
 Prompt template: [subagent-prompts.md](subagent-prompts.md#epic-fix).
 

@@ -4,7 +4,7 @@ Copy and fill in `{placeholders}`. Every prompt must be self-contained.
 
 Spawn via the host's subagent API (see [host-conventions.md](../../references/host-conventions.md)):
 - Review → role `thermo-review` (soft default: high-reasoning)
-- Fix → general-purpose / implementation worker (soft default: capable/fast)
+- Fix → role `worker` (soft default: capable/fast; fall back to host general-purpose if missing)
 
 Honor user model overrides.
 
@@ -47,7 +47,7 @@ Classify each finding: **BLOCKER**, **MAJOR**, **MINOR**, **NIT**
 ## Fix
 
 ```markdown
-You are fixing thermo review findings on branch `{work-branch}`.
+You are the jstack `worker` fixing thermo review findings on branch `{work-branch}`.
 
 ## Findings to address
 {paste numbered BLOCKER/MAJOR list from review specialist}
@@ -97,7 +97,7 @@ Conduct repeated deep thermo-nuclear reviews → fix → re-review cycles scoped
 git diff origin/{base}...HEAD
 ```
 
-**Models:** soft defaults — high-reasoning for thermo-review; capable/fast for fix workers. Honor any user overrides from the launch message.
+**Models:** soft defaults — high-reasoning for thermo-review; capable/fast for fix `worker`. Honor any user overrides from the launch message.
 
 **Definition of done:** zero BLOCKER/MAJOR findings from thermo review, scoped test/type-check gates green. Do not merge anything.
 

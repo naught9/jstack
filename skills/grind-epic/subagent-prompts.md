@@ -4,7 +4,7 @@ Copy and fill in `{placeholders}`. Every prompt must be self-contained.
 
 Spawn via the host's subagent API (see [host-conventions.md](../../references/host-conventions.md)):
 - Epic review → role `thermo-review` (soft default: high-reasoning)
-- Epic fix → general-purpose / implementation worker (soft default: capable/fast)
+- Epic fix → role `worker` (soft default: capable/fast; fall back to host general-purpose if missing)
 
 Honor user model overrides.
 
@@ -52,7 +52,7 @@ Classify each finding: **BLOCKER**, **MAJOR**, **MINOR**, **NIT**
 ## Epic fix
 
 ```markdown
-You are fixing thermo review findings for the **{parent issue} epic** on branch `{fix-branch}`.
+You are the jstack `worker` fixing thermo review findings for the **{parent issue} epic** on branch `{fix-branch}`.
 
 ## Findings to address
 {paste numbered BLOCKER/MAJOR list from review specialist}

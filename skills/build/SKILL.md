@@ -13,6 +13,8 @@ disable-model-invocation: true
 
 Everyday single-agent implementation. You are the **primary implementer** — execute an approved plan (or a clear, small task), verify, and stop at review-ready. Do not commit/push unless the user also asks for [ship](../ship/SKILL.md).
 
+When the parent orchestrates instead of coding: spawn role **`worker`** with a self-contained prompt (plan path, scope, definition of done). Fall back to host general-purpose only if `worker` is not installed.
+
 **Escalate when:**
 
 - Need parallel specialist waves → [parallelize](../parallelize/SKILL.md) (plan first with [parallel-plan](../parallel-plan/SKILL.md) if missing)

@@ -12,6 +12,8 @@ disable-model-invocation: true
 
 Everyday branch review against the default base branch (usually `main` / `dev`). Focus on issues that would matter in a real PR — not style nits or pre-existing problems outside the diff.
 
+**Spawn:** prefer role **`reviewer`** with a self-contained prompt (diff scope + base branch). If subagents are unavailable, run this skill **inline** in the parent session.
+
 **Escalate when:**
 
 - Deep dual-pass bug/security + quality audit → [thermos](../thermos/SKILL.md)
@@ -68,3 +70,4 @@ Everyday branch review against the default base branch (usually `main` / `dev`).
 - **Never** report an issue you haven't verified by reading the relevant code.
 - **Never** pad the list — an empty findings section with "looks good" is valid.
 - Check PR discussion with `gh` only *after* your own review, if a PR exists and you want to cross-reference automated review bots or human comments.
+- Do **not** implement fixes in this skill — report findings; use `worker` or [grind-to-green](../grind-to-green/SKILL.md) for fixes.

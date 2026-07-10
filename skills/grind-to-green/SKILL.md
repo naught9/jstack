@@ -17,7 +17,7 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 
 ## Models
 
-- Soft default: **high-reasoning** for `thermo-review`; **capable/fast** for fix workers; capable parent.
+- Soft default: **high-reasoning** for `thermo-review`; **capable/fast** for fix `worker`s; capable parent.
 - Honor user overrides (e.g. `/grind-to-green use grok 4.5 for review and fix`).
 
 **Related:** For stacked phased epics with Linear/Graphite, use [grind-epic](../grind-epic/SKILL.md) instead. For a one-shot dual review without a fix loop, use [thermos](../thermos/SKILL.md).
@@ -89,7 +89,7 @@ Classify findings: **BLOCKER**, **MAJOR**, **MINOR**, **NIT**. Verdict: **CLEAN*
 
 ### 3. Spawn fix specialist
 
-For BLOCKER/MAJOR batches, spawn a **general-purpose / implementation worker**.
+For BLOCKER/MAJOR batches, spawn a **`worker`** (host general-purpose only if `worker` is not installed).
 
 Prompt template: [subagent-prompts.md](subagent-prompts.md#fix).
 

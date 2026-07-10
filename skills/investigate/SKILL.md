@@ -14,7 +14,7 @@ Everyday debug loop: **repro → evidence → root cause → fix or plan**. Pref
 **Escalate when:**
 
 - Fix is large / multi-file / architectural → [plan](../plan/SKILL.md) then [build](../build/SKILL.md)
-- Needs parallel exploration across packages → spawn explore workers, then continue here
+- Needs parallel exploration across packages → spawn `explorer` agents, then continue here
 - After a fix, want review → [quick-review](../quick-review/SKILL.md)
 
 Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
@@ -34,7 +34,7 @@ Host question-tool details: [host-conventions.md](../../references/host-conventi
 1. Intake       → symptom, expected vs actual, when it started, env hints
 2. Clarify      → 1–2 questions only if blocked (missing repro, version, surface)
 3. Reproduce    → failing test, script, or documented manual steps
-4. Narrow       → bisect paths: recent diff, logs, stack traces, related modules
+4. Narrow       → bisect paths: recent diff, logs, stack traces, related modules (optional `explorer` spawns)
 5. Root cause   → one primary cause with evidence (secondary factors listed briefly)
 6. Act          → small fix + verify  OR  short fix plan + stop
 7. Report       → cause, evidence, what changed / next steps

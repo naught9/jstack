@@ -24,7 +24,7 @@ Host question-tool details: [host-conventions.md](../../references/host-conventi
 - **Read-only until approved.** No edits, installs, commits, or implementation. Research and plan only.
 - **Clarify first.** If requirements are ambiguous or multiple approaches materially change the design, ask **1–2 critical questions** immediately (host structured question tool; else numbered chat options). Do not ship a placeholder or “awaiting answers” plan.
 - **Commit to one approach.** No Option A/B, TBDs, or soft optionality inside the plan. Pick a sensible default when the user hasn’t specified; state it briefly.
-- **Research before writing.** Prefer parallel explore/read of relevant files; cite real paths.
+- **Research before writing.** Prefer spawning `explorer` (or parallel read) of relevant files; cite real paths.
 - **Proportional.** Short plans for small tasks; deeper plans only when complexity warrants.
 - **Stop after the plan.** Present the plan and wait for user approval / “build” — do not auto-implement.
 
@@ -37,10 +37,10 @@ If already in Cursor Plan mode with `CreatePlan` available, prefer the native to
 ```
 1. Intake     → parse request; if clearly a multi-phase epic, hand off to plan-epic
 2. Clarify    → 1–2 questions if needed; wait
-3. Research   → codebase + docs; optional parallel explore agents
+3. Research   → codebase + docs; optional parallel `explorer` agents
 4. Decide     → one concrete approach
-5. Write plan → markdown artifact (format below)
-6. Stop       → user reviews / edits; implementation is [build](../build/SKILL.md)
+5. Write plan → markdown artifact (format below); may spawn `planner` if the parent stays orchestrator-only
+6. Stop       → user reviews / edits; implementation is [build](../build/SKILL.md) or a `worker` spawn
 ```
 
 ## Plan artifact

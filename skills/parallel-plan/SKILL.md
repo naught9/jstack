@@ -26,7 +26,7 @@ Host question / spawn details: [host-conventions.md](../../references/host-conve
 - **Read-only until approved.** No edits, installs, commits, implementation, or worker spawns. Research and plan only.
 - **Clarify first.** If requirements are ambiguous or multiple decompositions materially change the waves, ask **1–2 critical questions** immediately (host structured question tool; else numbered chat options). Do not ship a placeholder plan.
 - **Commit to one decomposition.** No Option A/B or soft optionality inside the plan. Pick a sensible default; state it briefly.
-- **Research before writing.** Prefer parallel explore/read of relevant files; cite real paths.
+- **Research before writing.** Prefer spawning `explorer` (or parallel read) of relevant files; cite real paths.
 - **Proportional.** If the task is small enough for one agent, say so and point to [plan](../plan/SKILL.md) — do not invent fake parallelism.
 - **One file owner per worker** when possible — serialize shared files/interfaces.
 - **Stop after the plan.** Present the plan and wait for approval / `/parallelize` — do not auto-execute.
@@ -40,8 +40,8 @@ If already in Cursor Plan mode with `CreatePlan` available, prefer the native to
 ```
 1. Intake     → parse request; if clearly a multi-phase epic, hand off to plan-epic
 2. Clarify    → 1–2 questions if needed; wait
-3. Research   → codebase + docs; optional parallel explore agents
-4. Decompose  → tasks with inputs, outputs, file ownership
+3. Research   → codebase + docs; optional parallel `explorer` agents
+4. Decompose  → tasks with inputs, outputs, file ownership (may use `planner` role)
 5. Classify   → sequential | parallel | user gate; collision risks; review checkpoints
 6. Write plan → markdown artifact (format below)
 7. Stop       → user reviews; execution is parallelize

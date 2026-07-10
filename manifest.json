@@ -1,7 +1,7 @@
 {
   "$schema": "./manifest.schema.json",
   "version": 3,
-  "updatedAt": "2026-07-09T11:30:00Z",
+  "updatedAt": "2026-07-10T12:00:00Z",
   "root": "/Users/jake/source/jstack",
   "mcp": [
     {
@@ -135,12 +135,28 @@
   ],
   "subagents": [
     {
+      "id": "explorer",
+      "path": "subagents/explorer.md"
+    },
+    {
+      "id": "planner",
+      "path": "subagents/planner.md"
+    },
+    {
+      "id": "reviewer",
+      "path": "subagents/reviewer.md"
+    },
+    {
       "id": "thermo-quality",
       "path": "subagents/thermo-quality.md"
     },
     {
       "id": "thermo-review",
       "path": "subagents/thermo-review.md"
+    },
+    {
+      "id": "worker",
+      "path": "subagents/worker.md"
     }
   ]
 }
