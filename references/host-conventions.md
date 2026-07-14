@@ -1,63 +1,47 @@
-# Host conventions (jstack)
+# Host conventions
 
-Agent-agnostic rules for skills and subagents. Skills describe **roles and workflows**; hosts differ only in how you spawn and ask questions.
+jstack skills name roles and workflows; the installer maps those roles into each host's native discovery and spawn interfaces.
 
 ## Structured questions
 
-When a skill says **ask the user** (fixed choices, approvals, multi-select):
-
-| Host | Tool |
-|------|------|
+| Host | Interface |
+|---|---|
 | Cursor | `AskQuestion` |
-| Pi | `ask_user_question` ([@juicesharp/rpiv-ask-user-question](https://pi.dev/packages/@juicesharp/rpiv-ask-user-question)) |
+| Pi | configured question extension or chat |
 | OpenCode | `question` |
-| Droid | `AskUserQuestion` |
-| Codex / others | Ask in chat with clear numbered options |
+| Codex | available structured input tool or chat |
 
-Batch 2–4 related questions per turn when the tool allows. If no structured tool exists, ask the same questions in prose.
+Batch related decisions when the host supports structured questions. Otherwise ask the same concise questions in chat.
 
-## Spawning subagents
+## Subagents
 
-Skills name **roles** (e.g. `explorer`, `worker`, `thermo-review`). Map the role to the host's spawn API:
+| Host | Spawn shape | Installed definition |
+|---|---|---|
+| Cursor | `Task` with `subagent_type: "<role>"` | `.cursor/agents/<role>.md` |
+| Pi (`pi-subagents`) | `subagent({ agent: "<role>", task })` | `.agents/agents/<role>.md` |
+| OpenCode | `task` or `@<role>` | `opencode.json` `agent.<role>` |
+| Codex | spawn by custom agent name | `.codex/agents/<role>.toml` |
 
-| Host | Spawn shape | Custom agent path |
-|------|-------------|-------------------|
-| Cursor | `Task` + `subagent_type: "<role>"` | agents dir / plugin agents |
-| Droid | `Task` + `subagent_type: "<role>"` | `.factory/droids/<role>.md` |
-| Pi (@tintinweb/pi-subagents) | `Agent({ subagent_type: "<role>", prompt, run_in_background? })` | `.pi/agents/<role>.md` |
-| Pi (pi-subagents / nicobailon) | `subagent({ agent: "<role>", task, async? })` | package `agents/` or project agents |
-| OpenCode | `task` tool or `@<role>` | `.opencode/agents/<role>.md` (`mode: subagent`) |
-| oh-my-pi | `task({ agent: "<role>", tasks: [...] })` | `.omp/agents/<role>.md` |
-| Codex | spawn by agent `name` (explicit user request) | `.codex/agents/<role>.toml` |
+Launch independent read-heavy work in parallel when the user or applicable project/skill instructions request delegation. Keep one writer per overlapping filesystem scope.
 
-**Parallel / background:** Prefer launching independent specialists in one turn. Use background/async when the host supports it (`run_in_background`, `async: true`, etc.). If the host has no subagents, run the role prompts **inline** in the parent session (sequential is fine).
-
-**Self-contained prompts:** Child agents do not see the parent conversation. Every spawn prompt must include the full task, paths, diff/context, and definition of done.
-
-**Fallbacks:** Prefer the jstack role when installed. If missing: `explorer` → host Explore/scout; `worker` → host general-purpose / Build / default; `planner` / `reviewer` → run the role body inline in the parent.
+Subagent prompts must include the task, relevant paths and context, constraints, and definition of done. Prefer the installed role; if it is missing, run the role body inline or use the closest host built-in.
 
 ## Models
 
-- Do **not** hard-require a model slug in skills.
-- Soft defaults:
-  - **High-reasoning** — `thermo-review`, `thermo-quality`, `planner`, `reviewer`
-  - **Capable / fast** — `explorer`, `worker`
-- Always honor explicit user overrides, e.g. `/thermos use grok 4.5 for the review` or `use opus for thermo-quality`.
-- When the user names a model for one role only, leave the other role on the host default unless they specify both.
+- High-reasoning defaults: `planner`, `reviewer`, `thermo-review`, `thermo-quality`.
+- Capable/fast defaults: `explorer`, `worker`.
+- Do not hard-require provider model slugs in portable skills or agent definitions.
+- Always honor explicit user overrides.
 
-## jstack role IDs
+## Role IDs
 
-| Role ID | Purpose | R/W intent |
-|---------|---------|------------|
-| `explorer` | Local codebase recon → compressed handoff | read |
-| `planner` | Concrete implementation plan, no product edits | read (+ plan file if asked) |
-| `worker` | Single-writer implementer for approved tasks / fixes | write |
-| `reviewer` | Everyday multi-angle review (lighter than thermos) | read |
-| `thermo-review` | Diff-scoped bugs / security / breaking / devex / feature-gate audit | read |
-| `thermo-quality` | Diff-scoped maintainability / structure / code-judo audit | read |
+| Role | Purpose | Intent |
+|---|---|---|
+| `explorer` | codebase reconnaissance and compressed handoff | read |
+| `planner` | concrete implementation plan | read |
+| `worker` | approved implementation and fixes | write |
+| `reviewer` | everyday evidence-backed review | read |
+| `thermo-review` | correctness, security, breaking, and devex audit | read |
+| `thermo-quality` | maintainability and structural audit | read |
 
-Canonical definitions live in `subagents/<role>.md`. Host setup (see root `README.md`) may add frontmatter or wrap Codex TOML; the **body** stays the source of truth.
-
-**v2 (not registered yet):** `web-researcher`, `oracle`, `debugger`.
-
-Skills may still embed specialized prompt templates (e.g. under `build-epic/`, `grind-epic/`, `grind-to-green/`, `parallelize/`). Those templates target the roles above — do not invent parallel `*-worker` IDs.
+Canonical definitions live in `subagents/<role>.md`. Host adapters may transform frontmatter or wrap the body, but the body remains the source of truth.

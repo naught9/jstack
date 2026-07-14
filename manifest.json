@@ -1,36 +1,10 @@
 {
   "$schema": "./manifest.schema.json",
-  "version": 3,
-  "updatedAt": "2026-07-10T12:00:00Z",
-  "root": "/Users/jake/source/jstack",
-  "mcp": [
-    {
-      "id": "linear",
-      "transport": "http",
-      "url": "https://mcp.linear.app/mcp",
-      "path": "mcp.json"
-    },
-    {
-      "id": "supabase",
-      "transport": "http",
-      "url": "https://mcp.supabase.com/mcp",
-      "path": "mcp.json"
-    },
-    {
-      "id": "context7",
-      "transport": "stdio",
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp"],
-      "path": "mcp.json"
-    },
-    {
-      "id": "playwright",
-      "transport": "stdio",
-      "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"],
-      "path": "mcp.json"
-    }
-  ],
+  "version": 4,
+  "updatedAt": "2026-07-13T00:00:00Z",
+  "mcp": {
+    "path": ".agents/.mcp.json"
+  },
   "skills": [
     {
       "id": "build",

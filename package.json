@@ -1,0 +1,11 @@
+{
+  "name": "jstack-harness",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "jstack": "./bin/jstack.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
+}
