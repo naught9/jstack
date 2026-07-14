@@ -28,7 +28,7 @@ Subagent prompts must include the task, relevant paths and context, constraints,
 
 ## Models
 
-- High-reasoning defaults: `planner`, `reviewer`, `thermo-review`, `thermo-quality`.
+- High-reasoning defaults: `oracle`, `planner`, `reviewer`, `thermo-review`, `thermo-quality`.
 - Capable/fast defaults: `explorer`, `worker`.
 - Do not hard-require provider model slugs in portable skills or agent definitions.
 - Always honor explicit user overrides.
@@ -38,6 +38,7 @@ Subagent prompts must include the task, relevant paths and context, constraints,
 | Role | Purpose | Intent |
 |---|---|---|
 | `explorer` | codebase reconnaissance and compressed handoff | read |
+| `oracle` | decision-consistency second opinion; protect inherited state | read |
 | `planner` | concrete implementation plan | read |
 | `worker` | approved implementation and fixes | write |
 | `reviewer` | everyday evidence-backed review | read |

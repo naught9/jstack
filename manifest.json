@@ -1,7 +1,7 @@
 {
   "$schema": "./manifest.schema.json",
   "version": 4,
-  "updatedAt": "2026-07-13T00:00:00Z",
+  "updatedAt": "2026-07-14T00:00:00Z",
   "mcp": {
     "path": ".agents/.mcp.json"
   },
@@ -111,6 +111,10 @@
     {
       "id": "explorer",
       "path": "subagents/explorer.md"
+    },
+    {
+      "id": "oracle",
+      "path": "subagents/oracle.md"
     },
     {
       "id": "planner",

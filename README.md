@@ -70,7 +70,7 @@ The merge preserves unrelated servers and host-specific fields. Authentication a
 
 ## Inventory
 
-The active roles are `explorer`, `planner`, `worker`, `reviewer`, `thermo-review`, and `thermo-quality`. The complete skill list lives in `manifest.json`; workflow and spawn mappings live in [host conventions](references/host-conventions.md).
+The active roles are `explorer`, `oracle`, `planner`, `worker`, `reviewer`, `thermo-review`, and `thermo-quality`. The complete skill list lives in `manifest.json`; workflow and spawn mappings live in [host conventions](references/host-conventions.md).
 
 Skills use soft model defaults only. Always honor explicit user model overrides.
 
