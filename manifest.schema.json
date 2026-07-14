@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jstack.local/manifest.schema.json",
+  "title": "jstack manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "updatedAt", "mcp", "skills", "subagents"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "const": 4 },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "mcp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    },
+    "subagents": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "path": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
