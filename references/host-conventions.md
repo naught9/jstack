@@ -18,7 +18,7 @@ Batch related decisions when the host supports structured questions. Otherwise a
 | Host | Spawn shape | Installed definition |
 |---|---|---|
 | Cursor | `Task` with `subagent_type: "<role>"` | `.cursor/agents/<role>.md` |
-| Pi (`pi-subagents`) | `subagent({ agent: "<role>", task })` | `.agents/agents/<role>.md` |
+| Pi (`@tintinweb/pi-subagents`) | `subagent({ agent: "<role>", task })` | `.agents/agents/<role>.md` |
 | OpenCode | `task` or `@<role>` | `opencode.json` `agent.<role>` |
 | Codex | spawn by custom agent name | `.codex/agents/<role>.toml` |
 

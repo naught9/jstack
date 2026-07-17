@@ -47,7 +47,9 @@ Global mode intentionally rejects submodules and disposable Git worktrees.
 | Prompts | `.agents/prompts/` | canonical Markdown | generated TOML | `{file:...}` references |
 | MCP source | `.agents/.mcp.json` | `.cursor/mcp.json` | `.codex/config.toml` | `opencode.json` |
 
-Pi uses the [`pi-subagents`](https://pi.dev/packages/pi-subagents) package. jstack supplies its project agents under `.agents/`; it does not install the package or create `.pi/` files.
+Pi uses [`@tintinweb/pi-subagents`](https://github.com/tintinweb/pi-subagents). jstack supplies its project agents under `.agents/`; it does not install the package or create `.pi/` files.
+
+Generated Pi agents use Tintinweb's `prompt_mode: append`, `skills: true`, and `extensions: true` metadata so they inherit the parent's complete effective system prompt, project instructions, skills, and extensions. Read-only roles additionally receive `read, bash, grep, find, ls`; `bash` remains available for Git and other inspection commands, while `worker` omits `tools` so it retains the full built-in set.
 
 ## MCP is opt-in
 

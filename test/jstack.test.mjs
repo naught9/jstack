@@ -29,11 +29,25 @@ async function fixture(options = {}) {
 test('installs every v1 host idempotently and doctor reports healthy assets', async () => {
   const options = await fixture();
   const first = await install(options);
-  assert.equal(first.leafCount, 50);
+  assert.equal(first.leafCount, 54);
 
   const skillLink = path.join(options.projectRoot, '.agents', 'skills', 'build');
   assert.equal(path.resolve(path.dirname(skillLink), await readlink(skillLink)), path.join(sourceRoot, 'skills', 'build'));
-  assert.match(await readFile(path.join(options.projectRoot, '.agents', 'agents', 'explorer.md'), 'utf8'), /inheritSkills: true/);
+  const agentIds = ['explorer', 'planner', 'worker', 'reviewer', 'oracle', 'thermo-review', 'thermo-quality'];
+  const readOnlyAgentIds = agentIds.filter((id) => id !== 'worker');
+  for (const id of agentIds) {
+    const generated = await readFile(path.join(options.projectRoot, '.agents', 'agents', `${id}.md`), 'utf8');
+    assert.match(generated, /prompt_mode: append/);
+    assert.match(generated, /^skills: true$/m);
+    assert.match(generated, /^extensions: true$/m);
+  }
+  for (const id of readOnlyAgentIds) {
+    const generated = await readFile(path.join(options.projectRoot, '.agents', 'agents', `${id}.md`), 'utf8');
+    assert.match(generated, /tools: read, bash, grep, find, ls/);
+    assert.doesNotMatch(generated, /tools:.*(?:edit|write)/);
+  }
+  const worker = await readFile(path.join(options.projectRoot, '.agents', 'agents', 'worker.md'), 'utf8');
+  assert.doesNotMatch(worker, /^tools:/m);
   assert.match(await readFile(path.join(options.projectRoot, '.codex', 'agents', 'explorer.toml'), 'utf8'), /developer_instructions = /);
   assert.match(await readFile(path.join(options.projectRoot, 'opencode.json'), 'utf8'), /"mode": "subagent"/);
 
