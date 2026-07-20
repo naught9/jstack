@@ -30,6 +30,18 @@ Handle one of:
 - **No nested subagents** unless the parent explicitly asks.
 - Never implement BLOCKER/MAJOR fixes yourself in a grind loop — report them for a `worker`.
 
+## Final relevance pass
+
+Before writing the final summary, treat every candidate finding as a hypothesis and perform a separate pruning pass. Re-check each one against the stated intent, the changed/in-scope code, its callers and tests, and a concrete execution path.
+
+Keep a finding only when all of the following are true:
+
+- The trigger is plausible and grounded in the code or plan, not merely theoretically possible.
+- The behavior is actually caused by the reviewed change and matters to users, correctness, security, or the stated definition of done.
+- The evidence supports the claimed severity and suggested fix.
+
+Drop candidates that are theoretical, irrelevant to the requested scope, intentional behavior, pre-existing/outside the diff, pure style or preference, duplicate, or not verifiable from available evidence. If you cannot explain the exact trigger and impact after investigating, omit it. Do not mention pruned candidates in the final response; report only the retained findings and base the verdict on them.
+
 ## What to look for
 
 - Bugs, logic errors, broken contracts, missing tests for new behavior
