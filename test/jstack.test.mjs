@@ -29,7 +29,7 @@ async function fixture(options = {}) {
 test('installs every v1 host idempotently and doctor reports healthy assets', async () => {
   const options = await fixture();
   const first = await install(options);
-  assert.equal(first.leafCount, 50);
+  assert.equal(first.leafCount, 54);
 
   const skillLink = path.join(options.projectRoot, '.agents', 'skills', 'build');
   assert.equal(path.resolve(path.dirname(skillLink), await readlink(skillLink)), path.join(sourceRoot, 'skills', 'build'));
