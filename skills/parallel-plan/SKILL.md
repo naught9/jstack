@@ -17,7 +17,7 @@ CreatePlan-style planning for **parallel specialist execution**. Research, clari
 
 **When to use [plan](../plan/SKILL.md) instead:** a single-agent concrete plan without specialist-wave decomposition.
 
-**Escalate when:** multi-phase epic with Linear / Graphite → [plan-epic](../plan-epic/SKILL.md); phased orchestration → [build-epic](../build-epic/SKILL.md).
+**Escalate when:** multi-phase epic with Linear / Graphite → offer [plan-epic](../plan-epic/SKILL.md); phased orchestration → offer [build-epic](../build-epic/SKILL.md). Wait for the user to opt in before using either skill.
 
 Host question / spawn details: [host-conventions.md](../../references/host-conventions.md).
 
@@ -38,7 +38,7 @@ If already in Cursor Plan mode with `CreatePlan` available, prefer the native to
 ## Workflow
 
 ```
-1. Intake     → parse request; if clearly a multi-phase epic, hand off to plan-epic
+1. Intake     → parse request; if clearly a multi-phase epic, offer plan-epic and wait for opt-in
 2. Clarify    → 1–2 questions if needed; wait
 3. Research   → codebase + docs; optional parallel `explorer` agents
 4. Decompose  → tasks with inputs, outputs, file ownership (may use `planner` role)

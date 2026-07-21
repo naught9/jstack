@@ -7,12 +7,17 @@ description: >-
   starting a new epic, hardening a planning doc, creating phased Linear issues,
   scaffolding a PR stack, or when the user mentions plan-epic,
   plan-phased-feature, plan of record, MUSE-XXX planning, or phased rollout.
+  Require explicit user invocation; do not use it automatically.
 disable-model-invocation: true
 ---
 
 # Plan Epic
 
 Interactive planning workflow for large features. Produce three artifacts (when requested):
+
+## Invocation gate
+
+Use this skill only when the user explicitly asks for `/plan-epic` or otherwise clearly requests this workflow. If it looks useful but was not requested, ask whether they would like to use `/plan-epic`, then wait for their answer.
 
 1. **Plan of record** — `work/planning/<FEATURE>.md`
 2. **Linear** — parent epic + one sub-issue per phase

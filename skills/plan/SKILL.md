@@ -14,7 +14,7 @@ Portable CreatePlan / Cursor Plan mode workflow for daily task planning. Researc
 
 **Escalate when:**
 
-- Multi-phase epic with Linear / Graphite → [plan-epic](../plan-epic/SKILL.md)
+- Multi-phase epic with Linear / Graphite → offer [plan-epic](../plan-epic/SKILL.md) and wait for the user to opt in
 - Parallel specialist worker waves → [parallel-plan](../parallel-plan/SKILL.md) (then [parallelize](../parallelize/SKILL.md) to execute)
 
 Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
@@ -35,7 +35,7 @@ If already in Cursor Plan mode with `CreatePlan` available, prefer the native to
 ## Workflow
 
 ```
-1. Intake     → parse request; if clearly a multi-phase epic, hand off to plan-epic
+1. Intake     → parse request; if clearly a multi-phase epic, offer plan-epic and wait for opt-in
 2. Clarify    → 1–2 questions if needed; wait
 3. Research   → codebase + docs; optional parallel `explorer` agents
 4. Decide     → one concrete approach

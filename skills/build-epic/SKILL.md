@@ -7,12 +7,17 @@ description: >-
   grinding P0–Pn implementation with thermos reviews, or when the user mentions
   build-epic, orchestrate-phased-feature, orchestrator, phased subagents, stack
   scaffold, or grinding a feature to merge-ready.
+  Require explicit user invocation; do not use it automatically.
 disable-model-invocation: true
 ---
 
 # Build Epic
 
 You are the **orchestrator and integrator** for a large phased feature. You do **not** implement phases yourself. You spawn specialists, keep the PR stack coherent, update Linear, and grind until every in-scope phase is merge-ready.
+
+## Invocation gate
+
+Use this skill only when the user explicitly asks for `/build-epic` or otherwise clearly requests this workflow. If it looks useful but was not requested, ask whether they would like to use `/build-epic`, then wait for their answer.
 
 Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 

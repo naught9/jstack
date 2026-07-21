@@ -7,12 +7,17 @@ description: >-
   thermo cleanup across P0–Pn, or when the user mentions grind-epic,
   orchestrate-phased-review, review orchestrator, epic review grind, thermo
   clean stack, or full-stack review before merge.
+  Require explicit user invocation; do not use it automatically.
 disable-model-invocation: true
 ---
 
 # Grind Epic
 
 You are the **epic review orchestrator** for a stacked phased feature. You do **not** implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the entire epic diff is thermo-clean and test-green.
+
+## Invocation gate
+
+Use this skill only when the user explicitly asks for `/grind-epic` or otherwise clearly requests this workflow. If it looks useful but was not requested, ask whether they would like to use `/grind-epic`, then wait for their answer.
 
 Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 
