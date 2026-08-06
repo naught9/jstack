@@ -30,11 +30,12 @@ Host spawn / question details: [host-conventions.md](../../references/host-conve
 
 1. **Scope** — determine review target from the user request, PR, current branch, or named files.
 2. **Context** — gather the diff and any file excerpts reviewers need (parent may do this, or each specialist gathers its own). Prefer merge-base vs the repo default base branch.
-3. **Spawn both roles in parallel** (same turn when the host allows):
+3. **Admit both roles before collecting either result**:
    - `thermo-review`
    - `thermo-quality`
-   Prefer background/async when available. Pass the same scoped context to each. Ask for prioritized findings with file:line evidence.
-4. **Fallback** — if the host has no subagent system, run both rubrics **inline** in this session (sequential is fine): load each skill and produce both reports before synthesizing.
-5. **Synthesize** — findings first, deduplicated. Weight overlapping findings more heavily; resolve disagreements with your own judgment. Keep the summary brief.
+   Retain both handles. Pass the same scoped context to each and ask for prioritized findings with file:line evidence.
+4. **Collect both handoffs** — require one explicit terminal handoff from each admitted specialist before synthesis. A spawn/admission return is not a review result.
+5. **Fallback** — if the host has no subagent system, run both rubrics **inline** in this session (sequential is fine): load each skill and produce both reports before synthesizing.
+6. **Synthesize** — findings first, deduplicated. Weight overlapping findings more heavily; resolve disagreements with your own judgment. Keep the summary brief.
 
 If individual specialist summaries are already visible to the user, do not restate them wholesale. Surface the unified verdict, highest-signal findings, and remaining uncertainty.

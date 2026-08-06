@@ -14,6 +14,8 @@ Everyday branch review against the default base branch (usually `main` / `dev`).
 
 **Spawn:** prefer role **`reviewer`** with a self-contained prompt (diff scope + base branch). If subagents are unavailable, run this skill **inline** in the parent session.
 
+Host spawn details: [host-conventions.md](../../references/host-conventions.md).
+
 **Escalate when:**
 
 - Deep dual-pass bug/security + quality audit → [thermos](../thermos/SKILL.md)

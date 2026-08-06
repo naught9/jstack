@@ -11,9 +11,9 @@ function usage() {
   return [
     'Usage:',
     '  node bin/jstack.mjs install [--project-root PATH | --global]',
-    '    [--hosts codex,cursor,pi,opencode] [--with-mcp] [--force]',
+    '    [--hosts codex,cursor,pi,opencode,prime] [--with-mcp] [--force]',
     '  node bin/jstack.mjs doctor [--project-root PATH | --global]',
-    '    [--hosts codex,cursor,pi,opencode] [--with-mcp]',
+    '    [--hosts codex,cursor,pi,opencode,prime] [--with-mcp]',
   ].join('\n');
 }
 

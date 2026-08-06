@@ -83,6 +83,8 @@ Spawn a **fresh** `worker` with a fully self-contained prompt (children cannot s
 
 Include: sub-issue ID, exact branch, base branch, plan sections, scope boundaries, definition of done, repo conventions.
 
+Retain the implementer handle and collect its explicit terminal handoff before starting thermos. On asynchronous runtimes such as Prime RLM, end the admission turn and resume the phase only after that handoff arrives; do not inspect or review an in-progress diff.
+
 The implementer may spawn nested exploration workers if the host allows and the phase needs it.
 
 ### 3. Review (thermos)
@@ -95,9 +97,10 @@ Invoke the [thermos](../thermos/SKILL.md) skill against the phase PR/branch (rol
 
 If thermos reports findings:
 
-1. Spawn a fix specialist (or resume implementer) with the finding list.
-2. Re-run thermos.
-3. Repeat until clean.
+1. Spawn a fix specialist, or send the finding list to the retained implementer handle when the runtime supports direct-child follow-up; otherwise spawn a fresh `worker`.
+2. Collect the fixer or implementer's explicit terminal handoff. On asynchronous runtimes, end the admission/follow-up turn and do not re-run thermos against an in-progress fix.
+3. Re-run thermos.
+4. Repeat until clean.
 
 Cap: if the same finding survives 3 fix/review cycles, stop the phase and escalate with evidence.
 

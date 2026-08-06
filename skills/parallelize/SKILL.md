@@ -20,8 +20,8 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 
 - **Orchestrate, don't monopolize.** Prefer spawning jstack `worker` agents over writing all the code in the parent session.
 - **Plan waves up front** when no approved parallel plan exists — brief [parallel-plan](../parallel-plan/SKILL.md) style chart (sequential vs parallel vs user gates). For large/ambiguous work, stop and get approval before spawning.
-- **Sequential when required.** If a step must land first (shared types, migrations, core abstractions), spawn one worker, **wait**, review/integrate, then open the next parallel wave.
-- **Parallel in one turn.** Independent workers with disjoint file ownership launch together (background/async when the host allows).
+- **Sequential when required.** If a step must land first (shared types, migrations, core abstractions), admit one worker, collect its explicit terminal handoff, review/integrate, then open the next parallel wave.
+- **Parallel admission.** Admit every independent worker in the wave without waiting for any worker result; retain each child handle. On asynchronous runtimes, admission calls may be sequential even though the children run concurrently.
 - **Self-contained prompts.** Children do not see this conversation — every spawn includes goal, paths, constraints, definition of done, and what not to touch.
 - **One file owner per worker.** Serialize shared files; never assign two workers the same hot file in one wave.
 - **Review between waves.** After each wave: read diffs, run or request scoped checks, fix collisions, then proceed.
@@ -33,8 +33,8 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 ```
 1. Intake + plan   → use existing parallel-plan artifact, or draft waves now
 2. Gate            → if ambiguous / large, confirm waves with user; else proceed
-3. Sequential wave → spawn worker(s) that must finish first; wait; review; integrate
-4. Parallel wave   → spawn independent workers in one turn; wait; review; integrate
+3. Sequential wave → admit prerequisite worker; collect handoff; review; integrate
+4. Parallel wave   → admit all independent workers; collect all handoffs; review; integrate
 5. Repeat          → more seq/parallel waves as the plan requires
 6. Close           → definition of done, remaining risks, suggest ship / quick-review
 ```
@@ -47,7 +47,7 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 
 ### 2. Spawn workers
 
-Spawn role **`worker`** (see [host-conventions.md](../../references/host-conventions.md)). Fall back to the host general-purpose agent only if `worker` is not installed. Prefer background for parallel waves.
+Spawn role **`worker`** (see [host-conventions.md](../../references/host-conventions.md)). Fall back to the host general-purpose agent only if `worker` is not installed. Use the host's asynchronous admission mechanism when available; never assume admission returns task output.
 
 **Prompt skeleton** (fill every field):
 
@@ -79,8 +79,8 @@ Do not expand into other workers' files. Escalate blockers instead of guessing.
 
 ### 3. Parent loop (per wave)
 
-1. Launch the wave (one worker, or N in parallel).
-2. Wait for completion (or poll background results).
+1. Admit the wave (one worker, or all independent workers), retaining every handle.
+2. Collect one explicit terminal handoff from every admitted worker. A spawn/admission return is not a handoff.
 3. **Review** — intent vs diff; collisions; missing tests (spawn `reviewer` when useful).
 4. **Integrate** — resolve overlaps yourself or with a small fix `worker`; re-run checks if needed.
 5. Only then start the next wave.

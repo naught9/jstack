@@ -10,7 +10,7 @@ import { JstackError } from '../lib/core.mjs';
 import { doctor, install } from '../lib/installer.mjs';
 
 const sourceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const allHosts = new Set(['codex', 'cursor', 'pi', 'opencode']);
+const allHosts = new Set(['codex', 'cursor', 'pi', 'opencode', 'prime']);
 const execFile = promisify(execFileCallback);
 
 async function fixture(options = {}) {
@@ -29,13 +29,26 @@ async function fixture(options = {}) {
 test('installs every v1 host idempotently and doctor reports healthy assets', async () => {
   const options = await fixture();
   const first = await install(options);
-  assert.equal(first.leafCount, 55);
+  assert.equal(first.leafCount, 57);
 
   const skillLink = path.join(options.projectRoot, '.agents', 'skills', 'build');
   assert.equal(path.resolve(path.dirname(skillLink), await readlink(skillLink)), path.join(sourceRoot, 'skills', 'build'));
+  const referencesLink = path.join(options.projectRoot, '.agents', 'references');
+  assert.equal(path.resolve(path.dirname(referencesLink), await readlink(referencesLink)), path.join(sourceRoot, 'references'));
   assert.match(await readFile(path.join(options.projectRoot, '.agents', 'agents', 'explorer.md'), 'utf8'), /inheritSkills: true/);
   assert.match(await readFile(path.join(options.projectRoot, '.codex', 'agents', 'explorer.toml'), 'utf8'), /developer_instructions = /);
   assert.match(await readFile(path.join(options.projectRoot, 'opencode.json'), 'utf8'), /"mode": "subagent"/);
+  const primeAdapter = await readFile(
+    path.join(options.projectRoot, '.agents', 'skills', 'jstack-subagents', 'SKILL.md'),
+    'utf8',
+  );
+  assert.match(primeAdapter, /description: Prime Agent only/);
+  assert.match(primeAdapter, /Runtime guard: use this adapter only inside Prime Agent/);
+  assert.match(primeAdapter, /handle = await rlm\(prompt/);
+  assert.match(primeAdapter, /agent_message\.send/);
+  assert.match(primeAdapter, /receiver_role="parent"/);
+  assert.match(primeAdapter, /end the parent turn/);
+  assert.match(primeAdapter, /GPT-5\.6 models support the `max` thinking level/);
 
   const statePath = path.join(options.projectRoot, '.agents', '.jstack-install.json');
   const before = await readFile(statePath, 'utf8');
@@ -50,6 +63,72 @@ test('installs every v1 host idempotently and doctor reports healthy assets', as
   const result = await doctor(options);
   assert.equal(result.healthy, true);
   assert.ok(result.lines.some((line) => line.startsWith('[optional] Codex MCP')));
+});
+
+
+test('installs and diagnoses the Prime RLM subagent adapter without relying on Pi agent discovery', async () => {
+  const options = await fixture({ hosts: new Set(['prime']) });
+  await install(options);
+
+  const adapterPath = path.join(options.projectRoot, '.agents', 'skills', 'jstack-subagents', 'SKILL.md');
+  const adapter = await readFile(adapterPath, 'utf8');
+  const manifest = JSON.parse(await readFile(path.join(sourceRoot, 'manifest.json'), 'utf8'));
+  for (const role of manifest.subagents) {
+    assert.ok(adapter.includes('| `' + role.id + '` |'));
+    const promptPath = path.resolve(path.dirname(adapterPath), '..', '..', 'prompts', `${role.id}.md`);
+    assert.equal(await readFile(promptPath, 'utf8').then(() => true), true);
+  }
+  await assert.rejects(lstat(path.join(options.projectRoot, '.agents', 'agents', 'explorer.md')), { code: 'ENOENT' });
+  assert.equal((await doctor(options)).healthy, true);
+
+  await writeFile(adapterPath, 'changed');
+  const drift = await doctor(options);
+  assert.equal(drift.healthy, false);
+  assert.ok(drift.problems.includes('Prime subagent adapter'));
+});
+
+test('documents asynchronous Prime fan-out and keeps orchestration skills on the shared contract', async () => {
+  const conventions = await readFile(path.join(sourceRoot, 'references', 'host-conventions.md'), 'utf8');
+  assert.match(conventions, /Prime Agent RLM/);
+  assert.match(conventions, /await rlm\(prompt/);
+  assert.match(conventions, /Spawn admission is not task completion/);
+  assert.match(conventions, /agent_message\.send/);
+  assert.match(conventions, /End the parent turn/);
+  assert.match(conventions, /GPT-5\.6 models support `max` thinking/);
+
+  const orchestrationSkills = [
+    'build',
+    'build-epic',
+    'grind-to-green',
+    'grind-epic',
+    'investigate',
+    'parallelize',
+    'plan',
+    'parallel-plan',
+    'quick-review',
+    'thermos',
+  ];
+  for (const name of orchestrationSkills) {
+    const content = await readFile(path.join(sourceRoot, 'skills', name, 'SKILL.md'), 'utf8');
+    assert.match(content, /references\/host-conventions\.md/, `${name} must use the shared host contract`);
+  }
+
+  const parallelize = await readFile(path.join(sourceRoot, 'skills', 'parallelize', 'SKILL.md'), 'utf8');
+  assert.match(parallelize, /Admit the wave/);
+  assert.match(parallelize, /explicit terminal handoff from every admitted worker/);
+  assert.doesNotMatch(parallelize, /poll background results|Parallel in one turn/);
+
+  const thermos = await readFile(path.join(sourceRoot, 'skills', 'thermos', 'SKILL.md'), 'utf8');
+  assert.match(thermos, /Admit both roles before collecting either result/);
+  assert.match(thermos, /Collect both handoffs/);
+  assert.doesNotMatch(thermos, /same turn when the host allows|Prefer background\/async/);
+
+  const buildEpic = await readFile(path.join(sourceRoot, 'skills', 'build-epic', 'SKILL.md'), 'utf8');
+  assert.match(buildEpic, /Retain the implementer handle and collect its explicit terminal handoff before starting thermos/);
+  assert.match(buildEpic, /otherwise spawn a fresh `worker`/);
+  assert.match(buildEpic, /Collect the fixer or implementer's explicit terminal handoff/);
+  assert.match(buildEpic, /do not re-run thermos against an in-progress fix/);
+  assert.doesNotMatch(buildEpic, /\(or resume implementer\)/);
 });
 
 test('merges MCP and OpenCode JSONC without losing unrelated content', async () => {
@@ -188,13 +267,40 @@ test('rejects duplicate IDs, escaping paths, malformed frontmatter, and invalid 
   await assert.rejects(install(options), /Invalid MCP server definition/);
 });
 
-test('global CLI install uses stable absolute links under an isolated home', async () => {
+test('global CLI install uses stable absolute links and remains healthy and idempotent', async (context) => {
+  if (!(await stat(path.join(sourceRoot, '.git'))).isDirectory()) {
+    context.skip('requires the stable primary jstack checkout');
+    return;
+  }
   const home = await mkdtemp(path.join(os.tmpdir(), 'jstack-home-'));
-  await execFile(process.execPath, [path.join(sourceRoot, 'bin', 'jstack.mjs'), 'install', '--global', '--hosts', 'cursor'], {
-    cwd: sourceRoot,
-    env: { ...process.env, HOME: home },
-  });
+  const cli = path.join(sourceRoot, 'bin', 'jstack.mjs');
+  const args = [cli, 'install', '--global', '--hosts', 'cursor,prime'];
+  const environment = { ...process.env, HOME: home };
+  await execFile(process.execPath, args, { cwd: sourceRoot, env: environment });
+
   const link = path.join(home, '.agents', 'skills', 'build');
   assert.equal(path.isAbsolute(await readlink(link)), true);
   assert.equal(await readlink(link), path.join(sourceRoot, 'skills', 'build'));
+  const referencesLink = path.join(home, '.agents', 'references');
+  assert.equal(path.isAbsolute(await readlink(referencesLink)), true);
+  assert.equal(await readlink(referencesLink), path.join(sourceRoot, 'references'));
+
+  const primeAdapterPath = path.join(home, '.agents', 'skills', 'jstack-subagents', 'SKILL.md');
+  const primeAdapter = await readFile(primeAdapterPath, 'utf8');
+  assert.match(primeAdapter, /\.\.\/\.\.\/prompts\/explorer\.md/);
+  assert.equal(
+    await readFile(path.resolve(path.dirname(primeAdapterPath), '..', '..', 'prompts', 'explorer.md'), 'utf8').then(
+      () => true,
+    ),
+    true,
+  );
+
+  const statePath = path.join(home, '.agents', '.jstack-install.json');
+  const before = await readFile(statePath, 'utf8');
+  await execFile(process.execPath, args, { cwd: sourceRoot, env: environment });
+  assert.equal(await readFile(statePath, 'utf8'), before);
+  await execFile(process.execPath, [cli, 'doctor', '--global', '--hosts', 'cursor,prime'], {
+    cwd: sourceRoot,
+    env: environment,
+  });
 });
