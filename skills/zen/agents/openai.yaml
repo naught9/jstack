@@ -1,0 +1,7 @@
+interface:
+  display_name: "Zen"
+  short_description: "Keep code clear, focused, and maintainable"
+  default_prompt: "Use $zen to keep this implementation clear, focused, and appropriately scoped."
+
+policy:
+  allow_implicit_invocation: false

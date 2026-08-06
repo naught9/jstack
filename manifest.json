@@ -1,7 +1,7 @@
 {
   "$schema": "./manifest.schema.json",
   "version": 4,
-  "updatedAt": "2026-07-14T00:00:00Z",
+  "updatedAt": "2026-08-06T00:00:00Z",
   "mcp": {
     "path": ".agents/.mcp.json"
   },
@@ -105,6 +105,10 @@
     {
       "id": "thermos",
       "path": "skills/thermos/SKILL.md"
+    },
+    {
+      "id": "zen",
+      "path": "skills/zen/SKILL.md"
     }
   ],
   "subagents": [
