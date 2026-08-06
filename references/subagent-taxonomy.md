@@ -9,9 +9,9 @@ Skills orchestrate; subagents execute slices. Canonical bodies: `subagents/<role
 |------|--------|------------|----------------|
 | `explorer` | Local recon → compressed handoff | capable/fast | plan, parallel-plan, investigate, build-epic recon |
 | `oracle` | Advisory second opinion; decision consistency; no edits | high-reasoning | plan, investigate, parallel-plan |
-| `planner` | Concrete plan, no product edits | high-reasoning | plan, parallel-plan, plan-epic |
+| `planner` | Concrete plan, no product edits | balanced-reasoning | plan, parallel-plan, plan-epic |
 | `worker` | Single-writer implement / fix | capable/fast | build, parallelize, grind-*, build-epic |
-| `reviewer` | Everyday multi-angle review | high-reasoning | quick-review, parallelize integrate |
+| `reviewer` | Everyday multi-angle review | balanced-reasoning | quick-review, parallelize integrate |
 | `thermo-review` | Deep correctness / security / breaking / devex | high-reasoning | thermos, grind-* |
 | `thermo-quality` | Deep maintainability / code-judo | high-reasoning | thermos |
 
