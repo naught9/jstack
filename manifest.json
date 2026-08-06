@@ -19,6 +19,10 @@
       "path": "skills/branch-and-pr/SKILL.md"
     },
     {
+      "id": "bro",
+      "path": "skills/bro/SKILL.md"
+    },
+    {
       "id": "cleanup-branches",
       "path": "skills/cleanup-branches/SKILL.md"
     },
