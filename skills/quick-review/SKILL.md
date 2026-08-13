@@ -18,6 +18,7 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 
 **Escalate when:**
 
+- Guided tour of the change (no findings) → [walkthrough](../walkthrough/SKILL.md)
 - Deep dual-pass bug/security + quality audit → [thermos](../thermos/SKILL.md)
 - Single deep correctness / security pass → [thermo-nuclear-review](../thermo-nuclear-review/SKILL.md)
 - Review → fix grind until green → [grind-to-green](../grind-to-green/SKILL.md)
