@@ -14,6 +14,7 @@ Portable CreatePlan / Cursor Plan mode workflow for daily task planning. Researc
 
 **Escalate when:**
 
+- Open product / architecture decisions that would fork the plan → offer [ask-me](../ask-me/SKILL.md) and wait for opt-in
 - Multi-phase epic with Linear / Graphite → offer [plan-epic](../plan-epic/SKILL.md) and wait for the user to opt in
 - Parallel specialist worker waves → [parallel-plan](../parallel-plan/SKILL.md) (then [parallelize](../parallelize/SKILL.md) to execute)
 
@@ -22,7 +23,7 @@ Host question-tool details: [host-conventions.md](../../references/host-conventi
 ## Hard rules
 
 - **Read-only until approved.** No edits, installs, commits, or implementation. Research and plan only.
-- **Clarify first.** If requirements are ambiguous or multiple approaches materially change the design, ask **1–2 critical questions** immediately (host structured question tool; else numbered chat options). Do not ship a placeholder or “awaiting answers” plan.
+- **Clarify first.** If requirements are ambiguous or multiple approaches materially change the design, ask **1–2 critical questions** immediately (host structured question tool; else numbered chat options). Do not ship a placeholder or “awaiting answers” plan. Skip this when [ask-me](../ask-me/SKILL.md) already settled the tree.
 - **Commit to one approach.** No Option A/B, TBDs, or soft optionality inside the plan. Pick a sensible default when the user hasn’t specified; state it briefly.
 - **Research before writing.** Prefer spawning `explorer` (or parallel read) of relevant files; cite real paths.
 - **Proportional.** Short plans for small tasks; deeper plans only when complexity warrants.
@@ -81,6 +82,7 @@ todos:
 
 ## Out of scope
 
+- Requirements interview before a plan → [ask-me](../ask-me/SKILL.md)
 - Linear epics / Graphite stacks → `plan-epic`
 - Parallel worker wave charts → `parallel-plan`; execute waves → `parallelize`
 - Single-agent implementation → [build](../build/SKILL.md)

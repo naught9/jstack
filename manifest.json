@@ -7,6 +7,10 @@
   },
   "skills": [
     {
+      "id": "ask-me",
+      "path": "skills/ask-me/SKILL.md"
+    },
+    {
       "id": "build",
       "path": "skills/build/SKILL.md"
     },
