@@ -25,7 +25,8 @@ Host question-tool and spawn details: [host-conventions.md](../../references/hos
 - **Decisions are the user's.** Put each to them and wait. Never silently assume a product or architecture choice.
 - **Facts are yours.** Codebase, docs, APIs, git — look them up (spawn `explorer` when that is faster). Never ask the user for something you can find.
 - **Rounds, not a dump.** Ask only the current **frontier**: questions whose prerequisites are already settled. Wait for answers before the next round.
-- **Recommend every time.** Each question includes your recommended answer and a one-line why.
+- **Context before the ask.** Each question briefs what exists today, what this choice affects, and enough background that the user can decide without reading the repo.
+- **Tradeoffs, then a recommendation.** For every discrete option, state the main pro and con (or cost). Then recommend one answer with a one-line why.
 - **Stop when the frontier is empty.** Recap settled decisions. Do not act until the user confirms shared understanding.
 
 ## Workflow
@@ -63,25 +64,34 @@ Batch the whole frontier in one round. Prefer the host structured question tool 
 
 Each question:
 
-1. Short title
-2. Body: enough context that the user can choose without reading the repo
-3. Discrete options when the choice is discrete (recommended option first, labeled recommended)
-4. Your recommended answer plus one-line why
+1. Short title — the decision, not a yes/no
+2. Context — what is true in this codebase or product, which files/APIs/constraints matter, and what hangs off this choice
+3. Options — discrete choices when the decision is discrete (recommended option first, labeled recommended)
+4. Pros and cons — for each option: the main upside and the main downside / cost / risk, specific to this work (not generic)
+5. Recommendation — one answer plus one-line why, given the context above
+
+Put context and tradeoffs in the question body. Structured question tools have short option labels — do not bury the briefing only in those labels.
 
 Chat fallback:
 
 ```
-Q1 - <title>: <body>
+Q1 - <title>:
+Context: <what exists, what this affects, any constraint that changes the choice>
+
+- <option A> — pro: … / con: …
+- <option B> — pro: … / con: …
 
 Recommended: <answer> — <why>
 ```
 
 Do not ask:
 
+- Bare questions with no context or tradeoffs
 - Anything you could grep, read, or spawn `explorer` to answer
 - Questions that depend on an unsettled answer from this same round
 - Taste questions that do not change the implementation
 - More than the current frontier (no extras)
+- Generic textbook pros/cons that ignore this codebase
 
 If the user answers with "recommended", "yes", or a short "1, 2b, recommended", take it and move on.
 
