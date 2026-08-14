@@ -1,7 +1,7 @@
 ---
 name: walkthrough
 description: >-
-  Guided Graphite-style code tour of a PR, branch, or local diff: overview,
+  Guided stacked-PR-style code tour of a PR, branch, or local diff: overview,
   review focuses, then sequenced stops with narrative, focused hunks, and
   show-me visuals (call trees, mermaid, shape diffs). Use for walkthrough,
   code tour, show me this PR, guided review, or explain this change. Not a

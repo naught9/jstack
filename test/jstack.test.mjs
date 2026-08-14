@@ -132,6 +132,29 @@ test('documents asynchronous Prime fan-out and keeps orchestration skills on the
   assert.doesNotMatch(buildEpic, /\(or resume implementer\)/);
 });
 
+test('stack skills use GitHub gh stack instead of Graphite gt', async () => {
+  const stackSkills = ['ship-stack', 'heal-stack', 'plan-epic', 'build-epic'];
+  for (const name of stackSkills) {
+    const content = await readFile(path.join(sourceRoot, 'skills', name, 'SKILL.md'), 'utf8');
+    assert.match(content, /gh stack/, `${name} must use gh stack`);
+    assert.doesNotMatch(
+      content,
+      /\bgt (init|create|submit|restack|track|log|sync|checkout)\b/,
+      `${name} must not use Graphite CLI`,
+    );
+  }
+
+  const scaffold = await readFile(path.join(sourceRoot, 'skills', 'plan-epic', 'github-stack-scaffold.md'), 'utf8');
+  assert.match(scaffold, /gh stack init --base dev/);
+  assert.match(scaffold, /gh stack submit --auto/);
+  assert.doesNotMatch(scaffold, /\bgt /);
+
+  await assert.rejects(readFile(path.join(sourceRoot, 'skills', 'plan-epic', 'graphite-scaffold.md'), 'utf8'), {
+    code: 'ENOENT',
+  });
+});
+
+
 test('merges MCP and OpenCode JSONC without losing unrelated content', async () => {
   const options = await fixture({ withMcp: true });
   const opencodePath = path.join(options.projectRoot, 'opencode.json');

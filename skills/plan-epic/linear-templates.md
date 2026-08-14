@@ -31,7 +31,7 @@ First-class **<feature>** in Muse Desktop — <one-line goal>.
 * **P1** <issue link> — <label>
 …
 
-Stack skeleton: one branch + one PR per phase, daisy-chained on `dev` per repo Graphite convention.
+Stack skeleton: one branch + one PR per phase, daisy-chained on `dev` per repo GitHub stack convention.
 
 ## Depends on
 
@@ -94,7 +94,7 @@ Fields:
 Title pattern: `{Feature short name} P{n} — {Label}`  
 Example: `Audio Tracks P0 — Track kind + data contract`
 
-Linear auto-suggests `gitBranchName` like `jake/muse-614-audio-tracks-p0-track-kind-data-contract` — use these for Graphite scaffold.
+Linear auto-suggests `gitBranchName` like `jake/muse-614-audio-tracks-p0-track-kind-data-contract` — use these for GitHub stack scaffold.
 
 ---
 

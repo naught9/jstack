@@ -13,7 +13,7 @@ Planning progress:
 - [ ] Plan committed; status → plan of record
 - [ ] User approved Linear set (gate 2)
 - [ ] Epic + sub-issues created and cross-linked
-- [ ] User opted into Graphite scaffold (gate 3)
+- [ ] User opted into GitHub stack scaffold (gate 3)
 - [ ] Stack scaffolded and submitted
 - [ ] Handoff summary delivered
 ```

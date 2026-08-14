@@ -71,10 +71,10 @@ Skip trunk names. For each local and remote feature branch, assign **one** prima
 
 | Bucket | Criteria |
 |--------|----------|
-| **Active — keep** | Open PR (include last activity / draft flag), or clearly part of an in-flight Graphite stack / named WIP |
+| **Active — keep** | Open PR (include last activity / draft flag), or clearly part of an in-flight GitHub stack / named WIP |
 | **Safe to delete** | PR `MERGED` and branch still present; **or** tip is ancestor of trunk; **or** `CLOSED` but tip/work verified on trunk (stack-landed); **or** upstream gone (`: gone]`) and work is on trunk |
 | **Already gone from remote** | Expected after fetch prune (merged/closed stack parents already deleted) — informational |
-| **Graphite scaffolding** | `graphite-base/*` (and similar) with no open PR — usually safe after the related stack has merged; list separately for approval |
+| **Leftover Graphite scaffolding** | `graphite-base/*` (and similar) with no open PR — leftover from the old Graphite workflow; usually safe after the related stack has merged; list separately for approval |
 | **Closed — work not in trunk** | PR `CLOSED` (or abandoned) and unique commits/files **missing** from trunk — salvage (cherry-pick / reopen PR) vs drop |
 | **Stale / wrong base** | Open PR targeting the wrong trunk (e.g. `main` when integration trunk is `dev`), or clearly abandoned draft — needs user call |
 | **No PR / unclear** | No PR association — do not auto-mark safe; ask |
@@ -101,7 +101,7 @@ Use this shape (adapt counts; tables fine in chat):
 | Closed — work not in trunk | N |
 | Open PRs — keep | N |
 | Stale / wrong base | N |
-| Graphite scaffolding | N |
+| Leftover Graphite scaffolding | N |
 | delete_branch_on_merge | on/off/unknown |
 
 ### Safe to delete
@@ -135,7 +135,7 @@ git push origin --delete …
 |--------|-----|-------|
 | … | #N OPEN | targets main not dev; stale since … |
 
-### Graphite scaffolding
+### Leftover Graphite scaffolding
 - graphite-base/…
 
 ### Other local housekeeping
@@ -153,7 +153,7 @@ Include ready-to-run command blocks for the **safe** sets, but **do not execute*
 Ask (structured question tool when available), e.g.:
 
 - Delete all **Safe to delete** (remote + local)?
-- Also delete listed **graphite-base/***?
+- Also delete listed leftover **graphite-base/*** branches?
 - For each **Closed — work not in trunk**: salvage then delete, or drop?
 - Leave **Stale / wrong base** alone for now?
 
@@ -190,5 +190,5 @@ Re-list locals/remotes. Report what was pruned, any salvage commits (SHA + wheth
 ## Out of scope
 
 - Merging PRs or shipping stacks → [ship](../ship/SKILL.md) / [ship-stack](../ship-stack/SKILL.md)
-- Repairing Graphite parent links → [heal-stack](../heal-stack/SKILL.md)
+- Repairing GitHub stack parent links → [heal-stack](../heal-stack/SKILL.md)
 - Enabling `delete_branch_on_merge` unless the user asks (mention as optional prevention tip only)

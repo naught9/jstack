@@ -1,4 +1,4 @@
-# Graphite stack scaffold
+# GitHub stack scaffold
 
 Optional third deliverable. Only run after user approval (gate 3).
 
@@ -6,7 +6,14 @@ Optional third deliverable. Only run after user approval (gate 3).
 
 - Plan doc committed on `dev` (or will land in P0 PR)
 - Linear sub-issues exist (for MUSE-XXX IDs and branch names)
-- `gt` available; trunk is `dev`
+- `gh` + `gh stack` available (`gh extension install github/gh-stack` if missing); trunk is `dev`
+
+## Agent CLI rules
+
+- Always pass non-interactive flags. Never run TUI commands: `gh stack modify`, `gh stack switch`, or bare `submit` / `view` / `init` / `add` / `checkout`.
+- Inspect with `gh stack view --json`. Submit with `gh stack submit --auto --remote origin`.
+- After submit, set titles/bodies with `gh pr edit` (auto titles are not enough).
+- Do **not** `git checkout dev`, commit on `dev`, or push/reset `dev` — see `AGENTS.md` (`dev` safety).
 
 ## Workflow
 
@@ -14,20 +21,27 @@ Optional third deliverable. Only run after user approval (gate 3).
 
 ```bash
 git fetch origin dev
-gt init --trunk dev --no-interactive
 ```
-
-Do **not** `git checkout dev`, commit on `dev`, or run `gt sync` on `dev` — see `AGENTS.md` (`dev` safety).
 
 ### 2. Create stack bottom-up
 
-For each phase P0, P1, …, Pn (including follow-on placeholders if requested):
+For each phase P0, P1, …, Pn (including follow-on placeholders if requested), use the branch name Linear attached to each sub-issue (e.g. `jake/muse-614-audio-tracks-p0-track-kind-data-contract`). Do **not** invent branch names.
 
 ```bash
-gt create <gitBranchName from Linear>
+gh stack init --base dev <p0-gitBranchName>
+# placeholder commit on P0 (see below)
+gh stack add <p1-gitBranchName>
+# placeholder commit on P1
+# … repeat add + commit through Pn
 ```
 
-Use the branch name Linear attached to each sub-issue (e.g. `jake/muse-614-audio-tracks-p0-track-kind-data-contract`). Do **not** invent branch names.
+`add` must run from the current top of the stack. If the phase branches already exist, adopt them in one shot instead:
+
+```bash
+gh stack init --base dev <p0> <p1> … <pn>
+```
+
+Then check out each branch (`gh stack checkout <branch>`) and add the placeholder commit.
 
 ### 3. Placeholder commits
 
@@ -52,10 +66,10 @@ Each phase branch needs a minimal commit so PRs can open. Keep diffs tiny — im
 ### 4. Submit stack
 
 ```bash
-gt submit --stack --no-edit
+gh stack submit --auto --remote origin
 ```
 
-Set each PR to **draft**. Titles:
+`--auto` opens **draft** PRs. Then set titles and bodies with `gh pr edit`:
 
 | Phase | PR title pattern |
 |-------|------------------|
@@ -67,7 +81,7 @@ PR bodies: link plan doc, sub-issue, parent epic. Note "scaffold only — not fo
 ### 5. Verify
 
 ```bash
-gt log --stack --reverse
+gh stack view --json
 ```
 
 Expected: P0 → `dev`, P1 → P0 branch, …, tip = last phase (or follow-on placeholder).
@@ -85,10 +99,9 @@ Add Linear comment listing PR numbers and branch names for orchestrator handoff.
 Prefer the dedicated skill: [heal-stack](../heal-stack/SKILL.md). Summary:
 
 1. `git fetch origin dev` and each stack branch from `origin`
-2. `gt init --trunk dev --no-interactive` if trunk metadata is wrong
-3. `gt track -p <parent>` bottom-up (P0→`dev`, P1→P0, …)
-4. **Do not** `gt sync` on `dev`, `gt track --force` from the tip, or push/reset `dev`
-5. `gt log --stack --reverse` then `gt submit --stack --no-edit` (or [ship-stack](../ship-stack/SKILL.md))
+2. `gh stack unstack --local` then `gh stack init --base dev <p0> <p1> … <pn>` (or `gh stack link --base dev --remote origin …` when PRs already exist)
+3. **Do not** commit/push/reset `dev`, or run `gh stack modify`
+4. `gh stack rebase --remote origin` then `gh stack submit --auto --remote origin` (or [ship-stack](../ship-stack/SKILL.md))
 
 ---
 

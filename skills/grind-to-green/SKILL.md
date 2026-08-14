@@ -5,7 +5,7 @@ description: >-
   thermo-review → fix → verify cycles in a single chat.
   Use when the user says grind-to-green, grind to green, thermo grind,
   review-fix loop, or wants parallel thermo review + fix specialists
-  without phased/Linear/Graphite orchestration.
+  without phased/Linear/GitHub-stack orchestration.
 disable-model-invocation: true
 ---
 
@@ -20,7 +20,7 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 - Soft default: **high-reasoning** for `thermo-review`; **capable/fast** for fix `worker`s; capable parent.
 - Honor user overrides (e.g. `/grind-to-green use grok 4.5 for review and fix`).
 
-**Related:** For stacked phased epics with Linear/Graphite, use [grind-epic](../grind-epic/SKILL.md) instead. For a one-shot dual review without a fix loop, use [thermos](../thermos/SKILL.md).
+**Related:** For stacked phased epics with Linear/GitHub stacks, use [grind-epic](../grind-epic/SKILL.md) instead. For a one-shot dual review without a fix loop, use [thermos](../thermos/SKILL.md).
 
 ## Before you start
 

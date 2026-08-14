@@ -11,7 +11,7 @@ Produce a read-only, evidence-backed disposition report before changing reposito
 
 1. **Scope the repository and source of truth.**
    - Read the repository's `AGENTS.md`/`CLAUDE.md`, `work/README.md`, and documentation indexes.
-   - Confirm the target branch. In Muse repositories, use `dev` as the integration target and never commit, push, reset, or run `gt sync` on `dev`.
+   - Confirm the target branch. In Muse repositories, use `dev` as the integration target and never commit, push, or reset `dev`.
    - Inspect `git status` first. Preserve existing user changes and call out dirty worktrees; do not fold unrelated changes into the audit.
 
 2. **Inventory the documents.**

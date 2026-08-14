@@ -98,6 +98,6 @@ If the host has **no** subagent system: run `worker` prompts **inline** sequenti
 - Planning-only (no spawns) → [parallel-plan](../parallel-plan/SKILL.md)
 - Single-agent plan/build without workers → [plan](../plan/SKILL.md) / [build](../build/SKILL.md)
 - Bug triage → [investigate](../investigate/SKILL.md)
-- Muse phased epic orchestration / Graphite → [build-epic](../build-epic/SKILL.md)
+- Muse phased epic orchestration / GitHub stacks → [build-epic](../build-epic/SKILL.md)
 - Thermo grind → [thermos](../thermos/SKILL.md) / [grind-to-green](../grind-to-green/SKILL.md)
 - Commit / push → [ship](../ship/SKILL.md)

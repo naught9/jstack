@@ -29,7 +29,7 @@ git diff origin/dev...origin/jake/muse-620-audio-tracks-p6-recording
 | Epic tip branch | `jake/muse-620-audio-tracks-p6-recording` |
 | Trunk | `dev` |
 
-### Graphite stack (daisy-chained)
+### GitHub stack (daisy-chained)
 
 | Phase | Issue | Branch | PR |
 |-------|-------|--------|-----|

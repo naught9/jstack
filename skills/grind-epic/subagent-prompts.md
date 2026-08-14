@@ -85,7 +85,7 @@ You are the jstack `worker` fixing thermo review findings for the **{parent issu
 
 ## Orchestrator launch
 
-Use when the user starts an epic review grind. Fill from Linear + Graphite + plan doc.
+Use when the user starts an epic review grind. Fill from Linear + GitHub stack + plan doc.
 
 ```markdown
 You are the epic review orchestrator for **{parent issue}** ({title}) in muse-monorepo.
@@ -112,7 +112,7 @@ git diff origin/{trunk}...origin/{tip-branch}
 | Epic tip branch | `{tip-branch}` |
 | Trunk | `{trunk}` |
 
-### Graphite stack (daisy-chained)
+### GitHub stack (daisy-chained)
 
 | Phase | Issue | Branch | PR |
 |-------|-------|--------|-----|

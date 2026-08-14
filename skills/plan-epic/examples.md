@@ -51,7 +51,7 @@ Starting context: <links, constraints>
 I already have a rough idea of phases: <optional>
 
 Ask structured clarifying questions before finalizing the plan or Linear issues.
-Scaffold Graphite stack: yes/no
+Scaffold GitHub stack: yes/no
 ```
 
 ### Next step

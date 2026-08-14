@@ -2,7 +2,7 @@
 name: build-epic
 description: >-
   Orchestrate large phased features by spawning implementation and review
-  specialists per phase, managing Graphite PR stacks and Linear progress until
+  specialists per phase, managing GitHub PR stacks and Linear progress until
   merge-ready. Use when launching a parent agent for a multi-phase epic,
   grinding P0–Pn implementation with thermos reviews, or when the user mentions
   build-epic, orchestrate-phased-feature, orchestrator, phased subagents, stack
@@ -37,7 +37,7 @@ Gather or confirm:
 | Parent Linear issue | e.g. MUSE-537 |
 | Plan of record | `work/planning/*.md` or issue attachment |
 | Phase sub-issues | Linear children (P0…Pn) |
-| Graphite stack | Draft PRs + branch names, or plan to create them |
+| GitHub stack | Draft PRs + branch names, or plan to create them |
 | Out-of-scope phases | e.g. follow-on P6 — do not implement |
 | Gates / blockers | e.g. upstream stack must merge before P2 |
 
@@ -48,7 +48,7 @@ Read the plan of record and parent issue fully before spawning any specialist.
 - One branch + one PR per phase, daisy-chained on `dev` (P0 base = `dev`, Pn base = P(n−1) branch).
 - Prefer **existing scaffold branches** when present — do not create parallel branches.
 - Use Linear-suggested branch names (e.g. `jake/muse-614-audio-tracks-p0-...`).
-- Restack descendants after each phase (`gt restack`, `gt submit` as needed). For a full-stack publish, use [ship-stack](../ship-stack/SKILL.md); if PRs are orphaned or bases are wrong, use [heal-stack](../heal-stack/SKILL.md) first.
+- Restack descendants after each phase (`gh stack rebase --remote origin`, `gh stack submit --auto --remote origin` as needed). Never run `gh stack modify`. For a full-stack publish, use [ship-stack](../ship-stack/SKILL.md); if PRs are orphaned or bases are wrong, use [heal-stack](../heal-stack/SKILL.md) first.
 - **Do not merge** unless the user explicitly asks. Deliverable = merge-ready PRs.
 
 ## Per-phase loop

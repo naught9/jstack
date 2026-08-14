@@ -3,7 +3,7 @@ name: ship
 description: >-
   Stage relevant changes, create a git commit, then wait for explicit user
   confirmation before pushing. Use for ship, commit and push, or everyday
-  "land my work" on a single branch. Not for Graphite stacks — use ship-stack.
+  "land my work" on a single branch. Not for GitHub stacks — use ship-stack.
 disable-model-invocation: true
 ---
 
@@ -14,7 +14,7 @@ Everyday single-branch land: stage → commit → **ask before push**. No merge.
 **Escalate when:**
 
 - Still implementing → [build](../build/SKILL.md) / [parallelize](../parallelize/SKILL.md)
-- Graphite phased stack publish → [ship-stack](../ship-stack/SKILL.md)
+- GitHub phased stack publish → [ship-stack](../ship-stack/SKILL.md)
 - Broken / orphan stack repair → [heal-stack](../heal-stack/SKILL.md)
 
 Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
@@ -85,7 +85,7 @@ On no: stop after commit; report SHA and that push was skipped.
 
 ## Out of scope
 
-- Creating PRs or Graphite stacks
+- Creating PRs or GitHub stacks
 - Merging
 - Multi-branch restack / submit → `ship-stack`
 - Stack repair → `heal-stack`

@@ -20,7 +20,7 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 **Escalate when:**
 
 - Need parallel specialist waves → [parallelize](../parallelize/SKILL.md) (plan first with [parallel-plan](../parallel-plan/SKILL.md) if missing)
-- Multi-phase epic / Graphite stack → [build-epic](../build-epic/SKILL.md)
+- Multi-phase epic / GitHub stack → [build-epic](../build-epic/SKILL.md)
 - No plan and scope is ambiguous → [plan](../plan/SKILL.md) first, then return here
 - Bug unknown / needs repro → [investigate](../investigate/SKILL.md)
 

@@ -87,7 +87,7 @@ You are the jstack `worker` fixing thermos review findings for **{phase label}**
 
 ## Orchestrator launch prompt
 
-Use when the user starts a new orchestrated run. Fill `{...}` from Linear + Graphite.
+Use when the user starts a new orchestrated run. Fill `{...}` from Linear + GitHub stack.
 
 ```markdown
 You are the orchestrator for **{parent issue}** ({title}).

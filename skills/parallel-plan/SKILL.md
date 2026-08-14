@@ -17,7 +17,7 @@ CreatePlan-style planning for **parallel specialist execution**. Research, clari
 
 **When to use [plan](../plan/SKILL.md) instead:** a single-agent concrete plan without specialist-wave decomposition.
 
-**Escalate when:** multi-phase epic with Linear / Graphite → offer [plan-epic](../plan-epic/SKILL.md); phased orchestration → offer [build-epic](../build-epic/SKILL.md). Wait for the user to opt in before using either skill.
+**Escalate when:** multi-phase epic with Linear / GitHub stacks → offer [plan-epic](../plan-epic/SKILL.md); phased orchestration → offer [build-epic](../build-epic/SKILL.md). Wait for the user to opt in before using either skill.
 
 Host question / spawn details: [host-conventions.md](../../references/host-conventions.md).
 
@@ -114,4 +114,4 @@ Prefer bullet lists over markdown tables when targeting Cursor CreatePlan UI par
 
 - Spawning workers / integrating results → [parallelize](../parallelize/SKILL.md)
 - Single-agent daily plan → [plan](../plan/SKILL.md)
-- Linear / Graphite epics → [plan-epic](../plan-epic/SKILL.md)
+- Linear / GitHub stack epics → [plan-epic](../plan-epic/SKILL.md)

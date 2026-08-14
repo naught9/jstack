@@ -3,10 +3,11 @@ name: plan-epic
 description: >-
   Plan large phased features interactively: clarify scope with structured
   questions, write the plan of record in work/planning, create a Linear epic
-  with sub-issues, and optionally scaffold a Graphite PR stack. Use when
+  with sub-issues, and optionally scaffold a GitHub PR stack. Use when
   starting a new epic, hardening a planning doc, creating phased Linear issues,
   scaffolding a PR stack, or when the user mentions plan-epic,
-  plan-phased-feature, plan of record, MUSE-XXX planning, or phased rollout.
+  plan-phased-feature, plan of record, MUSE-XXX planning, phased rollout,
+  or Graphite/GitHub stacks.
   Require explicit user invocation; do not use it automatically.
 disable-model-invocation: true
 ---
@@ -21,18 +22,18 @@ Use this skill only when the user explicitly asks for `/plan-epic` or otherwise 
 
 1. **Plan of record** — `work/planning/<FEATURE>.md`
 2. **Linear** — parent epic + one sub-issue per phase
-3. **Graphite stack** (optional) — daisy-chained draft PRs with scaffold placeholders
+3. **GitHub stack** (optional) — daisy-chained draft PRs with scaffold placeholders
 
-**When to use [plan](../plan/SKILL.md) instead:** daily / single-task planning without Linear, Graphite, or a multi-phase plan of record.
+**When to use [plan](../plan/SKILL.md) instead:** daily / single-task planning without Linear, GitHub stacks, or a multi-phase plan of record.
 
-**Pair with:** [build-epic](../build-epic/SKILL.md) for implementation; [grind-epic](../grind-epic/SKILL.md) for epic review grinding after the stack lands; [ship-stack](../ship-stack/SKILL.md) / [heal-stack](../heal-stack/SKILL.md) to publish or repair the Graphite stack.
+**Pair with:** [build-epic](../build-epic/SKILL.md) for implementation; [grind-epic](../grind-epic/SKILL.md) for epic review grinding after the stack lands; [ship-stack](../ship-stack/SKILL.md) / [heal-stack](../heal-stack/SKILL.md) to publish or repair the GitHub stack.
 
 Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
 
 ## Hard rules
 
 - **Ask before finalize.** Use the host's structured question tool (or clear chat options) to resolve ambiguity before writing the final plan doc **or** creating Linear issues. Do not skip clarification rounds when open questions remain.
-- **Two approval gates.** (1) Plan doc draft → user approves → commit. (2) Linear issue set → user approves → create. Graphite scaffold is a third optional gate.
+- **Two approval gates.** (1) Plan doc draft → user approves → commit. (2) Linear issue set → user approves → create. GitHub stack scaffold is a third optional gate.
 - **Do not implement.** Planning only — no feature code, migrations, or phase implementation.
 - **Plan is source of truth.** Linear epic/sub-issues summarize and link to the doc; detailed scope lives in `work/planning/`.
 - **One branch + one PR per phase** on `dev` when scaffolding (P0 base = `dev`, Pn base = P(n−1)).
@@ -45,7 +46,7 @@ Host question-tool details: [host-conventions.md](../../references/host-conventi
 3. Draft plan      → work/planning/<FEATURE>.md
 4. Approve plan    → structured question or explicit user OK
 5. Linear          → epic + sub-issues (after approval)
-6. Scaffold?       → ask; if yes, Graphite stack
+6. Scaffold?       → ask; if yes, GitHub stack
 7. Cross-link      → epic ↔ doc ↔ PRs; handoff summary
 ```
 
@@ -99,7 +100,7 @@ Confirm:
 - Assignee
 - Sub-issue naming pattern (e.g. `Feature P0 — Short label`)
 
-### Round D — Graphite (optional)
+### Round D — GitHub stack (optional)
 
 Ask whether to scaffold the PR stack now. If yes:
 
@@ -151,19 +152,20 @@ After creation, update epic description with sub-issue links (`<issue id="..." h
 
 ---
 
-## 5. Graphite stack scaffold (optional)
+## 5. GitHub stack scaffold (optional)
 
-After user opts in, follow [graphite-scaffold.md](graphite-scaffold.md).
+After user opts in, follow [github-stack-scaffold.md](github-stack-scaffold.md).
 
 Summary:
 
 ```bash
 git fetch origin dev
-gt init --trunk dev --no-interactive
-# bottom-up: P0, P1, …, Pn (never commit on or gt sync dev)
-gt create <linear-suggested-branch>   # per phase
+gh stack init --base dev <p0-gitBranchName>
+# bottom-up: P0, P1, …, Pn (never commit on or push/reset dev)
+gh stack add <linear-suggested-branch>   # per later phase
 # minimal placeholder commit per phase (except P0 may include plan doc)
-gt submit --stack --no-edit
+gh stack submit --auto --remote origin
+# gh pr edit each PR for scaffold titles/bodies
 ```
 
 PR conventions:
@@ -172,7 +174,7 @@ PR conventions:
 - **P1–Pn:** `chore(<area>): stack scaffold placeholder for P{n} (MUSE-XXX)` — draft PR, minimal diff (~placeholder marker only)
 - Follow-on phases (out of v1 scope): scaffold at stack tip but mark **do not implement** in epic
 
-Verify: `gt log --stack --reverse` shows P0→`dev`, P1→P0, …
+Verify: `gh stack view --json` shows P0→`dev`, P1→P0, …
 
 ---
 

@@ -15,7 +15,7 @@ Portable CreatePlan / Cursor Plan mode workflow for daily task planning. Researc
 **Escalate when:**
 
 - Open product / architecture decisions that would fork the plan → offer [ask-me](../ask-me/SKILL.md) and wait for opt-in
-- Multi-phase epic with Linear / Graphite → offer [plan-epic](../plan-epic/SKILL.md) and wait for the user to opt in
+- Multi-phase epic with Linear / GitHub stacks → offer [plan-epic](../plan-epic/SKILL.md) and wait for the user to opt in
 - Parallel specialist worker waves → [parallel-plan](../parallel-plan/SKILL.md) (then [parallelize](../parallelize/SKILL.md) to execute)
 
 Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
@@ -83,10 +83,10 @@ todos:
 ## Out of scope
 
 - Requirements interview before a plan → [ask-me](../ask-me/SKILL.md)
-- Linear epics / Graphite stacks → `plan-epic`
+- Linear epics / GitHub stacks → `plan-epic`
 - Parallel worker wave charts → `parallel-plan`; execute waves → `parallelize`
 - Single-agent implementation → [build](../build/SKILL.md)
 - Bug / root cause → [investigate](../investigate/SKILL.md)
 - CI grind, thermos → grind / thermos skills
-- Commit / push → [ship](../ship/SKILL.md); Graphite stack publish/repair → [ship-stack](../ship-stack/SKILL.md) / [heal-stack](../heal-stack/SKILL.md)
+- Commit / push → [ship](../ship/SKILL.md); GitHub stack publish/repair → [ship-stack](../ship-stack/SKILL.md) / [heal-stack](../heal-stack/SKILL.md)
 - Brainstorm-only architecture with no implementation intent → stay conversational; only use this skill when the user wants a buildable plan

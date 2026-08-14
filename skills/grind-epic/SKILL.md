@@ -37,7 +37,7 @@ Gather or confirm:
 | Parent Linear issue | e.g. MUSE-537 |
 | Plan of record | `work/planning/*.md` |
 | Orchestration log | `work/active/{PARENT}_ORCHESTRATION_LOG.md` or `work/{parent}-orchestration.md` |
-| Epic tip branch | top of Graphite stack (e.g. `jake/muse-620-...-p6-recording`) |
+| Epic tip branch | top of GitHub stack (e.g. `jake/muse-620-...-p6-recording`) |
 | Trunk | `dev` (default) |
 | Phase stack table | sub-issue, branch, PR per P0…Pn |
 | Epic diff command | `git diff origin/{trunk}...origin/{tip-branch}` |
@@ -177,7 +177,7 @@ Report to the user:
 
 ## Launch prompt
 
-Fill `{...}` from Linear + Graphite + plan doc. Full template: [subagent-prompts.md](subagent-prompts.md#orchestrator-launch).
+Fill `{...}` from Linear + GitHub stack + plan doc. Full template: [subagent-prompts.md](subagent-prompts.md#orchestrator-launch).
 
 ## Examples
 

@@ -4,7 +4,7 @@ Target density and tone. Do not copy these files into a real tour.
 
 Read this as the output contract: overview → review focuses → themed stops (stats, watch-outs, a focused hunk, a visual when control flow is the point) → tests rollup → leftover plumbing.
 
-## Full tour (Graphite-shaped)
+## Full tour (stacked-PR-shaped)
 
 ### Overview
 
