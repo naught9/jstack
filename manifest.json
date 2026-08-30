@@ -1,7 +1,7 @@
 {
   "$schema": "./manifest.schema.json",
   "version": 4,
-  "updatedAt": "2026-08-13T00:00:00Z",
+  "updatedAt": "2026-08-30T00:00:00Z",
   "mcp": {
     "path": ".agents/.mcp.json"
   },
@@ -29,6 +29,10 @@
     {
       "id": "cleanup-branches",
       "path": "skills/cleanup-branches/SKILL.md"
+    },
+    {
+      "id": "create-verification-skill",
+      "path": "skills/create-verification-skill/SKILL.md"
     },
     {
       "id": "deslop",
@@ -61,6 +65,10 @@
     {
       "id": "investigate",
       "path": "skills/investigate/SKILL.md"
+    },
+    {
+      "id": "maintain-verification-skill",
+      "path": "skills/maintain-verification-skill/SKILL.md"
     },
     {
       "id": "parallel-plan",

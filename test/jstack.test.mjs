@@ -29,7 +29,7 @@ async function fixture(options = {}) {
 test('installs every v1 host idempotently and doctor reports healthy assets', async () => {
   const options = await fixture();
   const first = await install(options);
-  assert.equal(first.leafCount, 60);
+  assert.equal(first.leafCount, 62);
 
   const skillLink = path.join(options.projectRoot, '.agents', 'skills', 'build');
   assert.equal(path.resolve(path.dirname(skillLink), await readlink(skillLink)), path.join(sourceRoot, 'skills', 'build'));
@@ -103,6 +103,7 @@ test('documents asynchronous Prime fan-out and keeps orchestration skills on the
     'grind-epic',
     'ask-me',
     'investigate',
+    'maintain-verification-skill',
     'parallelize',
     'plan',
     'parallel-plan',
@@ -130,6 +131,18 @@ test('documents asynchronous Prime fan-out and keeps orchestration skills on the
   assert.match(buildEpic, /Collect the fixer or implementer's explicit terminal handoff/);
   assert.match(buildEpic, /do not re-run thermos against an in-progress fix/);
   assert.doesNotMatch(buildEpic, /\(or resume implementer\)/);
+});
+
+test('verification skills write project-local verify skills under .agents/skills', async () => {
+  const create = await readFile(path.join(sourceRoot, 'skills', 'create-verification-skill', 'SKILL.md'), 'utf8');
+  assert.match(create, /\.agents\/skills\/verify-<app>/);
+  assert.doesNotMatch(create, /\.cursor\/skills\/verify-/);
+  assert.match(create, /maintain-verification-skill/);
+
+  const maintain = await readFile(path.join(sourceRoot, 'skills', 'maintain-verification-skill', 'SKILL.md'), 'utf8');
+  assert.match(maintain, /\.agents\/skills\/verify-\*/);
+  assert.match(maintain, /create-verification-skill/);
+  assert.match(maintain, /explorer/);
 });
 
 test('stack skills use GitHub gh stack instead of Graphite gt', async () => {
