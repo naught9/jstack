@@ -7,7 +7,7 @@ description: >-
   starting a new epic, hardening a planning doc, creating phased Linear issues,
   scaffolding a PR stack, or when the user mentions plan-epic,
   plan-phased-feature, plan of record, MUSE-XXX planning, phased rollout,
-  or Graphite/GitHub stacks.
+  or GitHub stacks.
   Require explicit user invocation; do not use it automatically.
 disable-model-invocation: true
 ---
@@ -32,6 +32,7 @@ Host question-tool details: [host-conventions.md](../../references/host-conventi
 
 ## Hard rules
 
+- **GitHub Stacks only for stacked PRs.** Use `gh stack`; do not use Graphite or `gt` commands. Use ordinary `git` and `gh` for non-stack branch and PR operations.
 - **Ask before finalize.** Use the host's structured question tool (or clear chat options) to resolve ambiguity before writing the final plan doc **or** creating Linear issues. Do not skip clarification rounds when open questions remain.
 - **Two approval gates.** (1) Plan doc draft → user approves → commit. (2) Linear issue set → user approves → create. GitHub stack scaffold is a third optional gate.
 - **Do not implement.** Planning only — no feature code, migrations, or phase implementation.

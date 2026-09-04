@@ -1,10 +1,10 @@
 ---
 name: ship-stack
 description: >-
-  Publish or update a GitHub stacked PR: rebase onto trunk, submit the stack,
-  verify daisy-chain bases. Does not merge. Use for ship-stack, submit stack,
-  gh stack submit, Graphite stack publish, or landing a phased feature stack
-  after implementation.
+  Publish or update a GitHub stacked PR with the GitHub CLI stack extension:
+  rebase onto trunk, submit the stack, and verify daisy-chain bases. Does not
+  merge. Use for ship-stack, submit stack, gh stack submit, or landing a phased
+  feature stack after implementation.
 disable-model-invocation: true
 ---
 
@@ -16,6 +16,7 @@ Publish/update a GitHub daisy-chained PR stack. Rebase + submit only — **never
 
 ## Hard rules
 
+- **GitHub Stacks only.** Use `gh stack` for stacked PR operations. Do not use Graphite or `gt` commands.
 - Require `gh` + `gh stack` (`gh extension install github/gh-stack` if missing).
 - **Trunk is `dev`** (muse-monorepo). Pass `--base dev` on `init` / `link` when creating or repairing a stack.
 - **Do not** commit on `dev`, push/reset `dev`. Fetch only: `git fetch origin dev`. `gh stack sync` may fast-forward local `dev` to `origin/dev`; that is OK. Never rewrite trunk.

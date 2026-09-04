@@ -21,6 +21,7 @@ Host question-tool details: [host-conventions.md](../../references/host-conventi
 
 ## Hard rules
 
+- **Standard Git/GitHub workflow.** Use ordinary `git` commands for this single-branch flow and `gh` when GitHub interaction is requested. Do not use Graphite, `gt`, or `gh stack` here.
 - **Only when invoked.** Do not commit or push unless the user asked for this skill (or explicitly asked to commit/push).
 - **No secrets.** Never stage `.env`, credentials, tokens, or similar. Warn if the user asks to include them.
 - **No force push to main/master.** Warn and stop if requested.

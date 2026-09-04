@@ -10,6 +10,7 @@ Optional third deliverable. Only run after user approval (gate 3).
 
 ## Agent CLI rules
 
+- Use `gh stack` for stacked PR operations and ordinary `git`/`gh` for standard branch and PR work. Do not use Graphite or `gt` commands.
 - Always pass non-interactive flags. Never run TUI commands: `gh stack modify`, `gh stack switch`, or bare `submit` / `view` / `init` / `add` / `checkout`.
 - Inspect with `gh stack view --json`. Submit with `gh stack submit --auto --remote origin`.
 - After submit, set titles/bodies with `gh pr edit` (auto titles are not enough).

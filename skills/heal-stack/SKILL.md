@@ -3,8 +3,8 @@ name: heal-stack
 description: >-
   Repair a broken or incomplete GitHub stack so all phase PRs daisy-chain onto
   dev (P0→dev, Pn→P(n−1)). Use when PRs are orphaned, missing from gh stack view,
-  bases point at the wrong parent, or the stack does not show up as one unit.
-  Also matches heal-gt-stack and Graphite stack repair.
+  bases point at the wrong parent, or the GitHub stack does not show up as one
+  unit.
 disable-model-invocation: true
 ---
 
@@ -18,10 +18,11 @@ Realign phase branches and GitHub stack metadata so the full stack appears as on
 - PR base is `dev` when it should be the previous phase branch (or the reverse for P0)
 - Parallel branches were created instead of a linear stack
 - `gh stack view --json` disagrees with GitHub PR bases
-- Leftover Graphite tracking with no GitHub stack object
+- Existing PR branches have correct ancestry but no GitHub stack object
 
 ## Hard rules
 
+- **GitHub Stacks only.** Repair stacks with `gh stack` plus ordinary `git`/`gh` inspection. Do not use Graphite or `gt` commands.
 - Require `gh` + `gh stack` (`gh extension install github/gh-stack` if missing).
 - **Trunk is `dev`.** Fetch only — never commit on, push, or reset `dev`. `gh stack sync` may fast-forward local `dev` to `origin/dev`; that is OK.
 - **Bottom-up only.** Fix Git ancestry from P0 → tip, then rebuild stack metadata. Never reorder from the tip alone hoping parents fix themselves.

@@ -17,6 +17,7 @@ repository default branch.
 
 ## Hard rules
 
+- **Standard Git/GitHub workflow.** Use ordinary `git` for branches and commits and `gh` for the PR. Do not use Graphite, `gt`, or `gh stack` for this non-stack workflow.
 - **Only when invoked.** This skill performs branch, commit, push, and PR
   mutations. Do not run it from an implicit match.
 - **Inspect before mutating.** Read the current branch, status, staged and

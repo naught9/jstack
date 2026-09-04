@@ -45,6 +45,7 @@ Read the plan of record and parent issue fully before spawning any specialist.
 
 ## Stack conventions (muse-monorepo)
 
+- **GitHub Stacks only.** Use `gh stack` for stack operations and ordinary `git`/`gh` for standard branch and PR work. Do not use Graphite or `gt` commands.
 - One branch + one PR per phase, daisy-chained on `dev` (P0 base = `dev`, Pn base = P(n−1) branch).
 - Prefer **existing scaffold branches** when present — do not create parallel branches.
 - Use Linear-suggested branch names (e.g. `jake/muse-614-audio-tracks-p0-...`).

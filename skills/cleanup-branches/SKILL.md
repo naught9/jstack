@@ -18,6 +18,7 @@ Host question-tool details: [host-conventions.md](../../references/host-conventi
 
 ## Hard rules
 
+- **Standard Git/GitHub workflow.** Use ordinary `git` and `gh` for branch auditing and cleanup. Do not invoke Graphite or `gt`; any `graphite-base/*` names are legacy branches to classify only.
 - **Audit first, delete second.** Present findings and wait. Do not delete in the same turn as the first audit unless the user already approved a named list.
 - **Never delete trunk:** `main`, `master`, `dev`, or the repo default branch. Never delete the currently checked-out branch — switch to trunk first.
 - **Never force-push or rewrite trunk** as part of cleanup (pushing trunk only if the user separately asks, e.g. after a salvage cherry-pick).
