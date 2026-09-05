@@ -18,7 +18,7 @@ Batch related decisions when the host supports structured questions. Otherwise a
 
 | Host | Spawn shape | Installed definition |
 |---|---|---|
-| Cursor | `Task` with `subagent_type: "<role>"` | `.cursor/agents/<role>.md` |
+| Cursor | `Task` with `subagent_type: "<role>"` and Cursor Grok `model` (see [Models](#models)) | `.cursor/agents/<role>.md` |
 | Pi (`pi-subagents`) | `subagent({ agent: "<role>", task })` | `.agents/agents/<role>.md` |
 | OpenCode | `task` or `@<role>` | `opencode.json` `agent.<role>` |
 | Codex | spawn by custom agent name | `.codex/agents/<role>.toml` |
@@ -46,8 +46,23 @@ Do not invent a synchronous wrapper, generic wait API, or named-agent lookup. Ne
 
 - High-reasoning defaults: `oracle`, `planner`, `reviewer`, `thermo-review`, `thermo-quality`.
 - Capable/fast defaults: `explorer`, `worker`.
-- Do not hard-require provider model slugs in portable skills or agent definitions.
+- Do not hard-require provider model slugs in portable skills or canonical agent bodies.
 - Always honor explicit user overrides.
+
+### Cursor
+
+On Cursor, **Cursor Grok is the default for every jstack subagent**, including reviewers. Do not spawn Anthropic Opus (for example `claude-opus-5-thinking-high` / "Opus 5 high") or other Claude models unless the user explicitly named that family.
+
+When calling `Task`:
+
+1. Use the installed jstack role (`reviewer`, `thermo-review`, `thermo-quality`, `worker`, …). Do not substitute a built-in reviewer that selects Opus.
+2. Set `model` to the latest Cursor Grok slug from the Task tool's available list (ids containing `grok`, such as `cursor-grok-4.6-xhigh`). Prefer the high/xhigh variant for high-reasoning roles when listed.
+3. Do not treat "high-reasoning" as permission to select Opus. Do not pass `inherit` when the parent is not already Cursor Grok — an Auto or Claude parent would otherwise produce an Opus child.
+4. `composer-2.5` is an acceptable Cursor-native fallback for capable/fast workers only when no Grok slug is listed.
+5. The Cursor adapter writes `model: grok-4.6` on generated `.cursor/agents/<role>.md` files. Keep that pin; do not replace it with Opus.
+
+### Prime Agent
+
 - Prime children inherit the parent model and thinking configuration by default. For an explicit model override, use an exact selector returned by `await rlm.find_models(...)`; `rlm()` accepts `name` and `model`, not a per-child thinking option.
 - GPT-5.6 models support `max` thinking. Honor an explicit `max` request on the parent/session instead of clamping it to `xhigh`.
 

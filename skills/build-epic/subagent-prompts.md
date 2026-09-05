@@ -2,7 +2,7 @@
 
 Copy and fill in `{placeholders}`. Every prompt must be self-contained.
 
-Spawn via the host's subagent API using role **`worker`** (see [host-conventions.md](../../references/host-conventions.md)). Fall back to host general-purpose only if `worker` is not installed. Soft model default: capable/fast; honor user overrides.
+Spawn via the host's subagent API using role **`worker`** (see [host-conventions.md](../../references/host-conventions.md)). Fall back to host general-purpose only if `worker` is not installed. Soft model default: capable/fast; honor user overrides. On Cursor, pass Cursor Grok; do not select Opus unless the user named that family.
 
 ## Implementation
 

@@ -84,7 +84,7 @@ todos:
 ## Phase 2 — Parallel workers
 Launch in a single turn (one specialist per row):
 
-- W1: <task> — files/scope — depends on Phase 1 — soft model: capable/high (e.g. grok-4.5-high)
+- W1: <task> — files/scope — depends on Phase 1 — soft model: capable/high (e.g. grok-4.6)
 - W2: ...
 
 ## Phase 3 — Integration / sequential
@@ -107,8 +107,9 @@ Prefer bullet lists over markdown tables when targeting Cursor CreatePlan UI par
 
 ## Soft model hints
 
-- Implementation workers: **capable/high** soft default (e.g. grok-4.5-high when available).
+- Implementation workers: **capable/high** soft default (e.g. grok-4.6 when available).
 - Do not hard-require a model slug. Honor user overrides at execute time.
+- Host mapping: [host-conventions.md](../../references/host-conventions.md#models). On Cursor, prefer Cursor Grok; do not select Opus unless the user named that family.
 
 ## Out of scope
 

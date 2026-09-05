@@ -19,7 +19,7 @@ git diff origin/dev...HEAD
 
 (after `gh pr checkout 188`)
 
-**Models:** honor launch overrides; otherwise soft defaults (high-reasoning review, capable/fast fix).
+**Models:** honor launch overrides; otherwise soft defaults (high-reasoning review, capable/fast fix). On Cursor, prefer Cursor Grok.
 
 **Definition of done:** zero BLOCKER/MAJOR findings from thermo review, scoped test/type-check gates green. Do not merge anything.
 

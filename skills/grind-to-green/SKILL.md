@@ -18,7 +18,8 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 ## Models
 
 - Soft default: **high-reasoning** for `thermo-review`; **capable/fast** for fix `worker`s; capable parent.
-- Honor user overrides (e.g. `/grind-to-green use grok 4.5 for review and fix`).
+- Honor user overrides (e.g. `/grind-to-green use grok 4.6 for review and fix`).
+- Host mapping: [host-conventions.md](../../references/host-conventions.md#models). On Cursor, prefer Cursor Grok for review and fix children; do not select Opus unless the user named that family.
 
 **Related:** For stacked phased epics with Linear/GitHub stacks, use [grind-epic](../grind-epic/SKILL.md) instead. For a one-shot dual review without a fix loop, use [thermos](../thermos/SKILL.md).
 

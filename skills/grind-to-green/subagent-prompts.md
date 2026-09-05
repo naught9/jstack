@@ -6,7 +6,7 @@ Spawn via the host's subagent API (see [host-conventions.md](../../references/ho
 - Review → role `thermo-review` (soft default: high-reasoning)
 - Fix → role `worker` (soft default: capable/fast; fall back to host general-purpose if missing)
 
-Honor user model overrides.
+Honor user model overrides. On Cursor, pass Cursor Grok per [host-conventions.md](../../references/host-conventions.md#models); do not select Opus unless the user named that family.
 
 ## Review
 
@@ -97,7 +97,7 @@ Conduct repeated deep thermo-nuclear reviews → fix → re-review cycles scoped
 git diff origin/{base}...HEAD
 ```
 
-**Models:** soft defaults — high-reasoning for thermo-review; capable/fast for fix `worker`. Honor any user overrides from the launch message.
+**Models:** soft defaults — high-reasoning for thermo-review; capable/fast for fix `worker`. Honor any user overrides from the launch message. On Cursor, prefer Cursor Grok; do not select Opus unless named.
 
 **Definition of done:** zero BLOCKER/MAJOR findings from thermo review, scoped test/type-check gates green. Do not merge anything.
 

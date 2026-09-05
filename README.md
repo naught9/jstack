@@ -75,7 +75,7 @@ The merge preserves unrelated servers and host-specific fields. Authentication a
 
 The active roles are `explorer`, `oracle`, `planner`, `worker`, `reviewer`, `thermo-review`, and `thermo-quality`. The complete skill list lives in `manifest.json`; workflow and spawn mappings live in [host conventions](references/host-conventions.md).
 
-Skills use soft model defaults only. Always honor explicit user model overrides.
+Skills use soft model defaults only. Always honor explicit user model overrides. On Cursor, the adapter pins Cursor Grok for installed subagents; do not spawn Opus reviewers unless the user named that family (see [host conventions](references/host-conventions.md#models)).
 
 ## Verification
 

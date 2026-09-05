@@ -24,7 +24,8 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 ## Models
 
 - Soft default: capable/fast model for the parent orchestrator and `worker` roles; high-reasoning for thermos review roles.
-- Honor user overrides for parent or any child role (e.g. "use grok 4.5 for implementers").
+- Honor user overrides for parent or any child role (e.g. "use grok 4.6 for implementers").
+- Host mapping: [host-conventions.md](../../references/host-conventions.md#models). On Cursor, prefer Cursor Grok for implementers and thermos reviewers; do not select Opus unless the user named that family.
 
 **Pair with:** [grind-epic](../grind-epic/SKILL.md) for post-implementation epic review grinding (thermo clean + test-green across the full stack).
 

@@ -26,7 +26,8 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 - **One file owner per worker.** Serialize shared files; never assign two workers the same hot file in one wave.
 - **Review between waves.** After each wave: read diffs, run or request scoped checks, fix collisions, then proceed.
 - **Don't over-parallelize.** Tiny tasks stay in one worker (or the parent). Say so and keep it simple.
-- Soft model default for `worker`: **capable/high** (prefer **grok-4.5-high** when the host offers it). Honor user overrides (e.g. `/parallelize use opus for workers`).
+- Soft model default for `worker`: **capable/high** (prefer Cursor Grok / grok-4.6 when the host offers it). Honor user overrides (e.g. `/parallelize use grok 4.6 for workers`).
+- Host mapping: [host-conventions.md](../../references/host-conventions.md#models). On Cursor, pass the latest Cursor Grok Task slug for every worker; do not select Opus unless the user named that family.
 
 ## Workflow
 

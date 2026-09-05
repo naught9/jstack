@@ -22,6 +22,7 @@ Skills orchestrate; subagents execute slices. Canonical bodies: `subagents/<role
 3. Read-only by default except `worker`.
 4. Do not invent parallel `*-worker` IDs or host glue roles (Browser/Cloud/Bugbot).
 5. Thermos stay the deep-review brand; `reviewer` stays lighter.
+6. Cursor adapter maps every role to Cursor Grok (`grok-4.6`) unless the user names another family. Never default reviewers to Opus.
 
 ## v2 (not registered)
 

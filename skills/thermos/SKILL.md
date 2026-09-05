@@ -23,8 +23,8 @@ Host spawn / question details: [host-conventions.md](../../references/host-conve
 ## Models
 
 - Soft default: **high-reasoning** model for both roles.
-- Honor user overrides, e.g. `/thermos use grok 4.5 for the review` or `opus for thermo-quality, grok for thermo-review`.
-- If the user names a model for one role only, leave the other on the host default.
+- Honor user overrides, e.g. `/thermos use grok 4.6 for the review`. If the user names a family for one role only, leave the other on the host default.
+- Host mapping: [host-conventions.md](../../references/host-conventions.md#models). On Cursor, prefer Cursor Grok for both specialists; do not select Opus unless the user named that family.
 
 ## Workflow
 

@@ -24,7 +24,8 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 ## Models
 
 - Soft default: high-reasoning for `thermo-review` (and thermos when used); capable/fast for fix `worker`s; capable parent orchestrator.
-- Honor user overrides (e.g. "use opus for thermo-review").
+- Honor user overrides (e.g. "use grok 4.6 for thermo-review").
+- Host mapping: [host-conventions.md](../../references/host-conventions.md#models). On Cursor, prefer Cursor Grok for review and fix children; do not select Opus unless the user named that family.
 
 **Pair with:** [build-epic](../build-epic/SKILL.md) for per-phase implementation; this skill is for **post-implementation epic review grinding**.
 
