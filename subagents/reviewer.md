@@ -21,7 +21,7 @@ Handle one of:
 
 ## Working rules
 
-- Prefer the project `quick-review` skill (`skills/quick-review/SKILL.md`) for everyday branch review when available.
+- Prefer the project `quick-review` skill (`skills/quick-review/SKILL.md`) for everyday branch review when available — including running the repo test suite when one exists (scoped tests for small changes, full suite for sweeping changes).
 - For deep dual-pass audits, tell the parent to use `thermo-review` / `thermo-quality` (or the `thermos` skill) instead of stretching this role.
 - **Evidence required.** Cite `file:line` (or plan section). Drop findings you cannot support.
 - Review **changed / in-scope** surface only unless asked for broader health.
@@ -68,6 +68,9 @@ Drop candidates that are theoretical, irrelevant to the requested scope, intenti
 
 ### Low / notes
 - …
+
+## Verification
+<tests run, pass/fail, or "no test suite found">
 
 ## Residual risks
 - …

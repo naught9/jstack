@@ -28,9 +28,13 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 1. **Get the diff** — branch changes vs merge-base with the target base (committed + staged + unstaged unless the user asked for committed-only).
 2. **Understand intent** — skim commit messages, PR description if available, and the overall shape of the change. State the intent in one sentence before diving in.
 3. **Deep context** — for each significant change, read surrounding code (callers, tests, related modules) so you understand impact beyond the diff hunk.
-4. **Review** — look for bugs, logic errors, missing tests, broken contracts, and regressions in the changed code.
-5. **Prune findings** — drop false positives, pre-existing issues, and nitpicks. If you aren't confident, investigate further or omit.
-6. **Present** — concise summary with findings grouped by severity.
+4. **Run tests** — if the repo has a test suite, execute it and use the results in the review. Discover commands from `package.json` scripts, `Makefile`, README, or repo conventions.
+   - **Focused changes** (small diff, one package/area, localized behavior): run scoped tests for touched packages/files (e.g. `pnpm --filter @pkg test`, `vitest path/to/file.test.ts`, `cargo test -p crate`, the failing test case). Prefer the smallest gate that covers the change.
+   - **Sweeping changes** (many files/packages, shared infra, cross-cutting refactors, build/CI/config, or unclear blast radius): run the full suite (e.g. `npm test`, `pnpm test`, repo CI equivalent).
+   - When unsure, err toward broader coverage. Record commands run and pass/fail; treat failures as review evidence.
+5. **Review** — look for bugs, logic errors, missing tests, broken contracts, and regressions in the changed code. Incorporate test failures.
+6. **Prune findings** — drop false positives, pre-existing issues, and nitpicks. If you aren't confident, investigate further or omit.
+7. **Present** — concise summary with findings grouped by severity.
 
 ## What to look for
 
@@ -63,6 +67,9 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 
 ### Low / notes
 - ...
+
+## Verification
+<tests run, pass/fail, or "no test suite found">
 
 ## Summary
 <2–4 sentences: ship / fix first / looks good>
