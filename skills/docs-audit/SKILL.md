@@ -12,7 +12,7 @@ This skill covers **engineering documentation content**. It does not reconcile `
 
 ## Writing standard
 
-Follow the layered technical-writing standard (Diátaxis structure, direct commands, one thought per sentence, Global English clarity). When available, read and apply the `technical-writing` skill. Core rules for this audit:
+Follow the [technical-writing](../technical-writing/SKILL.md) standard. Core rules for this audit:
 
 - **Cut words that do no work.** "In order to" → "to". Delete hedges like "it is important to note that".
 - **Use short, everyday words.** "Use", not "utilize". "Do", not "perform".
@@ -152,7 +152,7 @@ Only after explicit approval:
 |------|-------|
 | Reconcile `work/` logs with Linear/GitHub state | [docs-linear-github-audit](../docs-linear-github-audit/SKILL.md) |
 | Add docstrings or API comments to code | [docs](../docs/SKILL.md) |
-| Deep prose/style pass on a specific doc | `technical-writing` (when installed) |
+| Deep prose/style pass on a specific doc | [technical-writing](../technical-writing/SKILL.md) |
 
 ## Anti-patterns
 
