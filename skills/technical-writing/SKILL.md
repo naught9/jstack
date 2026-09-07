@@ -97,6 +97,19 @@ Source: asd-ste100.org (Issue 9, 2025), fetched 2026-07-18. The numbered rules a
 
 Source: Kohl, The Global English Style Guide (SAS Press). Guideline text fetched from the Internet Archive and the SAS sample chapter, 2026-07-18.
 
+## Write for readers who retrieve one section, not the whole page
+
+A coding agent and a skimming human hit the same docs differently, but the fix is the same discipline, not a separate style. A human scrolls up when confused; an agent often retrieves one section in isolation and never sees the rest of the page.
+
+- **Answer first.** Put the constraint, default, or instruction in the section's first sentence. A human skimming gets it there; an agent that extracts only the opening line gets it too.
+- **Make each section self-contained.** Don't lean on "see the section above" for a fact required to act correctly. Restate it in a short clause, even if it repeats a sentence from elsewhere in the doc.
+- **Never put a required fact only in a table.** Tables get compressed or dropped by some retrieval paths. State the required field, default, or limit in prose at least once; let the table summarize after.
+- **Use the exact identifier, not a paraphrase.** If the field is `user_id`, write `user_id`, not "the user's identifier." A paraphrase invites the wrong symbol name downstream.
+- **State units and versions, not bare numbers.** "30" is ambiguous. "30 seconds" and "as of `apply_project_operations`" are not.
+- **Give every doc of one type the same section skeleton.** Every runbook, every ADR, every architecture doc in a repo should share a section order. A reader who learns the shape from one page navigates every page without re-deriving it.
+
+Source: readme.com/resources/writing-for-humans-and-models, render.com "your docs are now an API", Ritza style guide "thinking of the agents", fetched 2026-09-08.
+
 ## Prose slop
 
 Run this pass on every doc, README, PR description, and commit message you touch. [deslop](../deslop/SKILL.md) is for **code** slop on branch diffs only; it does not cover documentation prose.
@@ -146,6 +159,7 @@ Apply to any prose this skill covers. Item 1 applies only to document sets:
 7. Would a developer say these words out loud? Replace invented metaphors and fancy synonyms with the plain word or the real symbol name.
 8. Are all symbols, paths, and counts real at this commit, with the commands that regenerate the counts?
 9. Did you run the prose slop pass? Any AI vocabulary, filler, abstract metaphors, or chatbot tone left?
+10. Does each section stand on its own — no required fact hidden only in a table or only in an earlier section?
 
 ## Relationship to other skills
 
