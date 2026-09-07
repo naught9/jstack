@@ -1,0 +1,4 @@
+interface:
+  display_name: "Docs Audit"
+  short_description: "Audit docs/internal/ for accuracy and gaps"
+  default_prompt: "Use $docs-audit to audit docs/internal/ against the current codebase, starting from recent PRs, and report stale docs plus undocumented areas."
