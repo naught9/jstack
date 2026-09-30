@@ -6,6 +6,7 @@ jstack skills name roles and workflows; the installer maps those roles into each
 
 | Host | Interface |
 |---|---|
+| Claude Code | `AskUserQuestion` |
 | Cursor | `AskQuestion` |
 | Pi | configured question extension or chat |
 | OpenCode | `question` |
@@ -18,6 +19,7 @@ Batch related decisions when the host supports structured questions. Otherwise a
 
 | Host | Spawn shape | Installed definition |
 |---|---|---|
+| Claude Code | `Agent` with `subagent_type: "<role>"` | `.claude/agents/<role>.md` |
 | Cursor | `Task` with `subagent_type: "<role>"` and Cursor Grok `model` (see [Models](#models)) | `.cursor/agents/<role>.md` |
 | Pi (`pi-subagents`) | `subagent({ agent: "<role>", task })` | `.agents/agents/<role>.md` |
 | OpenCode | `task` or `@<role>` | `opencode.json` `agent.<role>` |
@@ -48,6 +50,10 @@ Do not invent a synchronous wrapper, generic wait API, or named-agent lookup. Ne
 - Capable/fast defaults: `explorer`, `worker`.
 - Do not hard-require provider model slugs in portable skills or canonical agent bodies.
 - Always honor explicit user overrides.
+
+### Claude Code
+
+Generated `.claude/agents/<role>.md` files omit `model`, so children inherit the parent session's model. Pass the `Agent` tool's `model` override only when the user named a model. Claude Code subagents cannot spawn further subagents; a role that needs fan-out must be orchestrated from the parent session. Subagents are launched in the background by default, so keep each handle and wait for its completion notification before synthesizing.
 
 ### Cursor
 

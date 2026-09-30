@@ -1,6 +1,6 @@
 # jstack
 
-Portable skills, subagent roles, and MCP metadata for Codex, Cursor, Pi, OpenCode, and Prime Agent.
+Portable skills, subagent roles, and MCP metadata for Claude Code, Codex, Cursor, Pi, OpenCode, and Prime Agent.
 
 ```text
 jstack/
@@ -23,10 +23,10 @@ node jstack/bin/jstack.mjs install --project-root .
 node jstack/bin/jstack.mjs doctor --project-root .
 ```
 
-The default host set is `codex,cursor,pi,opencode,prime`. Narrow it when needed:
+The default host set is `claude,codex,cursor,pi,opencode,prime`. Narrow it when needed:
 
 ```bash
-node jstack/bin/jstack.mjs install --project-root . --hosts codex,cursor
+node jstack/bin/jstack.mjs install --project-root . --hosts claude,codex,cursor
 ```
 
 Install a personal baseline only from the stable primary jstack checkout:
@@ -36,17 +36,26 @@ node bin/jstack.mjs install --global
 node bin/jstack.mjs doctor --global
 ```
 
+For Claude Code only, install skills and subagents into `~/.claude/`:
+
+```bash
+node bin/jstack.mjs install --global --hosts claude
+node bin/jstack.mjs doctor --global --hosts claude
+```
+
 Global mode intentionally rejects submodules and disposable Git worktrees.
 
 ## Installed layout
 
-| Capability | Shared / Pi | Prime Agent | Cursor | Codex | OpenCode |
-|---|---|---|---|---|---|
-| Skills | `.agents/skills/` | auto-discovers shared skills | shared | shared | shared |
-| Agents | `.agents/agents/` | prompt-only RLM adapter | `.cursor/agents/` | `.codex/agents/` | `opencode.json` |
-| Prompts | `.agents/prompts/` | role bodies read by the adapter | canonical Markdown | generated TOML | `{file:...}` references |
-| References | `.agents/references/` | shared | shared | shared | shared |
-| MCP source | `.agents/.mcp.json` | inventory only | `.cursor/mcp.json` | `.codex/config.toml` | `opencode.json` |
+| Capability | Shared / Pi | Claude Code | Prime Agent | Cursor | Codex | OpenCode |
+|---|---|---|---|---|---|---|
+| Skills | `.agents/skills/` | `.claude/skills/` (symlinks) | auto-discovers shared skills | shared | shared | shared |
+| Agents | `.agents/agents/` | `.claude/agents/` | prompt-only RLM adapter | `.cursor/agents/` | `.codex/agents/` | `opencode.json` |
+| Prompts | `.agents/prompts/` | canonical Markdown | role bodies read by the adapter | canonical Markdown | generated TOML | `{file:...}` references |
+| References | `.agents/references/` | `.claude/references/` | shared | shared | shared | shared |
+| MCP source | `.agents/.mcp.json` | project `.mcp.json` only | inventory only | `.cursor/mcp.json` | `.codex/config.toml` | `opencode.json` |
+
+Claude Code does not read `.agents/skills/`, so the `claude` adapter links each skill and `references/` under `.claude/`. Skills resolve `../../references/` relative to their directory, which is why `.claude/references` is linked too. Generated agents omit `model` and inherit the session model. With `--with-mcp`, project installs merge servers into the project-root `.mcp.json` (shared with Pi; Claude Code asks for approval on first use). Global installs leave MCP alone because user-scope servers live in `~/.claude.json`, which Claude Code rewrites constantly; add them with `claude mcp add --scope user`.
 
 Pi uses the [`pi-subagents`](https://pi.dev/packages/pi-subagents) package. jstack supplies its project agents under `.agents/`; it does not install the package or create `.pi/` files.
 
@@ -84,7 +93,7 @@ npm test
 node bin/jstack.mjs doctor --project-root /path/to/project
 ```
 
-For a host smoke test, start a fresh session and enumerate a shared skill. On named-role hosts, invoke each installed role. On Prime Agent, load `jstack-subagents`, admit representative children with `rlm()`, and confirm each child reports through `agent_message` before synthesis. Confirm MCP is absent unless `--with-mcp` was used; the Prime adapter never activates MCP. OpenCode configuration can be inspected with `opencode debug config`.
+For a host smoke test, start a fresh session and enumerate a shared skill. On named-role hosts (including Claude Code, where `/agents` lists the roles), invoke each installed role. On Prime Agent, load `jstack-subagents`, admit representative children with `rlm()`, and confirm each child reports through `agent_message` before synthesis. Confirm MCP is absent unless `--with-mcp` was used; the Prime adapter never activates MCP. OpenCode configuration can be inspected with `opencode debug config`.
 
 ## Updating
 
