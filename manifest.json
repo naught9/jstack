@@ -131,6 +131,10 @@
       "path": "skills/thermos/SKILL.md"
     },
     {
+      "id": "update-model-pins",
+      "path": "skills/update-model-pins/SKILL.md"
+    },
+    {
       "id": "walkthrough",
       "path": "skills/walkthrough/SKILL.md"
     },
