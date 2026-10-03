@@ -3,18 +3,20 @@
 Copy and fill in `{placeholders}`. Every prompt must be self-contained.
 
 Spawn via the host's subagent API (see [host-conventions.md](../../references/host-conventions.md)):
-- Review → role `thermo-review` (soft default: high-reasoning)
+- Initial review → [thermos](../thermos/SKILL.md), roles `thermo-review` + `thermo-quality` (soft default: high-reasoning)
+- Quick re-review → role `reviewer` (soft default: balanced-reasoning)
+- Deep re-review → role `thermo-review` (soft default: high-reasoning)
 - Fix → role `worker` (soft default: capable/fast; fall back to host general-purpose if missing)
 
 Honor user model overrides. On Cursor, pass Cursor Grok per [host-conventions.md](../../references/host-conventions.md#models); do not select Opus unless the user named that family.
 
-## Review
+## Initial review
 
 ```markdown
 You are reviewing the diff for `{work-branch}` vs `{base}`.
 
 ## Task
-Run a thermo-nuclear review (`thermo-review` role / `thermo-nuclear-review` skill) on the review surface. **Review only — do not implement fixes.**
+Run one initial thermos audit (`thermo-review` + `thermo-quality` in parallel) on the full review surface. **Review only — do not implement fixes.**
 
 ## Diff command
 ```bash
@@ -30,10 +32,7 @@ Ensure `{work-branch}` is checked out locally before reviewing.
 {paste residual risks or "none"}
 
 ## Focus areas
-{paste rubric table — correctness, security, breaking changes, scope, tests, devex}
-
-## Subsystem focus (if parallel split)
-{optional: e.g. "Focus only on packages/agent/..."}
+{paste rubric table — correctness, security, breaking changes, scope, tests, devex, maintainability}
 
 ## Classification
 Classify each finding: **BLOCKER**, **MAJOR**, **MINOR**, **NIT**
@@ -41,7 +40,44 @@ Classify each finding: **BLOCKER**, **MAJOR**, **MINOR**, **NIT**
 ## Deliverable
 - Verdict: **CLEAN** (zero BLOCKER/MAJOR) or **NEEDS_FIXES**
 - Findings: Severity | Location | Finding | Suggested fix
-- Cross-cutting issues that span multiple subsystems
+- Cross-cutting issues that span review rubrics
+```
+
+## Re-review
+
+```markdown
+You are re-reviewing the updated diff for `{work-branch}` vs `{base}`.
+The initial thermos audit has already completed. Run exactly one review pass; do not launch thermos or a second parallel reviewer.
+
+## Review mode
+Use `{quick-review | thermo-nuclear-review}`:
+- `quick-review` / role `reviewer` for localized fixes and direct finding confirmation.
+- `thermo-nuclear-review` / role `thermo-review` for security, correctness invariants, breaking behavior, devex, feature gates, cross-cutting behavior, or other high-risk fixes.
+
+## Findings to confirm
+{paste findings that prompted this fix round}
+
+## Diff command
+```bash
+git diff origin/{base}...HEAD
+```
+
+## Context and known risks
+{paste PR summary, residual risks, or "none"}
+
+## Task
+1. Ensure `{work-branch}` is checked out locally.
+2. Verify each prior finding end to end on the updated diff.
+3. Check the overall review surface for regressions introduced by the fixes under the selected rubric.
+4. Report only evidence-backed findings.
+
+## Rules
+- Review only; do not implement fixes.
+- Do not spawn both review roles.
+
+## Deliverable
+- Verdict: **CLEAN** (zero BLOCKER/MAJOR) or **NEEDS_FIXES**
+- Findings: Severity | Location | Finding | Suggested fix
 ```
 
 ## Fix
@@ -86,20 +122,22 @@ Use when the user starts a grind. Fill from the invocation (`/grind-to-green pr 
 
 ```markdown
 You are the grind-to-green orchestrator for `{work-branch}` vs `{base}` in muse-monorepo.
-You do not implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the diff is thermo-clean and test-green.
+You do not implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the diff is review-clean and test-green.
 
 Follow the `grind-to-green` skill.
 
 ## Mission
-Conduct repeated deep thermo-nuclear reviews → fix → re-review cycles scoped as:
+Conduct one initial thermos audit, then fix → single-pass re-review cycles scoped as:
 
 ```bash
 git diff origin/{base}...HEAD
 ```
 
-**Models:** soft defaults — high-reasoning for thermo-review; capable/fast for fix `worker`. Honor any user overrides from the launch message. On Cursor, prefer Cursor Grok; do not select Opus unless named.
+**Models:** soft defaults — high-reasoning for initial thermos and deep re-review, balanced-reasoning for quick re-review, capable/fast for fix `worker`. Honor any user overrides from the launch message. On Cursor, prefer Cursor Grok; do not select Opus unless named.
 
-**Definition of done:** zero BLOCKER/MAJOR findings from thermo review, scoped test/type-check gates green. Do not merge anything.
+**Review policy:** run thermos once at the start. After fixes, choose one fresh `reviewer` using `quick-review` by default or one `thermo-review` using `thermo-nuclear-review` for high-risk fixes. Do not spawn both for routine re-reviews.
+
+**Definition of done:** initial thermos complete; either it is clean or the latest required re-review has zero BLOCKER/MAJOR findings; scoped test/type-check gates green. Do not merge anything.
 
 ## Ground truth
 
@@ -111,11 +149,6 @@ git diff origin/{base}...HEAD
 
 ## Prior known risks
 {or "none"}
-
-## Parallel review splits (optional, for large diffs)
-| Specialist | Focus |
-|------------|-------|
-{fill subsystem splits or "single review pass"}
 
 ## Verification commands (orchestrator runs after every fix)
 ```bash

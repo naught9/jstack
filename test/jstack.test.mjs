@@ -149,8 +149,18 @@ test('documents asynchronous Prime fan-out and keeps orchestration skills on the
   assert.match(buildEpic, /Retain the implementer handle and collect its explicit terminal handoff before starting thermos/);
   assert.match(buildEpic, /otherwise spawn a fresh `worker`/);
   assert.match(buildEpic, /Collect the fixer or implementer's explicit terminal handoff/);
-  assert.match(buildEpic, /do not re-run thermos against an in-progress fix/);
+  assert.match(buildEpic, /do not review an in-progress fix/);
+  assert.match(buildEpic, /Invoke \[thermos\].*\*\*once\*\*/);
+  assert.match(buildEpic, /Spawn \*\*one fresh re-review specialist\*\*/);
+  assert.match(buildEpic, /Default to \[quick-review\]/);
+  assert.match(buildEpic, /Use \[thermo-nuclear-review\]/);
   assert.doesNotMatch(buildEpic, /\(or resume implementer\)/);
+
+  const grindToGreen = await readFile(path.join(sourceRoot, 'skills', 'grind-to-green', 'SKILL.md'), 'utf8');
+  assert.match(grindToGreen, /Run \[thermos\].*\*\*once\*\*/);
+  assert.match(grindToGreen, /spawn \*\*one fresh re-review specialist\*\*/i);
+  assert.match(grindToGreen, /Default to \[quick-review\]/);
+  assert.match(grindToGreen, /Use \[thermo-nuclear-review\]/);
 });
 
 test('Cursor adapter writes Grok-pinned agent files and replaces legacy symlinks', async () => {

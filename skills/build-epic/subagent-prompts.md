@@ -47,20 +47,49 @@ Implement the phase, get CI-local checks green, push commits to `{branch}`, and 
 - Anything blocked or needing orchestrator decision
 ```
 
-## Review
+## Initial review
 
 ```markdown
 You are reviewing **{phase label}** of {parent issue} (PR #{pr number}, branch `{branch}`).
 
 ## Task
 1. Ensure `{branch}` is checked out locally.
-2. Run a thermos review (roles `thermo-review` + `thermo-quality`) against this phase's branch changes.
+2. Run one initial thermos review (roles `thermo-review` + `thermo-quality` in parallel) against this phase's branch changes.
 3. Return all findings sorted by severity with file:line references.
 
 ## Rules
 - You did not implement this phase — review only.
 - Do not fix findings; report them for a separate fix specialist.
 - If thermos fails to run, diagnose once and retry; escalate if still blocked.
+
+## Deliverable
+- Clean → reply "REVIEW CLEAN"
+- Findings → numbered list: Severity | Location | Finding | Suggested fix
+```
+
+## Re-review
+
+```markdown
+You are re-reviewing fixes for **{phase label}** of {parent issue} (PR #{pr number}, branch `{branch}`).
+The initial thermos review has already completed. Run exactly one review pass; do not launch thermos or a second parallel reviewer.
+
+## Review mode
+Use `{quick-review | thermo-nuclear-review}`:
+- `quick-review` / role `reviewer` for localized fixes and direct finding confirmation.
+- `thermo-nuclear-review` / role `thermo-review` for security, correctness invariants, breaking behavior, devex, feature gates, cross-cutting behavior, or other high-risk fixes.
+
+## Findings to confirm
+{paste the findings that prompted this fix round}
+
+## Task
+1. Ensure `{branch}` is checked out locally.
+2. Inspect the updated phase diff and verify each prior finding end to end.
+3. Check for regressions introduced by the fixes under the selected review rubric.
+4. Return only evidence-backed findings with file:line references.
+
+## Rules
+- Review only; do not implement fixes.
+- Do not spawn both review roles.
 
 ## Deliverable
 - Clean → reply "REVIEW CLEAN"

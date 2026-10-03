@@ -6,12 +6,12 @@ User: `/grind-to-green pr 188 -> dev`
 
 ```markdown
 You are the grind-to-green orchestrator for `jake/some-feature` vs `dev` in muse-monorepo.
-You do not implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the diff is thermo-clean and test-green.
+You do not implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the diff is review-clean and test-green.
 
 Follow the `grind-to-green` skill.
 
 ## Mission
-Conduct repeated deep thermo-nuclear reviews → fix → re-review cycles scoped as:
+Conduct one initial thermos audit, then fix → single-pass re-review cycles scoped as:
 
 ```bash
 git diff origin/dev...HEAD
@@ -19,9 +19,11 @@ git diff origin/dev...HEAD
 
 (after `gh pr checkout 188`)
 
-**Models:** honor launch overrides; otherwise soft defaults (high-reasoning review, capable/fast fix). On Cursor, prefer Cursor Grok.
+**Models:** honor launch overrides; otherwise soft defaults (high-reasoning initial thermos/deep re-review, balanced quick re-review, capable/fast fix). On Cursor, prefer Cursor Grok.
 
-**Definition of done:** zero BLOCKER/MAJOR findings from thermo review, scoped test/type-check gates green. Do not merge anything.
+**Review policy:** run thermos once initially. After fixes, use one `quick-review` reviewer by default or one `thermo-nuclear-review` reviewer for high-risk fixes.
+
+**Definition of done:** initial thermos complete; either it is clean or the latest required re-review has zero BLOCKER/MAJOR findings; scoped test/type-check gates green. Do not merge anything.
 
 ## Ground truth
 
@@ -33,12 +35,6 @@ git diff origin/dev...HEAD
 
 ## Prior known risks
 none
-
-## Parallel review splits
-| Specialist | Focus |
-|------------|-------|
-| A | UI / agent package changes |
-| B | API / desktop IPC changes |
 
 ## Verification commands
 ```bash
@@ -56,10 +52,11 @@ Grind until CLEAN. Do not merge.
 
 User: `/grind-to-green`
 
-Orchestrator assumes current branch vs `origin/dev`, infers verification from `git diff --stat`, runs a single review pass unless the diff is large enough to split.
+Orchestrator assumes current branch vs `origin/dev`, infers verification from `git diff --stat`, runs one initial thermos audit, and uses one reviewer for each later re-review.
 
 ### What works
 
-- Parent never implements; separate thermo review + fix specialists each iteration.
-- Parallel subsystem reviews + parallel independent fix batches.
+- Parent never implements; review and fix specialists remain separate.
+- Initial thermos supplies the two broad parallel rubrics; later re-reviews use one selected reviewer.
+- Independent fix batches may still run in parallel.
 - Orchestrator verifies commands after every fix round instead of trusting specialist claims.

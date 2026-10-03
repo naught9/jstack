@@ -23,9 +23,9 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 
 ## Models
 
-- Soft default: capable/fast model for the parent orchestrator and `worker` roles; high-reasoning for thermos review roles.
+- Soft default: capable/fast model for the parent orchestrator and `worker` roles; high-reasoning for initial thermos roles and deep `thermo-review` re-reviews; balanced-reasoning for `reviewer` re-reviews.
 - Honor user overrides for parent or any child role (e.g. "use grok 4.7 for implementers").
-- Host mapping: [host-conventions.md](../../references/host-conventions.md#models). On Cursor, prefer Cursor Grok for implementers and thermos reviewers; do not select Opus unless the user named that family.
+- Host mapping: [host-conventions.md](../../references/host-conventions.md#models). On Cursor, prefer Cursor Grok for implementers and reviewers; do not select Opus unless the user named that family.
 
 **Pair with:** [grind-epic](../grind-epic/SKILL.md) for post-implementation epic review grinding (thermo clean + test-green across the full stack).
 
@@ -60,8 +60,8 @@ Run phases **in order** (P0 → Pn). For each in-scope phase:
 ```
 - [ ] 1. Promote PR from scaffold → in-progress
 - [ ] 2. Spawn implementation specialist
-- [ ] 3. Run thermos review (thermo-review + thermo-quality)
-- [ ] 4. Fix loop until clean review
+- [ ] 3. Run one initial thermos review (thermo-review + thermo-quality)
+- [ ] 4. Fix loop with single-pass re-reviews until clean
 - [ ] 5. Mark PR ready + restack + update Linear
 - [ ] 6. Verify acceptance criteria yourself
 - [ ] 7. Log progress; comment on parent issue
@@ -89,20 +89,24 @@ Retain the implementer handle and collect its explicit terminal handoff before s
 
 The implementer may spawn nested exploration workers if the host allows and the phase needs it.
 
-### 3. Review (thermos)
+### 3. Initial review (thermos)
 
 Spawn a **separate** review path — never let the implementer review its own work.
 
-Invoke the [thermos](../thermos/SKILL.md) skill against the phase PR/branch (roles `thermo-review` + `thermo-quality`). Template: [subagent-prompts.md](subagent-prompts.md#review).
+Invoke [thermos](../thermos/SKILL.md) **once** against the phase PR/branch (roles `thermo-review` + `thermo-quality` in parallel). This establishes the broad correctness, security, and maintainability baseline. Template: [subagent-prompts.md](subagent-prompts.md#initial-review).
 
 ### 4. Fix loop
 
-If thermos reports findings:
+If the initial thermos or a later re-review reports findings:
 
 1. Spawn a fix specialist, or send the finding list to the retained implementer handle when the runtime supports direct-child follow-up; otherwise spawn a fresh `worker`.
-2. Collect the fixer or implementer's explicit terminal handoff. On asynchronous runtimes, end the admission/follow-up turn and do not re-run thermos against an in-progress fix.
-3. Re-run thermos.
-4. Repeat until clean.
+2. Collect the fixer or implementer's explicit terminal handoff. On asynchronous runtimes, end the admission/follow-up turn and do not review an in-progress fix.
+3. Spawn **one fresh re-review specialist**, not another two-role thermos pair:
+   - Default to [quick-review](../quick-review/SKILL.md) via role `reviewer` for localized fixes and direct confirmation that reported findings are resolved.
+   - Use [thermo-nuclear-review](../thermo-nuclear-review/SKILL.md) via role `thermo-review` when the findings or fixes involve security, correctness invariants, breaking behavior, devex, feature gates, cross-cutting behavior, or otherwise remain high risk.
+4. Repeat until the selected re-review is clean.
+
+Re-run full thermos only if the fix materially expands the PR's scope, introduces substantial structural/maintainability changes that the initial quality pass did not cover, or the user explicitly requests it. Template: [subagent-prompts.md](subagent-prompts.md#re-review).
 
 Cap: if the same finding survives 3 fix/review cycles, stop the phase and escalate with evidence.
 
@@ -116,7 +120,7 @@ Cap: if the same finding survives 3 fix/review cycles, stop the phase and escala
 
 A phase is done only when **you** confirm:
 
-- Thermos review clean
+- Initial thermos completed and the latest required re-review is clean
 - Scoped tests / type-check / lint green (check output, don't trust specialist claims)
 - Acceptance criteria from sub-issue + plan doc met
 - PR title/body no longer say "scaffold"
