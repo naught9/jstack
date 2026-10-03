@@ -29,7 +29,7 @@ Grind P0–P5 to merge-ready. Do not merge.
 
 ### What worked
 
-- Parent Grok 4.5 High orchestrator spawned separate implement + thermos review subagents per phase.
+- Parent Grok 4.7 High orchestrator spawned separate implement + thermos review subagents per phase.
 - Scaffold stack (#137–#143) avoided branch/PR setup churn; PRs renamed when phases started.
 - Orchestrator verified test output and diffs instead of trusting subagent "done" claims.
 - P6 left untouched at stack tip, restacked as lower phases landed.

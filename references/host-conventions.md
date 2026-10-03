@@ -57,20 +57,19 @@ Generated `.claude/agents/<role>.md` files omit `model`, so children inherit the
 
 ### Cursor
 
-On Cursor, **Cursor Grok is the default for every jstack subagent**, including reviewers. Do not spawn Anthropic Opus (for example `claude-opus-5-thinking-high` / "Opus 5 high") or other Claude models unless the user explicitly named that family.
+On Cursor, **Cursor Grok is the default for every jstack subagent**, including reviewers.
 
 When calling `Task`:
 
 1. Use the installed jstack role (`reviewer`, `thermo-review`, `thermo-quality`, `worker`, …). Do not substitute a built-in reviewer that selects Opus.
-2. Set `model` to the latest Cursor Grok slug from the Task tool's available list (ids containing `grok`, such as `cursor-grok-4.6-xhigh`). Prefer the high/xhigh variant for high-reasoning roles when listed.
+2. Set `model` to the latest Cursor Grok slug from the Task tool's available list (ids containing `grok`, such as `cursor-grok-4.7-xhigh`). Prefer the high/xhigh variant for high-reasoning roles when listed.
 3. Do not treat "high-reasoning" as permission to select Opus. Do not pass `inherit` when the parent is not already Cursor Grok — an Auto or Claude parent would otherwise produce an Opus child.
 4. `composer-2.5` is an acceptable Cursor-native fallback for capable/fast workers only when no Grok slug is listed.
-5. The Cursor adapter writes `model: grok-4.6` on generated `.cursor/agents/<role>.md` files. Keep that pin; do not replace it with Opus.
+5. The Cursor adapter writes `model: grok-4.7` on generated `.cursor/agents/<role>.md` files. Keep that pin; do not replace it with Opus.
 
 ### Prime Agent
 
 - Prime children inherit the parent model and thinking configuration by default. For an explicit model override, use an exact selector returned by `await rlm.find_models(...)`; `rlm()` accepts `name` and `model`, not a per-child thinking option.
-- GPT-5.6 models support `max` thinking. Honor an explicit `max` request on the parent/session instead of clamping it to `xhigh`.
 
 ## Role IDs
 

@@ -67,7 +67,6 @@ test('installs every v1 host idempotently and doctor reports healthy assets', as
   assert.match(primeAdapter, /agent_message\.send/);
   assert.match(primeAdapter, /receiver_role="parent"/);
   assert.match(primeAdapter, /end the parent turn/);
-  assert.match(primeAdapter, /GPT-5\.6 models support the `max` thinking level/);
 
   const statePath = path.join(options.projectRoot, '.agents', '.jstack-install.json');
   const before = await readFile(statePath, 'utf8');
@@ -113,10 +112,8 @@ test('documents asynchronous Prime fan-out and keeps orchestration skills on the
   assert.match(conventions, /Spawn admission is not task completion/);
   assert.match(conventions, /agent_message\.send/);
   assert.match(conventions, /End the parent turn/);
-  assert.match(conventions, /GPT-5\.6 models support `max` thinking/);
   assert.match(conventions, /Cursor Grok is the default for every jstack subagent/);
-  assert.match(conventions, /Do not spawn Anthropic Opus/);
-  assert.match(conventions, /model: grok-4\.6/);
+  assert.match(conventions, /model: grok-4\.7/);
 
   const orchestrationSkills = [
     'build',
