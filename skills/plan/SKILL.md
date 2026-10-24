@@ -25,6 +25,7 @@ Portable CreatePlan / Cursor Plan mode workflow for daily task planning. Researc
 - **Commit to one approach.** No Option A/B, TBDs, or soft optionality inside the plan. Pick a sensible default when the user hasn’t specified; state it briefly.
 - **Research before writing.** Prefer spawning `explorer` (or parallel read) of relevant files; cite real paths.
 - **Proportional.** Short plans for small tasks; deeper plans only when complexity warrants.
+- **Linear is opt-in.** Never create or edit a Linear issue unless the user asks or approves. If no issue is linked, ask once whether to record one (see [Linear issue](#linear-issue)); the default is no.
 - **Stop after the plan.** Present the plan and wait for user approval / “build” — do not auto-implement.
 
 ### Cursor note
@@ -39,7 +40,8 @@ If already in Cursor Plan mode with `CreatePlan` available, prefer the native to
 3. Research   → codebase + docs; optional parallel `explorer` agents
 4. Decide     → one concrete approach
 5. Write plan → markdown artifact (format below); may spawn `planner` if the parent stays orchestrator-only
-6. Stop       → user reviews / edits; implementation is the next step or a `worker` spawn
+6. Linear?    → if no issue is linked, ask whether to record one; create only on approval
+7. Stop       → user reviews / edits; implementation is the next step or a `worker` spawn
 ```
 
 ## Plan artifact
@@ -78,10 +80,20 @@ todos:
 - No explicit colors / styling (theme handles it)
 - No `click` syntax
 
+## Linear issue
+
+Check whether the work is already tracked: an issue ID or URL in the request, an ID in the branch name or PR (e.g. `jake/muse-614-…`), or an issue the user attached.
+
+- **Linked:** read it (`get_issue`) during intake for context and acceptance criteria, and reference its identifier in the plan. Do not edit it unless asked.
+- **Not linked:** after presenting the plan, ask once with the host structured question tool (else a chat yes/no): "Record this as a Linear issue?" Options: no (default), yes (create from the plan), link an existing issue.
+- **Skip the question** when the user already declined or said no Linear, when Linear tools are unavailable, or for trivial one-step tasks.
+- **On yes (or if the user asked up front):** create one issue with `save_issue` using [linear-template.md](linear-template.md). Confirm team (and project if the work belongs to one) first, and show the title and description before creating if the user hasn't seen them. Report the identifier and URL.
+- Never create an issue as a side effect of planning, and never create more than the one the user approved. Multi-phase epics go through [plan-epic](../plan-epic/SKILL.md) instead.
+
 ## Out of scope
 
 - Requirements interview before a plan → [ask-me](../ask-me/SKILL.md)
-- Linear epics / GitHub stacks → `plan-epic`
+- Linear epics / GitHub stacks → [plan-epic](../plan-epic/SKILL.md)
 - Parallel worker waves → `parallelize`
 - Bug / root cause → [investigate](../investigate/SKILL.md)
 - Thermos → [thermos](../thermos/SKILL.md)
