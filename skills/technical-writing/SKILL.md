@@ -166,6 +166,4 @@ Apply to any prose this skill covers. Item 1 applies only to document sets:
 | Need | Skill |
 |------|-------|
 | Strip AI noise from code on the current branch | [deslop](../deslop/SKILL.md) |
-| Add docstrings or API comments to code | [docs](../docs/SKILL.md) |
 | Audit `docs/internal/` for accuracy and gaps | [docs-audit](../docs-audit/SKILL.md) |
-| Reconcile `work/` logs with Linear/GitHub state | [docs-linear-github-audit](../docs-linear-github-audit/SKILL.md) |

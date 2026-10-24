@@ -9,11 +9,11 @@ disable-model-invocation: true
 
 # Investigate
 
-Everyday debug loop: **repro → evidence → root cause → fix or plan**. Prefer a minimal verified fix when the change is small and local; otherwise hand a concrete fix plan to [build](../build/SKILL.md) / [plan](../plan/SKILL.md).
+Everyday debug loop: **repro → evidence → root cause → fix or plan**. Prefer a minimal verified fix when the change is small and local; otherwise hand a concrete fix plan to [plan](../plan/SKILL.md).
 
 **Escalate when:**
 
-- Fix is large / multi-file / architectural → [plan](../plan/SKILL.md) then [build](../build/SKILL.md)
+- Fix is large / multi-file / architectural → [plan](../plan/SKILL.md) first
 - Needs parallel exploration across packages → spawn `explorer` agents, then continue here
 - After a fix, want review → [quick-review](../quick-review/SKILL.md)
 
@@ -65,6 +65,5 @@ Everyday debug loop: **repro → evidence → root cause → fix or plan**. Pref
 
 ## Out of scope
 
-- Feature implementation from a greenfield request → [plan](../plan/SKILL.md) / [build](../build/SKILL.md)
-- Commit / push → [ship](../ship/SKILL.md)
+- Feature implementation from a greenfield request → [plan](../plan/SKILL.md)
 - Deep PR audit without a live bug → [quick-review](../quick-review/SKILL.md) / [thermos](../thermos/SKILL.md)

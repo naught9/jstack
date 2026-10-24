@@ -10,11 +10,11 @@ disable-model-invocation: true
 
 # Ask Me
 
-Requirements interview **before** [plan](../plan/SKILL.md) or [build](../build/SKILL.md). Map the work as a **design tree**: every decision branches into the decisions that hang off it. Do not plan or implement until the user confirms a shared understanding.
+Requirements interview **before** [plan](../plan/SKILL.md) or implementation. Map the work as a **design tree**: every decision branches into the decisions that hang off it. Do not plan or implement until the user confirms a shared understanding.
 
 **Escalate when:**
 
-- Shared understanding reached → [plan](../plan/SKILL.md) (epic → [plan-epic](../plan-epic/SKILL.md); parallel waves → [parallel-plan](../parallel-plan/SKILL.md))
+- Shared understanding reached → [plan](../plan/SKILL.md) (epic → [plan-epic](../plan-epic/SKILL.md); parallel waves → [parallelize](../parallelize/SKILL.md))
 - Bug / root cause, not a design → [investigate](../investigate/SKILL.md)
 
 ## Hard rules
@@ -35,7 +35,7 @@ Requirements interview **before** [plan](../plan/SKILL.md) or [build](../build/S
 3. Frontier   → ask every currently unblocked decision in one round; wait
 4. Reshape    → apply answers; recompute frontier; repeat 2–4
 5. Recap      → when frontier is empty, summarize decisions; wait for confirm
-6. Hand off   → plan / plan-epic / parallel-plan if they asked for that next; otherwise stop
+6. Hand off   → plan / plan-epic / parallelize if they asked for that next; otherwise stop
 ```
 
 ## Design tree
@@ -107,5 +107,5 @@ Ask them to confirm or correct. Only after confirm: follow their original next-s
 ## Out of scope
 
 - Writing the plan → [plan](../plan/SKILL.md)
-- Implementing → [build](../build/SKILL.md)
+- Implementing → just do it (or [parallelize](../parallelize/SKILL.md) for worker waves)
 - Debugging a live bug → [investigate](../investigate/SKILL.md)

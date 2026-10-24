@@ -26,7 +26,7 @@ Use this skill only when the user explicitly asks for `/plan-epic` or otherwise 
 
 **When to use [plan](../plan/SKILL.md) instead:** daily / single-task planning without Linear, GitHub stacks, or a multi-phase plan of record.
 
-**Pair with:** [build-epic](../build-epic/SKILL.md) for implementation; [grind-epic](../grind-epic/SKILL.md) for epic review grinding after the stack lands; [ship-stack](../ship-stack/SKILL.md) / [heal-stack](../heal-stack/SKILL.md) to publish or repair the GitHub stack.
+**Pair with:** [build-epic](../build-epic/SKILL.md) for implementation; [grind-epic](../grind-epic/SKILL.md) for epic review grinding after the stack lands; [heal-stack](../heal-stack/SKILL.md) to repair the GitHub stack.
 
 ## Hard rules
 

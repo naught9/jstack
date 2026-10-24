@@ -1,10 +1,10 @@
 ---
 name: parallelize
 description: >-
-  Orchestrate implementation via parallel subagent workers: plan waves if
-  needed, spawn sequential then parallel specialists, review and integrate
-  between waves. Use for parallelize, parallelize-work, or executing a
-  parallel-plan. Parent stays orchestrator — not the primary implementer.
+  Orchestrate implementation via parallel subagent workers: plan waves inline,
+  spawn sequential then parallel specialists, review and integrate between
+  waves. Use for parallelize, parallelize-work, or splitting work across
+  parallel workers. Parent stays orchestrator — not the primary implementer.
 disable-model-invocation: true
 ---
 
@@ -12,12 +12,10 @@ disable-model-invocation: true
 
 Execute work with **subagent workers** for efficiency. Your role shifts to **orchestration, code review, and integration** — not doing all the implementation yourself.
 
-**Pair with:** [parallel-plan](../parallel-plan/SKILL.md) for the wave chart (run that skill first, or produce an equivalent plan inline if the user already approved a decomposition).
-
 ## Hard rules
 
 - **Orchestrate, don't monopolize.** Prefer spawning jstack `worker` agents over writing all the code in the parent session.
-- **Plan waves up front** when no approved parallel plan exists — brief [parallel-plan](../parallel-plan/SKILL.md) style chart (sequential vs parallel vs user gates). For large/ambiguous work, stop and get approval before spawning.
+- **Plan waves up front.** Write a brief inline wave chart (sequential vs parallel vs user gates) in chat — no plan file. For large/ambiguous work, stop and get approval before spawning.
 - **Sequential when required.** If a step must land first (shared types, migrations, core abstractions), admit one worker, collect its explicit terminal handoff, review/integrate, then open the next parallel wave.
 - **Parallel admission.** Admit every independent worker in the wave without waiting for any worker result; retain each child handle. On asynchronous runtimes, admission calls may be sequential even though the children run concurrently.
 - **Self-contained prompts.** Children do not see this conversation — every spawn includes goal, paths, constraints, definition of done, and what not to touch.
@@ -28,18 +26,18 @@ Execute work with **subagent workers** for efficiency. Your role shifts to **orc
 ## Workflow
 
 ```
-1. Intake + plan   → use existing parallel-plan artifact, or draft waves now
+1. Intake + plan   → use an approved decomposition, or draft the wave chart inline now
 2. Gate            → if ambiguous / large, confirm waves with user; else proceed
 3. Sequential wave → admit prerequisite worker; collect handoff; review; integrate
 4. Parallel wave   → admit all independent workers; collect all handoffs; review; integrate
 5. Repeat          → more seq/parallel waves as the plan requires
-6. Close           → definition of done, remaining risks, suggest ship / quick-review
+6. Close           → definition of done, remaining risks, suggest quick-review
 ```
 
 ### 1. Resolve the plan
 
-- If `plans/*-parallel.md` (or an attached parallel plan) exists and is approved → execute it.
-- Else produce a short wave chart (Goal / Sequential / Parallel / Gates / Done) before spawning.
+- If the user already approved a decomposition (or attached a plan) → execute it.
+- Else produce a short inline wave chart (Goal / Sequential / Parallel / Gates / Done) before spawning. Do not write it to a file.
 - Flag collision risks and assign file owners explicitly in each worker prompt.
 
 ### 2. Spawn workers
@@ -92,9 +90,7 @@ If the host has **no** subagent system: run `worker` prompts **inline** sequenti
 
 ## Out of scope
 
-- Planning-only (no spawns) → [parallel-plan](../parallel-plan/SKILL.md)
-- Single-agent plan/build without workers → [plan](../plan/SKILL.md) / [build](../build/SKILL.md)
+- Single-agent plan without workers → [plan](../plan/SKILL.md)
 - Bug triage → [investigate](../investigate/SKILL.md)
 - Muse phased epic orchestration / GitHub stacks → [build-epic](../build-epic/SKILL.md)
-- Thermo grind → [thermos](../thermos/SKILL.md) / [grind-to-green](../grind-to-green/SKILL.md)
-- Commit / push → [ship](../ship/SKILL.md)
+- Thermo grind → [thermos](../thermos/SKILL.md) / [grind-epic](../grind-epic/SKILL.md)

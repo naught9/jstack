@@ -1,6 +1,6 @@
 ---
 name: docs-audit
-description: Audit internal engineering docs in docs/internal/ for accuracy, coverage, architecture clarity, diagram fidelity, and writing quality against the current codebase. Use when docs/internal/ may be stale, after significant feature work, or when the user asks for an internal docs audit, engineering docs review, or documentation freshness check. Not for work-log or Linear/GitHub reconciliation — use docs-linear-github-audit for that.
+description: Audit internal engineering docs in docs/internal/ for accuracy, coverage, architecture clarity, diagram fidelity, and writing quality against the current codebase. Use when docs/internal/ may be stale, after significant feature work, or when the user asks for an internal docs audit, engineering docs review, or documentation freshness check.
 disable-model-invocation: true
 ---
 
@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Produce a read-only audit of `docs/internal/` against the current codebase. Find stale or missing content, weak architecture explanations, outdated diagrams, and undocumented areas worth covering. Apply clear technical writing for prose issues. Do not rewrite docs in the audit pass — present findings and proposed edits for user approval first.
 
-This skill covers **engineering documentation content**. It does not reconcile `work/` logs, Linear issues, or branch state. Use [docs-linear-github-audit](../docs-linear-github-audit/SKILL.md) for that.
+This skill covers **engineering documentation content**. It does not reconcile `work/` logs, Linear issues, or branch state.
 
 ## Writing standard
 
@@ -192,8 +192,6 @@ Only after explicit approval:
 
 | Need | Skill |
 |------|-------|
-| Reconcile `work/` logs with Linear/GitHub state | [docs-linear-github-audit](../docs-linear-github-audit/SKILL.md) |
-| Add docstrings or API comments to code | [docs](../docs/SKILL.md) |
 | Deep prose/style pass on a specific doc | [technical-writing](../technical-writing/SKILL.md) |
 
 ## Anti-patterns

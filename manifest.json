@@ -11,16 +11,8 @@
       "path": "skills/ask-me/SKILL.md"
     },
     {
-      "id": "build",
-      "path": "skills/build/SKILL.md"
-    },
-    {
       "id": "build-epic",
       "path": "skills/build-epic/SKILL.md"
-    },
-    {
-      "id": "branch-and-pr",
-      "path": "skills/branch-and-pr/SKILL.md"
     },
     {
       "id": "bro",
@@ -39,28 +31,12 @@
       "path": "skills/deslop/SKILL.md"
     },
     {
-      "id": "docs",
-      "path": "skills/docs/SKILL.md"
-    },
-    {
       "id": "docs-audit",
       "path": "skills/docs-audit/SKILL.md"
     },
     {
-      "id": "docs-linear-github-audit",
-      "path": "skills/docs-linear-github-audit/SKILL.md"
-    },
-    {
-      "id": "frontend-design",
-      "path": "skills/frontend-design/SKILL.md"
-    },
-    {
       "id": "grind-epic",
       "path": "skills/grind-epic/SKILL.md"
-    },
-    {
-      "id": "grind-to-green",
-      "path": "skills/grind-to-green/SKILL.md"
     },
     {
       "id": "heal-stack",
@@ -73,10 +49,6 @@
     {
       "id": "maintain-verification-skill",
       "path": "skills/maintain-verification-skill/SKILL.md"
-    },
-    {
-      "id": "parallel-plan",
-      "path": "skills/parallel-plan/SKILL.md"
     },
     {
       "id": "parallelize",
@@ -93,14 +65,6 @@
     {
       "id": "quick-review",
       "path": "skills/quick-review/SKILL.md"
-    },
-    {
-      "id": "ship",
-      "path": "skills/ship/SKILL.md"
-    },
-    {
-      "id": "ship-stack",
-      "path": "skills/ship-stack/SKILL.md"
     },
     {
       "id": "summarize-for-handoff",

@@ -42,7 +42,7 @@ Read the plan of record and parent issue fully before spawning any specialist.
 - One branch + one PR per phase, daisy-chained on `dev` (P0 base = `dev`, Pn base = P(n−1) branch).
 - Prefer **existing scaffold branches** when present — do not create parallel branches.
 - Use Linear-suggested branch names (e.g. `jake/muse-614-audio-tracks-p0-...`).
-- Restack descendants after each phase (`gh stack rebase --remote origin`, `gh stack submit --auto --remote origin` as needed). Never run `gh stack modify`. For a full-stack publish, use [ship-stack](../ship-stack/SKILL.md); if PRs are orphaned or bases are wrong, use [heal-stack](../heal-stack/SKILL.md) first.
+- Restack descendants after each phase (`gh stack rebase --remote origin`, `gh stack submit --auto --remote origin` as needed). Never run `gh stack modify`. If PRs are orphaned or bases are wrong, use [heal-stack](../heal-stack/SKILL.md) first.
 - **Do not merge** unless the user explicitly asks. Deliverable = merge-ready PRs.
 
 ## Per-phase loop

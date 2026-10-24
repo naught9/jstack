@@ -3,40 +3,34 @@
 Copy and fill in `{placeholders}`. Every prompt must be self-contained.
 
 Spawn via the host's subagent API:
-- Epic review → role `thermo-review`
-- Epic fix → role `worker` (fall back to host general-purpose if missing)
+- Initial review → [thermos](../thermos/SKILL.md), roles `thermo-review` + `thermo-quality`
+- Quick re-review → role `reviewer`
+- Deep re-review → role `thermo-review`
+- Fix → role `worker` (fall back to host general-purpose if missing)
 
-## Epic review
+## Initial review
 
 ```markdown
-You are reviewing the **full stacked epic** for {parent issue} ({title}).
+You are reviewing the diff for `{work-branch}` vs `{base}`.
 
 ## Task
-Run a thermo-nuclear review (`thermo-review` role / `thermo-nuclear-review` skill) on the cumulative epic diff. **Review only — do not implement fixes.**
+Run one initial thermos audit (`thermo-review` + `thermo-quality` in parallel) on the full review surface. **Review only — do not implement fixes.**
 
 ## Diff command
 ```bash
-git diff origin/{trunk}...origin/{tip-branch}
+git diff origin/{base}...HEAD
 ```
 
-Ensure `{tip-branch}` is checked out locally before reviewing.
+Ensure `{work-branch}` is checked out locally before reviewing.
 
-## Plan quality bar
-From `{plan doc path}` {quality bar section ref}:
-{paste or summarize quality bar bullets}
-
-## Phase boundaries
-{table or bullets: what belongs in P0…Pn; flag scope creep}
+## Context (optional)
+{paste PR title/body summary, plan notes, or "none"}
 
 ## Prior known risks
-From orchestration log `{orchestration log path}`:
-{paste prior residual risks + regression checklist}
+{paste residual risks or "none"}
 
 ## Focus areas
-{paste rubric table from launch prompt — correctness, engine, security, etc.}
-
-## Subsystem focus (if parallel split)
-{optional: e.g. "Focus only on Supabase migration + RPC in supabase/migrations/..."}
+{paste rubric table — correctness, security, breaking changes, scope, tests, devex, maintainability}
 
 ## Classification
 Classify each finding: **BLOCKER**, **MAJOR**, **MINOR**, **NIT**
@@ -44,104 +38,121 @@ Classify each finding: **BLOCKER**, **MAJOR**, **MINOR**, **NIT**
 ## Deliverable
 - Verdict: **CLEAN** (zero BLOCKER/MAJOR) or **NEEDS_FIXES**
 - Findings: Severity | Location | Finding | Suggested fix
-- Cross-cutting issues that span multiple phases
+- Cross-cutting issues that span review rubrics
 ```
 
-## Epic fix
+## Re-review
 
 ```markdown
-You are the jstack `worker` fixing thermo review findings for the **{parent issue} epic** on branch `{fix-branch}`.
+You are re-reviewing the updated diff for `{work-branch}` vs `{base}`.
+The initial thermos audit has already completed. Run exactly one review pass; do not launch thermos or a second parallel reviewer.
+
+## Review mode
+Use `{quick-review | thermo-nuclear-review}`:
+- `quick-review` / role `reviewer` for localized fixes and direct finding confirmation.
+- `thermo-nuclear-review` / role `thermo-review` for security, correctness invariants, breaking behavior, devex, feature gates, cross-cutting behavior, or other high-risk fixes.
+
+## Findings to confirm
+{paste findings that prompted this fix round}
+
+## Diff command
+```bash
+git diff origin/{base}...HEAD
+```
+
+## Context and known risks
+{paste PR summary, residual risks, or "none"}
+
+## Task
+1. Ensure `{work-branch}` is checked out locally.
+2. Verify each prior finding end to end on the updated diff.
+3. Check the overall review surface for regressions introduced by the fixes under the selected rubric.
+4. Report only evidence-backed findings.
+
+## Rules
+- Review only; do not implement fixes.
+- Do not spawn both review roles.
+
+## Deliverable
+- Verdict: **CLEAN** (zero BLOCKER/MAJOR) or **NEEDS_FIXES**
+- Findings: Severity | Location | Finding | Suggested fix
+```
+
+## Fix
+
+```markdown
+You are the jstack `worker` fixing thermo review findings on branch `{work-branch}`.
 
 ## Findings to address
 {paste numbered BLOCKER/MAJOR list from review specialist}
 
 ## Branch rules
-- Default work branch: `{tip-branch}`
-- If a fix clearly belongs on an intermediate phase branch `{phase-branch}`, fix there and note that orchestrator must restack descendants
+- Work branch: `{work-branch}`
+- Base: `{base}`
+- Do not merge; push only if the user/orchestrator expects remote updates
 
 ## Scope
 - Fix only what the findings require; no drive-by refactors
-- Attribute fixes to the correct subsystem; keep diffs minimal and localized
+- Keep diffs minimal and localized
 
 ## Repo conventions
 - pnpm only; Node 22; strict TypeScript at module boundaries
 - Don't reformat untouched files
-- Rebuild and commit `dist/` for changed packages that commit artifacts
+- Rebuild and commit `dist/` for changed packages that commit artifacts (only if orchestrator asked you to commit)
 
-## Verification (run before push)
+## Verification (run before finishing)
 {paste verification commands from launch prompt}
 
 ## Rules
 - Do **not** run thermo review on your own work
-- Push to `{fix-branch}` when checks pass
+- Leave the working tree ready for the orchestrator to verify
 
 ## Deliverable
 - Per-finding: fixed / wont-fix (with reason)
+- Files changed
 - Test commands run + results
-- Anything needing orchestrator restack or plan-level decision
+- Anything needing orchestrator decision
 ```
 
 ## Orchestrator launch
 
-Use when the user starts an epic review grind. Fill from Linear + GitHub stack + plan doc.
+Use when the user starts a grind. Fill from the invocation (`/grind-epic pr N -> base` or defaults).
 
 ```markdown
-You are the epic review orchestrator for **{parent issue}** ({title}) in muse-monorepo.
-You do not implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the entire epic diff is thermo-clean and test-green.
+You are the grind-epic orchestrator for `{work-branch}` vs `{base}` in muse-monorepo.
+You do not implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the diff is review-clean and test-green.
 
 Follow the `grind-epic` skill.
 
 ## Mission
-Conduct repeated deep thermo-nuclear reviews → fix → re-review cycles on the full stacked epic ({phase range}), scoped as:
+Conduct one initial thermos audit, then fix → single-pass re-review cycles scoped as:
 
 ```bash
-git diff origin/{trunk}...origin/{tip-branch}
+git diff origin/{base}...HEAD
 ```
 
-**Definition of done:** zero BLOCKER/MAJOR findings from thermo review, scoped test/type-check gates green, orchestration log updated, all PRs in the stack remain ready for review (not draft). Do not merge anything.
+**Review policy:** run thermos once at the start. After fixes, choose one fresh `reviewer` using `quick-review` by default or one `thermo-review` using `thermo-nuclear-review` for high-risk fixes. Do not spawn both for routine re-reviews.
+
+**Definition of done:** initial thermos complete; either it is clean or the latest required re-review has zero BLOCKER/MAJOR findings; scoped test/type-check gates green. Do not merge anything.
 
 ## Ground truth
 
-| Resource | Location |
-|----------|----------|
-| Parent issue | {parent issue} |
-| Plan of record | `{plan doc path}` |
-| Orchestration log | `{orchestration log path}` |
-| Epic tip branch | `{tip-branch}` |
-| Trunk | `{trunk}` |
-
-### GitHub stack (daisy-chained)
-
-| Phase | Issue | Branch | PR |
-|-------|-------|--------|-----|
-{fill rows}
-
-Epic scope: {file count / insertion summary if known}. Per-phase PR diffs are subsets; the authoritative review surface is the cumulative epic diff, but attribute fixes to the correct phase branch when possible.
-
-## Plan sections to read
-- Quality bar: `{plan doc path}` {section ref}
-- Phase boundaries: `{plan doc path}` {section ref}
+| Resource | Value |
+|----------|-------|
+| Work branch | `{work-branch}` |
+| Base / trunk | `{base}` |
+| PR (if any) | `{pr number or n/a}` |
 
 ## Prior known risks
-{from orchestration log}
-
-## Regression checklist (prior fixes — re-verify)
-| Phase | Commit | What to re-check |
-|-------|--------|------------------|
-{fill rows or "none yet"}
-
-## Parallel review splits (optional, for large diffs)
-| Specialist | Focus |
-|------------|-------|
-{fill subsystem splits — see examples.md}
+{or "none"}
 
 ## Verification commands (orchestrator runs after every fix)
 ```bash
-{paste type-check, test, cargo, migration smoke commands}
+{paste type-check / test / cargo commands inferred from the diff}
 ```
 
-## Pre-existing flakes (ignore unless epic introduces them)
-{bullet list}
+## Pre-existing flakes (ignore unless this change introduces them)
+{bullet list or "none known"}
 
 ## Thermo rubric focus areas
 {paste customized rubric table}

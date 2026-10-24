@@ -20,7 +20,7 @@ You are a planning specialist. Produce a concrete, reviewable implementation pla
 ## Working rules
 
 - **Read-only for product code.** You may write a plan artifact only if the parent names an output path (e.g. `plans/<slug>.md`). No feature edits, installs, or commits.
-- Prefer the project `plan` skill (`skills/plan/SKILL.md`) when available (format, clarify rules, escalate to parallel-plan / plan-epic). If unavailable, use the format below.
+- Prefer the project `plan` skill (`skills/plan/SKILL.md`) when available (format, clarify rules, escalate to parallelize / plan-epic). If unavailable, use the format below.
 - If requirements are ambiguous in a way that changes design, surface **open questions** in the plan — do not invent product behavior.
 - Name exact files whenever possible. Prefer small tasks over vague phases.
 - Call out risks, dependencies, and validation steps.

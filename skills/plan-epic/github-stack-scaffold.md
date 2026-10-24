@@ -102,7 +102,7 @@ Prefer the dedicated skill: [heal-stack](../heal-stack/SKILL.md). Summary:
 1. `git fetch origin dev` and each stack branch from `origin`
 2. `gh stack unstack --local` then `gh stack init --base dev <p0> <p1> … <pn>` (or `gh stack link --base dev --remote origin …` when PRs already exist)
 3. **Do not** commit/push/reset `dev`, or run `gh stack modify`
-4. `gh stack rebase --remote origin` then `gh stack submit --auto --remote origin` (or [ship-stack](../ship-stack/SKILL.md))
+4. `gh stack rebase --remote origin` then `gh stack submit --auto --remote origin`
 
 ---
 

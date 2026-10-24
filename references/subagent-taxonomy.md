@@ -7,9 +7,9 @@ Skills orchestrate; subagents execute slices. Canonical bodies: `subagents/<role
 
 | Role | Intent | Typical skills |
 |------|--------|----------------|
-| `explorer` | Local recon → compressed handoff | plan, parallel-plan, investigate, build-epic recon, maintain-verification-skill |
-| `oracle` | Advisory second opinion; decision consistency; no edits | plan, investigate, parallel-plan |
-| `planner` | Concrete plan, no product edits | plan, parallel-plan, plan-epic |
+| `explorer` | Local recon → compressed handoff | plan, parallelize, investigate, build-epic recon, maintain-verification-skill |
+| `oracle` | Advisory second opinion; decision consistency; no edits | plan, investigate, parallelize |
+| `planner` | Concrete plan, no product edits | plan, parallelize, plan-epic |
 | `worker` | Single-writer implement / fix | build, parallelize, grind-*, build-epic |
 | `reviewer` | Everyday multi-angle review | quick-review, parallelize integrate |
 | `thermo-review` | Deep correctness / security / breaking / devex | thermos, grind-* |
@@ -40,4 +40,4 @@ Skills orchestrate; subagents execute slices. Canonical bodies: `subagents/<role
 
 ## Explicit non-roles
 
-Keep as **skills** only: deslop, docs, ship, ship-stack, frontend-design, supabase, create-verification-skill, maintain-verification-skill, etc.
+Keep as **skills** only: deslop, supabase, create-verification-skill, maintain-verification-skill, etc.

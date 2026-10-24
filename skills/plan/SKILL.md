@@ -16,7 +16,7 @@ Portable CreatePlan / Cursor Plan mode workflow for daily task planning. Researc
 
 - Open product / architecture decisions that would fork the plan → offer [ask-me](../ask-me/SKILL.md) and wait for opt-in
 - Multi-phase epic with Linear / GitHub stacks → offer [plan-epic](../plan-epic/SKILL.md) and wait for the user to opt in
-- Parallel specialist worker waves → [parallel-plan](../parallel-plan/SKILL.md) (then [parallelize](../parallelize/SKILL.md) to execute)
+- Parallel specialist worker waves → [parallelize](../parallelize/SKILL.md)
 
 ## Hard rules
 
@@ -39,7 +39,7 @@ If already in Cursor Plan mode with `CreatePlan` available, prefer the native to
 3. Research   → codebase + docs; optional parallel `explorer` agents
 4. Decide     → one concrete approach
 5. Write plan → markdown artifact (format below); may spawn `planner` if the parent stays orchestrator-only
-6. Stop       → user reviews / edits; implementation is [build](../build/SKILL.md) or a `worker` spawn
+6. Stop       → user reviews / edits; implementation is the next step or a `worker` spawn
 ```
 
 ## Plan artifact
@@ -82,9 +82,8 @@ todos:
 
 - Requirements interview before a plan → [ask-me](../ask-me/SKILL.md)
 - Linear epics / GitHub stacks → `plan-epic`
-- Parallel worker wave charts → `parallel-plan`; execute waves → `parallelize`
-- Single-agent implementation → [build](../build/SKILL.md)
+- Parallel worker waves → `parallelize`
 - Bug / root cause → [investigate](../investigate/SKILL.md)
 - CI grind, thermos → grind / thermos skills
-- Commit / push → [ship](../ship/SKILL.md); GitHub stack publish/repair → [ship-stack](../ship-stack/SKILL.md) / [heal-stack](../heal-stack/SKILL.md)
+- GitHub stack repair → [heal-stack](../heal-stack/SKILL.md)
 - Brainstorm-only architecture with no implementation intent → stay conversational; only use this skill when the user wants a buildable plan

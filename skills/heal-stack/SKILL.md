@@ -10,7 +10,7 @@ disable-model-invocation: true
 
 # Heal Stack
 
-Realign phase branches and GitHub stack metadata so the full stack appears as one daisy-chain on `dev`. Then optionally hand off to [ship-stack](../ship-stack/SKILL.md) to submit.
+Realign phase branches and GitHub stack metadata so the full stack appears as one daisy-chain on `dev`. Then submit the stack if requested.
 
 **Symptoms this fixes:**
 
@@ -99,7 +99,7 @@ If a PR still sits alone, re-check its base and rebuild from that phase upward (
 
 ### 6. Report
 
-List before → after for each PR (old base → new base), and note any conflict resolutions. Suggest `/ship-stack` only if submit was skipped or needs a clean re-run.
+List before → after for each PR (old base → new base), and note any conflict resolutions. Offer to submit only if submit was skipped or needs a clean re-run.
 
 ## Forbidden
 
@@ -111,5 +111,3 @@ List before → after for each PR (old base → new base), and note any conflict
 ## Related
 
 - Scaffold new stacks: [github-stack-scaffold.md](../plan-epic/github-stack-scaffold.md)
-- Healthy publish: [ship-stack](../ship-stack/SKILL.md)
-- Single-branch commit: [ship](../ship/SKILL.md)
