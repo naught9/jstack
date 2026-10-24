@@ -84,6 +84,6 @@ todos:
 - Linear epics / GitHub stacks → `plan-epic`
 - Parallel worker waves → `parallelize`
 - Bug / root cause → [investigate](../investigate/SKILL.md)
-- CI grind, thermos → grind / thermos skills
+- Thermos → [thermos](../thermos/SKILL.md)
 - GitHub stack repair → [heal-stack](../heal-stack/SKILL.md)
 - Brainstorm-only architecture with no implementation intent → stay conversational; only use this skill when the user wants a buildable plan

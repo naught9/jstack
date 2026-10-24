@@ -93,4 +93,4 @@ If the host has **no** subagent system: run `worker` prompts **inline** sequenti
 - Single-agent plan without workers → [plan](../plan/SKILL.md)
 - Bug triage → [investigate](../investigate/SKILL.md)
 - Muse phased epic orchestration / GitHub stacks → [build-epic](../build-epic/SKILL.md)
-- Thermo grind → [thermos](../thermos/SKILL.md) / [grind-epic](../grind-epic/SKILL.md)
+- Dual review → [thermos](../thermos/SKILL.md)

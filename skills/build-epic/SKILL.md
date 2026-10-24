@@ -19,8 +19,6 @@ You are the **orchestrator and integrator** for a large phased feature. You do *
 
 Use this skill only when the user explicitly asks for `/build-epic` or otherwise clearly requests this workflow. If it looks useful but was not requested, ask whether they would like to use `/build-epic`, then wait for their answer.
 
-**Pair with:** [grind-epic](../grind-epic/SKILL.md) for post-implementation epic review grinding (thermo clean + test-green across the full stack).
-
 ## Before you start
 
 Gather or confirm:

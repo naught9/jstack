@@ -131,11 +131,6 @@ test('documents asynchronous fan-out in the taxonomy and keeps orchestration ski
   assert.match(buildEpic, /Use \[thermo-nuclear-review\]/);
   assert.doesNotMatch(buildEpic, /\(or resume implementer\)/);
 
-  const grindEpic = await readFile(path.join(sourceRoot, 'skills', 'grind-epic', 'SKILL.md'), 'utf8');
-  assert.match(grindEpic, /Run \[thermos\].*\*\*once\*\*/);
-  assert.match(grindEpic, /spawn \*\*one fresh re-review specialist\*\*/i);
-  assert.match(grindEpic, /Default to \[quick-review\]/);
-  assert.match(grindEpic, /Use \[thermo-nuclear-review\]/);
 });
 
 test('Cursor adapter writes unpinned agent files and replaces legacy symlinks', async () => {
