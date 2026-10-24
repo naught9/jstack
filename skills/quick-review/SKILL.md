@@ -14,8 +14,6 @@ Everyday branch review against the default base branch (usually `main` / `dev`).
 
 **Spawn:** prefer role **`reviewer`** with a self-contained prompt (diff scope + base branch). If subagents are unavailable, run this skill **inline** in the parent session.
 
-Host spawn details: [host-conventions.md](../../references/host-conventions.md). On Cursor, spawn `reviewer` on Cursor Grok — do not select Opus unless the user named that family.
-
 **Escalate when:**
 
 - Guided tour of the change (no findings) → [walkthrough](../walkthrough/SKILL.md)

@@ -14,8 +14,6 @@ Execute work with **subagent workers** for efficiency. Your role shifts to **orc
 
 **Pair with:** [parallel-plan](../parallel-plan/SKILL.md) for the wave chart (run that skill first, or produce an equivalent plan inline if the user already approved a decomposition).
 
-Host spawn details: [host-conventions.md](../../references/host-conventions.md).
-
 ## Hard rules
 
 - **Orchestrate, don't monopolize.** Prefer spawning jstack `worker` agents over writing all the code in the parent session.
@@ -26,8 +24,6 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 - **One file owner per worker.** Serialize shared files; never assign two workers the same hot file in one wave.
 - **Review between waves.** After each wave: read diffs, run or request scoped checks, fix collisions, then proceed.
 - **Don't over-parallelize.** Tiny tasks stay in one worker (or the parent). Say so and keep it simple.
-- Soft model default for `worker`: **capable/high** (prefer Cursor Grok / grok-4.7 when the host offers it). Honor user overrides (e.g. `/parallelize use grok 4.7 for workers`).
-- Host mapping: [host-conventions.md](../../references/host-conventions.md#models). On Cursor, pass the latest Cursor Grok Task slug for every worker; do not select Opus unless the user named that family.
 
 ## Workflow
 
@@ -48,7 +44,7 @@ Host spawn details: [host-conventions.md](../../references/host-conventions.md).
 
 ### 2. Spawn workers
 
-Spawn role **`worker`** (see [host-conventions.md](../../references/host-conventions.md)). Fall back to the host general-purpose agent only if `worker` is not installed. Use the host's asynchronous admission mechanism when available; never assume admission returns task output.
+Spawn role **`worker`**. Fall back to the host general-purpose agent only if `worker` is not installed. Use the host's asynchronous admission mechanism when available; never assume admission returns task output.
 
 **Prompt skeleton** (fill every field):
 

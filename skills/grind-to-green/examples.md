@@ -19,8 +19,6 @@ git diff origin/dev...HEAD
 
 (after `gh pr checkout 188`)
 
-**Models:** honor launch overrides; otherwise soft defaults (high-reasoning initial thermos/deep re-review, balanced quick re-review, capable/fast fix). On Cursor, prefer Cursor Grok.
-
 **Review policy:** run thermos once initially. After fixes, use one `quick-review` reviewer by default or one `thermo-nuclear-review` reviewer for high-risk fixes.
 
 **Definition of done:** initial thermos complete; either it is clean or the latest required re-review has zero BLOCKER/MAJOR findings; scoped test/type-check gates green. Do not merge anything.

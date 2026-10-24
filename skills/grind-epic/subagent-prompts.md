@@ -2,11 +2,9 @@
 
 Copy and fill in `{placeholders}`. Every prompt must be self-contained.
 
-Spawn via the host's subagent API (see [host-conventions.md](../../references/host-conventions.md)):
-- Epic review → role `thermo-review` (soft default: high-reasoning)
-- Epic fix → role `worker` (soft default: capable/fast; fall back to host general-purpose if missing)
-
-Honor user model overrides. On Cursor, pass Cursor Grok per [host-conventions.md](../../references/host-conventions.md#models); do not select Opus unless the user named that family.
+Spawn via the host's subagent API:
+- Epic review → role `thermo-review`
+- Epic fix → role `worker` (fall back to host general-purpose if missing)
 
 ## Epic review
 

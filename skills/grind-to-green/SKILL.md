@@ -13,14 +13,6 @@ disable-model-invocation: true
 
 You are the **review/fix orchestrator** for a single branch or PR. You do **not** implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the diff is review-clean and test-green.
 
-Host spawn details: [host-conventions.md](../../references/host-conventions.md).
-
-## Models
-
-- Soft default: **high-reasoning** for initial thermos roles and deep `thermo-review` re-reviews; **balanced-reasoning** for `reviewer` re-reviews; **capable/fast** for fix `worker`s; capable parent.
-- Honor user overrides (e.g. `/grind-to-green use grok 4.7 for review and fix`).
-- Host mapping: [host-conventions.md](../../references/host-conventions.md#models). On Cursor, prefer Cursor Grok for review and fix children; do not select Opus unless the user named that family.
-
 **Related:** For stacked phased epics with Linear/GitHub stacks, use [grind-epic](../grind-epic/SKILL.md) instead. For a one-shot dual review without a fix loop, use [thermos](../thermos/SKILL.md).
 
 ## Before you start

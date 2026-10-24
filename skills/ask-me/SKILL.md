@@ -12,8 +12,6 @@ disable-model-invocation: true
 
 Requirements interview **before** [plan](../plan/SKILL.md) or [build](../build/SKILL.md). Map the work as a **design tree**: every decision branches into the decisions that hang off it. Do not plan or implement until the user confirms a shared understanding.
 
-Host question-tool and spawn details: [host-conventions.md](../../references/host-conventions.md).
-
 **Escalate when:**
 
 - Shared understanding reached → [plan](../plan/SKILL.md) (epic → [plan-epic](../plan-epic/SKILL.md); parallel waves → [parallel-plan](../parallel-plan/SKILL.md))

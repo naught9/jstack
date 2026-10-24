@@ -11,20 +11,12 @@ disable-model-invocation: true
 
 Run both thermo review passes as parallel specialists, then synthesize.
 
-Host spawn / question details: [host-conventions.md](../../references/host-conventions.md).
-
 ## Roles
 
 | Role | Focus |
 |------|--------|
 | `thermo-review` | Bugs, breakages, security, devex, feature-flag leaks |
 | `thermo-quality` | Maintainability, structure, file-size growth, spaghetti, code-judo |
-
-## Models
-
-- Soft default: **high-reasoning** model for both roles.
-- Honor user overrides, e.g. `/thermos use grok 4.7 for the review`. If the user names a family for one role only, leave the other on the host default.
-- Host mapping: [host-conventions.md](../../references/host-conventions.md#models). On Cursor, prefer Cursor Grok for both specialists; do not select Opus unless the user named that family.
 
 ## Workflow
 

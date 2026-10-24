@@ -14,8 +14,6 @@ Full local + remote branch audit, then gated cleanup. **Never delete until the u
 
 Modeled on real muse audits (e.g. post-merge stack cleanup): fetch/prune → cross-ref `gh` PR state (squash-aware) → categorize → wait → delete only what was approved.
 
-Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
-
 ## Hard rules
 
 - **Standard Git/GitHub workflow.** Use ordinary `git` and `gh` for branch auditing and cleanup. Do not invoke Graphite or `gt`; any `graphite-base/*` names are legacy branches to classify only.

@@ -18,8 +18,6 @@ Portable CreatePlan / Cursor Plan mode workflow for daily task planning. Researc
 - Multi-phase epic with Linear / GitHub stacks → offer [plan-epic](../plan-epic/SKILL.md) and wait for the user to opt in
 - Parallel specialist worker waves → [parallel-plan](../parallel-plan/SKILL.md) (then [parallelize](../parallelize/SKILL.md) to execute)
 
-Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
-
 ## Hard rules
 
 - **Read-only until approved.** No edits, installs, commits, or implementation. Research and plan only.

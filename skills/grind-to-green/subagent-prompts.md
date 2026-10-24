@@ -2,13 +2,11 @@
 
 Copy and fill in `{placeholders}`. Every prompt must be self-contained.
 
-Spawn via the host's subagent API (see [host-conventions.md](../../references/host-conventions.md)):
-- Initial review → [thermos](../thermos/SKILL.md), roles `thermo-review` + `thermo-quality` (soft default: high-reasoning)
-- Quick re-review → role `reviewer` (soft default: balanced-reasoning)
-- Deep re-review → role `thermo-review` (soft default: high-reasoning)
-- Fix → role `worker` (soft default: capable/fast; fall back to host general-purpose if missing)
-
-Honor user model overrides. On Cursor, pass Cursor Grok per [host-conventions.md](../../references/host-conventions.md#models); do not select Opus unless the user named that family.
+Spawn via the host's subagent API:
+- Initial review → [thermos](../thermos/SKILL.md), roles `thermo-review` + `thermo-quality`
+- Quick re-review → role `reviewer`
+- Deep re-review → role `thermo-review`
+- Fix → role `worker` (fall back to host general-purpose if missing)
 
 ## Initial review
 
@@ -132,8 +130,6 @@ Conduct one initial thermos audit, then fix → single-pass re-review cycles sco
 ```bash
 git diff origin/{base}...HEAD
 ```
-
-**Models:** soft defaults — high-reasoning for initial thermos and deep re-review, balanced-reasoning for quick re-review, capable/fast for fix `worker`. Honor any user overrides from the launch message. On Cursor, prefer Cursor Grok; do not select Opus unless named.
 
 **Review policy:** run thermos once at the start. After fixes, choose one fresh `reviewer` using `quick-review` by default or one `thermo-review` using `thermo-nuclear-review` for high-risk fixes. Do not spawn both for routine re-reviews.
 

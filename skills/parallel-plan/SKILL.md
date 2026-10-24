@@ -19,8 +19,6 @@ CreatePlan-style planning for **parallel specialist execution**. Research, clari
 
 **Escalate when:** multi-phase epic with Linear / GitHub stacks → offer [plan-epic](../plan-epic/SKILL.md); phased orchestration → offer [build-epic](../build-epic/SKILL.md). Wait for the user to opt in before using either skill.
 
-Host question / spawn details: [host-conventions.md](../../references/host-conventions.md).
-
 ## Hard rules
 
 - **Read-only until approved.** No edits, installs, commits, implementation, or worker spawns. Research and plan only.
@@ -84,7 +82,7 @@ todos:
 ## Phase 2 — Parallel workers
 Launch in a single turn (one specialist per row):
 
-- W1: <task> — files/scope — depends on Phase 1 — soft model: capable/high (e.g. grok-4.7)
+- W1: <task> — files/scope — depends on Phase 1
 - W2: ...
 
 ## Phase 3 — Integration / sequential
@@ -104,12 +102,6 @@ Launch in a single turn (one specialist per row):
 ```
 
 Prefer bullet lists over markdown tables when targeting Cursor CreatePlan UI parity. Mermaid only when it clarifies wave dependencies (same mermaid rules as [plan](../plan/SKILL.md)).
-
-## Soft model hints
-
-- Implementation workers: **capable/high** soft default (e.g. grok-4.7 when available).
-- Do not hard-require a model slug. Honor user overrides at execute time.
-- Host mapping: [host-conventions.md](../../references/host-conventions.md#models). On Cursor, prefer Cursor Grok; do not select Opus unless the user named that family.
 
 ## Out of scope
 

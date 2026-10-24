@@ -19,14 +19,6 @@ You are the **orchestrator and integrator** for a large phased feature. You do *
 
 Use this skill only when the user explicitly asks for `/build-epic` or otherwise clearly requests this workflow. If it looks useful but was not requested, ask whether they would like to use `/build-epic`, then wait for their answer.
 
-Host spawn details: [host-conventions.md](../../references/host-conventions.md).
-
-## Models
-
-- Soft default: capable/fast model for the parent orchestrator and `worker` roles; high-reasoning for initial thermos roles and deep `thermo-review` re-reviews; balanced-reasoning for `reviewer` re-reviews.
-- Honor user overrides for parent or any child role (e.g. "use grok 4.7 for implementers").
-- Host mapping: [host-conventions.md](../../references/host-conventions.md#models). On Cursor, prefer Cursor Grok for implementers and reviewers; do not select Opus unless the user named that family.
-
 **Pair with:** [grind-epic](../grind-epic/SKILL.md) for post-implementation epic review grinding (thermo clean + test-green across the full stack).
 
 ## Before you start

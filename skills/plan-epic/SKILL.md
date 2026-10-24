@@ -28,8 +28,6 @@ Use this skill only when the user explicitly asks for `/plan-epic` or otherwise 
 
 **Pair with:** [build-epic](../build-epic/SKILL.md) for implementation; [grind-epic](../grind-epic/SKILL.md) for epic review grinding after the stack lands; [ship-stack](../ship-stack/SKILL.md) / [heal-stack](../heal-stack/SKILL.md) to publish or repair the GitHub stack.
 
-Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
-
 ## Hard rules
 
 - **GitHub Stacks only for stacked PRs.** Use `gh stack`; do not use Graphite or `gt` commands. Use ordinary `git` and `gh` for non-stack branch and PR operations.

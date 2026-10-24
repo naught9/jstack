@@ -17,8 +17,6 @@ Everyday debug loop: **repro → evidence → root cause → fix or plan**. Pref
 - Needs parallel exploration across packages → spawn `explorer` agents, then continue here
 - After a fix, want review → [quick-review](../quick-review/SKILL.md)
 
-Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
-
 ## Hard rules
 
 - **Evidence over guesses.** Cite file:line, logs, failing tests, or repro steps. Do not ship a “probably” root cause.

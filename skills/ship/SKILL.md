@@ -17,8 +17,6 @@ Everyday single-branch land: stage → commit → **ask before push**. No merge.
 - GitHub phased stack publish → [ship-stack](../ship-stack/SKILL.md)
 - Broken / orphan stack repair → [heal-stack](../heal-stack/SKILL.md)
 
-Host question-tool details: [host-conventions.md](../../references/host-conventions.md).
-
 ## Hard rules
 
 - **Standard Git/GitHub workflow.** Use ordinary `git` commands for this single-branch flow and `gh` when GitHub interaction is requested. Do not use Graphite, `gt`, or `gh stack` here.

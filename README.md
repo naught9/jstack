@@ -7,7 +7,7 @@ jstack/
 ├── .agents/.mcp.json          # host-neutral MCP inventory
 ├── bin/jstack.mjs             # installer and doctor CLI
 ├── manifest.json              # canonical inventory
-├── references/host-conventions.md
+├── references/subagent-taxonomy.md
 ├── skills/                    # Agent Skills trees
 └── subagents/                 # canonical role definitions
 ```
@@ -55,7 +55,7 @@ Global mode intentionally rejects submodules and disposable Git worktrees.
 | References | `.agents/references/` | `.claude/references/` | shared | shared | shared | shared |
 | MCP source | `.agents/.mcp.json` | project `.mcp.json` only | inventory only | `.cursor/mcp.json` | `.codex/config.toml` | `opencode.json` |
 
-Claude Code does not read `.agents/skills/`, so the `claude` adapter links each skill and `references/` under `.claude/`. Skills resolve `../../references/` relative to their directory, which is why `.claude/references` is linked too. Generated agents omit `model` and inherit the session model. With `--with-mcp`, project installs merge servers into the project-root `.mcp.json` (shared with Pi; Claude Code asks for approval on first use). Global installs leave MCP alone because user-scope servers live in `~/.claude.json`, which Claude Code rewrites constantly; add them with `claude mcp add --scope user`.
+Claude Code does not read `.agents/skills/`, so the `claude` adapter links each skill and `references/` under `.claude/`. Skills resolve `../../references/` relative to their directory, which is why `.claude/references` is linked too. With `--with-mcp`, project installs merge servers into the project-root `.mcp.json` (shared with Pi; Claude Code asks for approval on first use). Global installs leave MCP alone because user-scope servers live in `~/.claude.json`, which Claude Code rewrites constantly; add them with `claude mcp add --scope user`.
 
 Pi uses the [`pi-subagents`](https://pi.dev/packages/pi-subagents) package. jstack supplies its project agents under `.agents/`; it does not install the package or create `.pi/` files.
 
@@ -82,9 +82,7 @@ The merge preserves unrelated servers and host-specific fields. Authentication a
 
 ## Inventory
 
-The active roles are `explorer`, `oracle`, `planner`, `worker`, `reviewer`, `thermo-review`, and `thermo-quality`. The complete skill list lives in `manifest.json`; workflow and spawn mappings live in [host conventions](references/host-conventions.md).
-
-Skills use soft model defaults only. Always honor explicit user model overrides. On Cursor, the adapter pins Cursor Grok for installed subagents; do not spawn Opus reviewers unless the user named that family (see [host conventions](references/host-conventions.md#models)).
+The active roles are `explorer`, `oracle`, `planner`, `worker`, `reviewer`, `thermo-review`, and `thermo-quality`. The complete skill list lives in `manifest.json`; role contracts and spawn rules live in [subagent taxonomy](references/subagent-taxonomy.md).
 
 ## Verification
 
