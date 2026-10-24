@@ -14,17 +14,18 @@
 
 **Round B — plan approval:**
 
-- Approve `work/planning/AUDIO_TRACKS.md` as plan of record? → yes
+- Approve the Audio Tracks plan as plan of record? → yes
 
 **Round C — Linear:**
 
-- Project: Audio Engine & Instruments; assignee: me; estimates per phase → confirmed
+- Project: no "Audio Tracks" project found → created it first (team Muse, lead me); assignee: me; estimates per phase → confirmed
 
 ### Artifacts produced
 
 | Artifact | Result |
 |----------|--------|
-| Plan | `work/planning/AUDIO_TRACKS.md` — hardened 2026-07-03 |
+| Project | Audio Tracks (Linear project, created during planning) |
+| Plan | Linear document "Audio Tracks — Plan of record" in the project — hardened 2026-07-03 |
 | Epic | MUSE-537 |
 | Sub-issues | MUSE-614 (P0) … MUSE-620 (P6 follow-on) |
 | Stack | PRs #137–#143, branches `jake/muse-614-…` through `jake/muse-620-…` |

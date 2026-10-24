@@ -4,7 +4,7 @@ Optional third deliverable. Only run after user approval (gate 3).
 
 ## Prerequisites
 
-- Plan doc committed on `dev` (or will land in P0 PR)
+- Plan of record saved as a Linear document in the epic's project
 - Linear sub-issues exist (for MUSE-XXX IDs and branch names)
 - `gh` + `gh stack` available (`gh extension install github/gh-stack` if missing); trunk is `dev`
 
@@ -48,19 +48,13 @@ Then check out each branch (`gh stack checkout <branch>`) and add the placeholde
 
 Each phase branch needs a minimal commit so PRs can open. Keep diffs tiny — implementation replaces these later.
 
-**P0** (often includes plan doc):
-
-- Add or update `work/planning/<FEATURE>.md` if not already on `dev`
-- Optional: `work/planning/<FEATURE>.stack.md` with phase→branch map (delete when P0 implementation starts)
-- Commit message: `docs(<area>): harden <feature> plan of record; scaffold P0 (MUSE-XXX)`
-
-**P1–Pn** (placeholder only):
+**P0–Pn** (placeholder only; the plan lives in Linear, not in the repo):
 
 - Add a single marker file, e.g. `work/scaffolds/MUSE-XXX.stack-placeholder` containing:
   ```text
   Stack scaffold for <Feature> P{n} (MUSE-XXX).
   Replace with phase implementation. Do not merge as-is.
-  Plan: work/planning/<FEATURE>.md
+  Plan: <linear document url>
   ```
 - Commit message: `chore(<area>): stack scaffold placeholder for P{n} (MUSE-XXX)`
 
@@ -74,10 +68,9 @@ gh stack submit --auto --remote origin
 
 | Phase | PR title pattern |
 |-------|------------------|
-| P0 | `docs(<area>): harden <feature> plan of record; scaffold P0 (MUSE-XXX)` |
-| P1–Pn | `chore(<area>): stack scaffold placeholder for P{n} (MUSE-XXX)` |
+| P0–Pn | `chore(<area>): stack scaffold placeholder for P{n} (MUSE-XXX)` |
 
-PR bodies: link plan doc, sub-issue, parent epic. Note "scaffold only — not for merge."
+PR bodies: link the Linear plan document, sub-issue, parent epic. Note "scaffold only — not for merge."
 
 ### 5. Verify
 

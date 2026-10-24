@@ -2,6 +2,8 @@
 
 Use Linear MCP `save_issue`. Team: **Muse**. Read `get_issue` / `list_issue_statuses` if unsure of project or state names.
 
+The epic's **project** and **plan document** already exist by the time these are created (see [linear-project-template.md](linear-project-template.md)). Every issue below sets `project` to that project.
+
 ## Parent epic
 
 ```markdown
@@ -10,7 +12,7 @@ Title: <Feature Name>
 Description:
 First-class **<feature>** in Muse Desktop — <one-line goal>.
 
-**Plan of record:** [<FEATURE>.md](https://github.com/muse-art/muse-monorepo/blob/main/work/planning/<FEATURE>.md)
+**Plan of record:** [<Feature> — Plan of record](<linear document url>)
 
 ## Goal
 
@@ -45,10 +47,9 @@ Stack skeleton: one branch + one PR per phase, daisy-chained on `dev` per repo G
 Fields (adjust per clarification answers):
 
 - `team`: `Muse`
-- `project`: e.g. `Audio Engine & Instruments`
+- `project`: the epic's project (required)
 - `priority`: 1–4
 - `assignee`: `me` or named user
-- `links`: `[{ "url": "<plan github url>", "title": "<FEATURE>.md" }]`
 
 After sub-issues exist, edit epic description to insert real issue links.
 
@@ -60,7 +61,7 @@ After sub-issues exist, edit epic description to insert real issue links.
 Title: <Feature> P{n} — <short label>
 
 Description:
-Phase {n} of [<FEATURE>.md](https://github.com/muse-art/muse-monorepo/blob/main/work/planning/<FEATURE>.md) (§6, §<relevant>).
+Phase {n} of [<Feature> — Plan of record](<linear document url>) (§6, §<relevant>).
 
 ## Scope
 
@@ -85,7 +86,7 @@ Fields:
 
 - `parentId`: epic identifier (e.g. `MUSE-537`)
 - `team`: `Muse`
-- `project`: same as epic
+- `project`: same as epic (required)
 - `priority`: usually same or step down for follow-ons
 - `estimate`: story points if user provided
 - `blockedBy`: `["MUSE-XXX"]` when gated

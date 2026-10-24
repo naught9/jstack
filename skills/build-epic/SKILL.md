@@ -28,13 +28,24 @@ Gather or confirm:
 | Input | Where to find it |
 |-------|------------------|
 | Parent Linear issue | e.g. MUSE-537 |
-| Plan of record | `work/planning/*.md` or issue attachment |
+| Linear project | The epic's project (from the parent issue's `project`) |
+| Plan of record | The plan Linear document in that project (`list_documents` with `projectId`, then `get_document`) |
 | Phase sub-issues | Linear children (P0…Pn) |
 | GitHub stack | Draft PRs + branch names, or plan to create them |
 | Out-of-scope phases | e.g. follow-on P6 — do not implement |
 | Gates / blockers | e.g. upstream stack must merge before P2 |
 
-Read the plan of record and parent issue fully before spawning any specialist.
+Read the plan of record and parent issue fully before spawning any specialist. If the project has no plan document, stop and ask — suggest [plan-epic](../plan-epic/SKILL.md). Set the project state to `started` when P0 begins.
+
+## Orchestration log
+
+Keep a running orchestration log for the whole run. It is local scratch, **never committed** and not stored in Linear.
+
+- Path: `tmp/orchestration/<parent-issue>.md` at the repo root (e.g. `tmp/orchestration/MUSE-537.md`).
+- Before writing, confirm it is untracked and ignored: `git check-ignore -q tmp/orchestration/<parent-issue>.md`. If it isn't ignored, add `tmp/orchestration/` to the local exclude file (`$(git rev-parse --git-path info/exclude)`) rather than editing a tracked `.gitignore`.
+- Create it at the start with the ground truth (parent, project, plan document link, phase table, gates, out-of-scope phases). Re-read it after any context loss.
+- Append as you go: specialists spawned (role, scope, handle), review iterations and verdicts, fix SHAs, verification commands and results, gates hit, residual risks, accepted MINOR/NIT items, decisions made.
+- Specialist prompts may quote relevant log excerpts; children never get the log path as a dependency.
 
 ## Stack conventions (muse-monorepo)
 
@@ -119,7 +130,7 @@ A phase is done only when **you** confirm:
 
 ### 7. Log + parent comment
 
-Append to `work/<parent-issue>-orchestration.md`: phase, specialists run, review iterations, risks.
+Append to the local orchestration log: phase, specialists run, review iterations, risks.
 
 Post a progress comment on the parent Linear issue when the phase reaches merge-ready.
 
@@ -137,7 +148,7 @@ When a phase is blocked on an upstream merge (e.g. event-lane stack into `dev`):
 - Resolve mechanical rebase conflicts after restacks.
 - Keep PR titles/descriptions accurate as work evolves.
 - Re-run affected tests after restacks that touch shared files.
-- If a phase reveals a plan-level problem, stop, document, and surface — don't improvise architecture.
+- If a phase reveals a plan-level problem, stop, document it in the log and as a comment on the plan document or parent issue, and surface it — don't improvise architecture. Update the Linear plan document only when the user approves the change.
 
 ## Out-of-scope / tip placeholders
 
@@ -150,7 +161,7 @@ Report to the user:
 - Stack summary (PR numbers, branches, draft/ready status)
 - Per-phase: review iterations, test commands run, residual risks
 - Any blocked gates or plan issues needing human decision
-- Link to orchestration log in `work/`
+- Path to the local orchestration log (untracked; not in Linear or the repo)
 
 ## Examples
 

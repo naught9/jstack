@@ -1,16 +1,17 @@
 # Plan doc template
 
-Copy structure for `work/planning/<FEATURE>.md`. Adapt sections to feature size.
+Copy structure for the plan-of-record Linear document (`save_document`, belonging to the epic's project). Adapt sections to feature size.
 
 ## Planning checklist
 
 ```
 Planning progress:
 - [ ] Intake complete (context + inventory)
+- [ ] Linear project found or created
 - [ ] Clarification round(s) via structured questions
 - [ ] Plan draft written
 - [ ] User approved plan (gate 1)
-- [ ] Plan committed; status → plan of record
+- [ ] Plan saved as Linear document in the project; status → plan of record
 - [ ] User approved Linear set (gate 2)
 - [ ] Epic + sub-issues created and cross-linked
 - [ ] User opted into GitHub stack scaffold (gate 3)

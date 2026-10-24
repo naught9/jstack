@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Produce a read-only audit of `docs/internal/` against the current codebase. Find stale or missing content, weak architecture explanations, outdated diagrams, and undocumented areas worth covering. Apply clear technical writing for prose issues. Do not rewrite docs in the audit pass — present findings and proposed edits for user approval first.
 
-This skill covers **engineering documentation content**. It does not reconcile `work/` logs, Linear issues, or branch state.
+This skill covers **engineering documentation content**. It does not reconcile Linear issues or branch state.
 
 ## Writing standard
 

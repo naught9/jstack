@@ -11,11 +11,12 @@ Follow the `build-epic` skill.
 
 ## Ground truth
 - Parent: MUSE-537 — https://linear.app/muse-art/issue/MUSE-537
-- Plan: `work/planning/AUDIO_TRACKS.md`
+- Project: Audio Tracks — https://linear.app/muse-art/project/audio-tracks
+- Plan: Linear document "Audio Tracks — Plan of record" in that project
 - Phases:
   | Phase | Sub-issue | PR | Branch |
   |-------|-----------|-----|--------|
-  | P0 | MUSE-614 | #137 | `jake/muse-614-audio-tracks-p0-track-kind-data-contract` (base `dev`; includes hardened plan docs) |
+  | P0 | MUSE-614 | #137 | `jake/muse-614-audio-tracks-p0-track-kind-data-contract` (base `dev`) |
   | P1 | MUSE-615 | #138 | `jake/muse-615-audio-tracks-p1-import-persistence` |
   | P2 | MUSE-616 | #139 | `jake/muse-616-audio-tracks-p2-engine-region-playback` |
   | P3 | MUSE-617 | #140 | `jake/muse-617-audio-tracks-p3-waveform-ui-trim` |
@@ -36,4 +37,4 @@ Grind P0–P5 to merge-ready. Do not merge.
 
 ### Orchestration log path
 
-`work/MUSE-537-orchestration.md`
+`tmp/orchestration/MUSE-537.md` (gitignored, local only)

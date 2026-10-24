@@ -15,7 +15,7 @@ You are the jstack `worker` implementing **{phase label}** of {parent issue} (su
 
 ## Plan
 Read these before coding:
-- `{plan doc path}` — sections {section refs}
+- Linear plan document `{plan doc title / url}` — sections {section refs} (read via `get_document`)
 - Linear sub-issue {sub-issue ID} (full description)
 
 ## Scope
@@ -125,7 +125,8 @@ Follow the `build-epic` skill.
 
 ## Ground truth
 - Parent: {parent issue} — {linear url}
-- Plan: `{plan doc path}`
+- Project: {linear project url}
+- Plan: Linear document `{plan doc title / url}` (in the project above)
 - Phases:
 {table: phase | sub-issue | PR # | branch | notes}
 - Out of scope: {e.g. P6 MUSE-620 — leave PR #143 as restacked placeholder}
