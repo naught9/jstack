@@ -120,17 +120,15 @@ test('documents asynchronous fan-out in the taxonomy and keeps orchestration ski
   assert.match(thermos, /Collect both handoffs/);
   assert.doesNotMatch(thermos, /same turn when the host allows|Prefer background\/async/);
 
-  const buildEpic = await readFile(path.join(sourceRoot, 'skills', 'build-epic', 'SKILL.md'), 'utf8');
-  assert.match(buildEpic, /Retain the implementer handle and collect its explicit terminal handoff before starting thermos/);
-  assert.match(buildEpic, /otherwise spawn a fresh `worker`/);
-  assert.match(buildEpic, /Collect the fixer or implementer's explicit terminal handoff/);
-  assert.match(buildEpic, /do not review an in-progress fix/);
-  assert.match(buildEpic, /Invoke \[thermos\].*\*\*once\*\*/);
-  assert.match(buildEpic, /Spawn \*\*one fresh re-review specialist\*\*/);
-  assert.match(buildEpic, /Default to \[quick-review\]/);
-  assert.match(buildEpic, /Use \[thermo-nuclear-review\]/);
-  assert.doesNotMatch(buildEpic, /\(or resume implementer\)/);
-
+  const grindEpic = await readFile(path.join(sourceRoot, 'skills', 'grind-epic', 'SKILL.md'), 'utf8');
+  assert.match(grindEpic, /collect its explicit terminal handoff before verifying or re-reviewing/);
+  assert.match(grindEpic, /do not review an in-progress fix/);
+  assert.match(grindEpic, /Run \[thermos\].*\*\*once\*\*/);
+  assert.match(grindEpic, /spawn \*\*one fresh re-review specialist\*\*/i);
+  assert.match(grindEpic, /Default to \[quick-review\]/);
+  assert.match(grindEpic, /Use \[thermo-nuclear-review\]/);
+  assert.match(grindEpic, /plan document/);
+  assert.match(grindEpic, /tmp\/orchestration/);
 });
 
 test('Cursor adapter writes unpinned agent files and replaces legacy symlinks', async () => {
@@ -172,7 +170,7 @@ test('verification skills write project-local verify skills under .agents/skills
 });
 
 test('stack skills use GitHub gh stack instead of Graphite gt', async () => {
-  const stackSkills = ['heal-stack', 'plan-epic', 'build-epic'];
+  const stackSkills = ['heal-stack', 'plan-epic', 'grind-epic'];
   for (const name of stackSkills) {
     const content = await readFile(path.join(sourceRoot, 'skills', name, 'SKILL.md'), 'utf8');
     assert.match(content, /gh stack/, `${name} must use gh stack`);

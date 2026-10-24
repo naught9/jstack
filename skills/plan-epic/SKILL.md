@@ -28,7 +28,7 @@ Use this skill only when the user explicitly asks for `/plan-epic` or otherwise 
 
 **When to use [plan](../plan/SKILL.md) instead:** daily / single-task planning without Linear, GitHub stacks, or a multi-phase plan of record.
 
-**Pair with:** [build-epic](../build-epic/SKILL.md) for implementation; [heal-stack](../heal-stack/SKILL.md) to repair the GitHub stack.
+**Pair with:** [grind-epic](../grind-epic/SKILL.md) for review grinding once phases are implemented; [heal-stack](../heal-stack/SKILL.md) to repair the GitHub stack.
 
 ## Hard rules
 
@@ -206,7 +206,7 @@ When done, report:
 | Sub-issues | P0…Pn identifiers |
 | Stack | PR numbers + branch names (if scaffolded) |
 
-Suggest next step: launch orchestrator with `build-epic` skill.
+Suggest next step: implement the phases (e.g. [parallelize](../parallelize/SKILL.md) per phase), then run `grind-epic` on the project.
 
 ---
 

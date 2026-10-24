@@ -11,10 +11,6 @@
       "path": "skills/ask-me/SKILL.md"
     },
     {
-      "id": "build-epic",
-      "path": "skills/build-epic/SKILL.md"
-    },
-    {
       "id": "bro",
       "path": "skills/bro/SKILL.md"
     },
@@ -33,6 +29,10 @@
     {
       "id": "docs-audit",
       "path": "skills/docs-audit/SKILL.md"
+    },
+    {
+      "id": "grind-epic",
+      "path": "skills/grind-epic/SKILL.md"
     },
     {
       "id": "heal-stack",

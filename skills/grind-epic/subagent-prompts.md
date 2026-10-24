@@ -1,0 +1,166 @@
+# Specialist prompt templates
+
+Copy and fill in `{placeholders}`. Every prompt must be self-contained.
+
+Spawn via the host's subagent API:
+- Initial review → [thermos](../thermos/SKILL.md), roles `thermo-review` + `thermo-quality`
+- Quick re-review → role `reviewer`
+- Deep re-review → role `thermo-review`
+- Fix → role `worker` (fall back to host general-purpose if missing)
+
+## Initial review
+
+```markdown
+You are reviewing the diff for `{work-branch}` vs `{base}`.
+
+## Task
+Run one initial thermos audit (`thermo-review` + `thermo-quality` in parallel) on the full review surface. **Review only — do not implement fixes.**
+
+## Diff command
+```bash
+git diff origin/{base}...HEAD
+```
+
+Ensure `{work-branch}` is checked out locally before reviewing.
+
+## Context (optional)
+{paste PR title/body summary, plan notes, or "none"}
+
+## Prior known risks
+{paste residual risks or "none"}
+
+## Focus areas
+{paste rubric table — correctness, security, breaking changes, scope, tests, devex, maintainability}
+
+## Classification
+Classify each finding: **BLOCKER**, **MAJOR**, **MINOR**, **NIT**
+
+## Deliverable
+- Verdict: **CLEAN** (zero BLOCKER/MAJOR) or **NEEDS_FIXES**
+- Findings: Severity | Location | Finding | Suggested fix
+- Cross-cutting issues that span review rubrics
+```
+
+## Re-review
+
+```markdown
+You are re-reviewing the updated diff for `{work-branch}` vs `{base}`.
+The initial thermos audit has already completed. Run exactly one review pass; do not launch thermos or a second parallel reviewer.
+
+## Review mode
+Use `{quick-review | thermo-nuclear-review}`:
+- `quick-review` / role `reviewer` for localized fixes and direct finding confirmation.
+- `thermo-nuclear-review` / role `thermo-review` for security, correctness invariants, breaking behavior, devex, feature gates, cross-cutting behavior, or other high-risk fixes.
+
+## Findings to confirm
+{paste findings that prompted this fix round}
+
+## Diff command
+```bash
+git diff origin/{base}...HEAD
+```
+
+## Context and known risks
+{paste PR summary, residual risks, or "none"}
+
+## Task
+1. Ensure `{work-branch}` is checked out locally.
+2. Verify each prior finding end to end on the updated diff.
+3. Check the overall review surface for regressions introduced by the fixes under the selected rubric.
+4. Report only evidence-backed findings.
+
+## Rules
+- Review only; do not implement fixes.
+- Do not spawn both review roles.
+
+## Deliverable
+- Verdict: **CLEAN** (zero BLOCKER/MAJOR) or **NEEDS_FIXES**
+- Findings: Severity | Location | Finding | Suggested fix
+```
+
+## Fix
+
+```markdown
+You are the jstack `worker` fixing thermo review findings on branch `{work-branch}`.
+
+## Findings to address
+{paste numbered BLOCKER/MAJOR list from review specialist}
+
+## Branch rules
+- Work branch: `{work-branch}`
+- Base: `{base}`
+- Do not merge; push only if the user/orchestrator expects remote updates
+
+## Scope
+- Fix only what the findings require; no drive-by refactors
+- Keep diffs minimal and localized
+
+## Repo conventions
+- pnpm only; Node 22; strict TypeScript at module boundaries
+- Don't reformat untouched files
+- Rebuild and commit `dist/` for changed packages that commit artifacts (only if orchestrator asked you to commit)
+
+## Verification (run before finishing)
+{paste verification commands from launch prompt}
+
+## Rules
+- Do **not** run thermo review on your own work
+- Leave the working tree ready for the orchestrator to verify
+
+## Deliverable
+- Per-finding: fixed / wont-fix (with reason)
+- Files changed
+- Test commands run + results
+- Anything needing orchestrator decision
+```
+
+## Orchestrator launch
+
+Use when the user starts a grind. Fill from the invocation (`/grind-epic MUSE-537`, `/grind-epic pr N -> base`, or defaults) and the Linear project.
+
+```markdown
+You are the grind-epic orchestrator for `{work-branch}` vs `{base}` in muse-monorepo.
+You do not implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the diff is review-clean and test-green.
+
+Follow the `grind-epic` skill.
+
+## Mission
+Conduct one initial thermos audit, then fix → single-pass re-review cycles scoped as:
+
+```bash
+git diff origin/{base}...HEAD
+```
+
+**Review policy:** run thermos once at the start. After fixes, choose one fresh `reviewer` using `quick-review` by default or one `thermo-review` using `thermo-nuclear-review` for high-risk fixes. Do not spawn both for routine re-reviews.
+
+**Definition of done:** initial thermos complete; either it is clean or the latest required re-review has zero BLOCKER/MAJOR findings; scoped test/type-check gates green. Do not merge anything.
+
+## Ground truth
+
+| Resource | Value |
+|----------|-------|
+| Linear project | `{project name + url, or n/a}` |
+| Parent issue | `{e.g. MUSE-537, or n/a}` |
+| Plan document | `{Linear document title + url, or none}` |
+| Work branch (stack tip) | `{work-branch}` |
+| Base / trunk | `{base}` |
+| PR (if any) | `{pr number or n/a}` |
+| Phase table | `{phase | sub-issue | PR | branch, or n/a}` |
+| Orchestration log | `tmp/orchestration/{name}.md` (local, git-ignored) |
+
+## Prior known risks
+{or "none" — include prior review findings from the parent issue}
+
+## Verification commands (orchestrator runs after every fix)
+```bash
+{paste type-check / test / cargo commands inferred from the diff}
+```
+
+## Pre-existing flakes (ignore unless this change introduces them)
+{bullet list or "none known"}
+
+## Thermo rubric focus areas
+{paste customized rubric table}
+
+Grind until CLEAN. Do not merge.
+```

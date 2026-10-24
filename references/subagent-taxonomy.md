@@ -7,12 +7,12 @@ Skills orchestrate; subagents execute slices. Canonical bodies: `subagents/<role
 
 | Role | Intent | Typical skills |
 |------|--------|----------------|
-| `explorer` | Local recon → compressed handoff | plan, parallelize, investigate, build-epic recon, maintain-verification-skill |
+| `explorer` | Local recon → compressed handoff | plan, parallelize, investigate, maintain-verification-skill |
 | `oracle` | Advisory second opinion; decision consistency; no edits | plan, investigate, parallelize |
 | `planner` | Concrete plan, no product edits | plan, parallelize, plan-epic |
-| `worker` | Single-writer implement / fix | parallelize, build-epic |
+| `worker` | Single-writer implement / fix | parallelize, grind-epic |
 | `reviewer` | Everyday multi-angle review | quick-review, parallelize integrate |
-| `thermo-review` | Deep correctness / security / breaking / devex | thermos, build-epic |
+| `thermo-review` | Deep correctness / security / breaking / devex | thermos, grind-epic |
 | `thermo-quality` | Deep maintainability / code-judo | thermos |
 
 ## Design rules

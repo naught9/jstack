@@ -14,7 +14,7 @@ If the workspace has a native Linear project template for epics (`list_templates
 | `summary` | One line (≤255 chars): what ships and why |
 | `description` | Markdown below |
 | `targetDate` | ISO date, only if the user gave one |
-| `state` | `planned` (set to `started` via `save_project` when `build-epic` begins P0) |
+| `state` | `planned` (set to `started` via `save_project` when P0 implementation begins) |
 
 ## Description
 
@@ -45,4 +45,4 @@ Planning — plan of record not yet approved.
 1. Capture the project id and URL; every later `save_document` and `save_issue` for this epic passes this project (`list_documents` with `projectId` finds its documents).
 2. When the plan document is saved, update the `Plan of record` bullet with its link (`save_project` with `patch`).
 3. When the epic and sub-issues exist, add the epic link and update **Status**.
-4. When `build-epic` starts, set the project state to `started`.
+4. When P0 implementation starts, set the project state to `started`.

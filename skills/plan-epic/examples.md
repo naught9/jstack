@@ -58,5 +58,5 @@ Scaffold GitHub stack: yes/no
 ### Next step
 
 ```markdown
-Orchestrate MUSE-537 using the `build-epic` skill.
+Grind MUSE-537 using the `grind-epic` skill once the phases are implemented.
 ```

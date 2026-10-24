@@ -101,4 +101,4 @@ Prefer the dedicated skill: [heal-stack](../heal-stack/SKILL.md). Summary:
 
 ## What orchestrator does later
 
-Implementation agent renames PRs from scaffold titles, removes placeholder files, and implements real work — see [build-epic](../build-epic/SKILL.md).
+Implementation agent renames PRs from scaffold titles, removes placeholder files, and implements real work.

@@ -17,6 +17,7 @@ Everyday branch review against the default base branch (usually `main` / `dev`).
 **Escalate when:**
 
 - Guided tour of the change (no findings) → [walkthrough](../walkthrough/SKILL.md)
+- Review → fix loop until green → [grind-epic](../grind-epic/SKILL.md)
 - Deep dual-pass bug/security + quality audit → [thermos](../thermos/SKILL.md)
 - Single deep correctness / security pass → [thermo-nuclear-review](../thermo-nuclear-review/SKILL.md)
 
@@ -77,4 +78,4 @@ Everyday branch review against the default base branch (usually `main` / `dev`).
 - **Never** report an issue you haven't verified by reading the relevant code.
 - **Never** pad the list — an empty findings section with "looks good" is valid.
 - Check PR discussion with `gh` only *after* your own review, if a PR exists and you want to cross-reference automated review bots or human comments.
-- Do **not** implement fixes in this skill — report findings; use `worker` for fixes.
+- Do **not** implement fixes in this skill — report findings; use `worker` or [grind-epic](../grind-epic/SKILL.md) for fixes.
