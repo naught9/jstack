@@ -10,7 +10,7 @@ disable-model-invocation: true
 
 # Quick Review
 
-Everyday branch review against the default base branch (usually `main` / `dev`). Focus on issues that would matter in a real PR — not style nits or pre-existing problems outside the diff.
+Everyday branch review against the default base branch (usually `main`). Focus on issues that would matter in a real PR — not style nits or pre-existing problems outside the diff.
 
 **Spawn:** prefer role **`reviewer`** with a self-contained prompt (diff scope + base branch). If subagents are unavailable, run this skill **inline** in the parent session.
 

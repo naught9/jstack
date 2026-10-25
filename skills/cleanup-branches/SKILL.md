@@ -18,7 +18,7 @@ Modeled on real muse audits (e.g. post-merge stack cleanup): fetch/prune → cro
 
 - **Standard Git/GitHub workflow.** Use ordinary `git` and `gh` for branch auditing and cleanup. Do not invoke Graphite or `gt`; any `graphite-base/*` names are legacy branches to classify only.
 - **Audit first, delete second.** Present findings and wait. Do not delete in the same turn as the first audit unless the user already approved a named list.
-- **Never delete trunk:** `main`, `master`, `dev`, or the repo default branch. Never delete the currently checked-out branch — switch to trunk first.
+- **Never delete trunk:** `main`, `master`, `composer`, or the repo default branch. In muse-monorepo, delete the retired `dev` only when the user asks. Never delete the currently checked-out branch — switch to trunk first.
 - **Never force-push or rewrite trunk** as part of cleanup (pushing trunk only if the user separately asks, e.g. after a salvage cherry-pick).
 - **Squash-aware:** a branch tip may not be an ancestor of trunk after squash merge. Treat **merged PR** (`gh` state `MERGED`) as safe-to-delete even when `git merge-base --is-ancestor` fails.
 - **Stack-landed CLOSED:** a PR may be `CLOSED` (not MERGED) yet its tip commits/subjects already landed via a parent stack merge — still **safe to delete** if you verify the work is on trunk. Call this out explicitly in the report.
@@ -30,8 +30,7 @@ Modeled on real muse audits (e.g. post-merge stack cleanup): fetch/prune → cro
 
 Detect the integration trunk:
 
-1. If `dev` exists locally or on `origin`, use `dev` (muse-monorepo).
-2. Else use the repo default branch (`gh repo view --json defaultBranchRef` or `origin/HEAD`).
+Use the repo default branch (`gh repo view --json defaultBranchRef` or `origin/HEAD`); in muse-monorepo that is `main`. `composer` is frozen Composer and `dev` is the retired trunk: do not classify branches against either.
 
 Fetch before classifying:
 
@@ -62,7 +61,7 @@ For closed/merged candidates that look squash-ambiguous, spot-check whether tip 
 
 Optional: `gh api repos/{owner}/{repo} --jq '.delete_branch_on_merge'` (note if auto-delete is off — explains lingering remotes).
 
-Optional hygiene: `git stash list`; whether local `main`/`dev` diverge from `origin/*`.
+Optional hygiene: `git stash list`; whether local `main` diverges from `origin/main`.
 
 ### 2. Classify each feature branch
 
@@ -75,13 +74,12 @@ Skip trunk names. For each local and remote feature branch, assign **one** prima
 | **Already gone from remote** | Expected after fetch prune (merged/closed stack parents already deleted) — informational |
 | **Leftover Graphite scaffolding** | `graphite-base/*` (and similar) with no open PR — leftover from the old Graphite workflow; usually safe after the related stack has merged; list separately for approval |
 | **Closed — work not in trunk** | PR `CLOSED` (or abandoned) and unique commits/files **missing** from trunk — salvage (cherry-pick / reopen PR) vs drop |
-| **Stale / wrong base** | Open PR targeting the wrong trunk (e.g. `main` when integration trunk is `dev`), or clearly abandoned draft — needs user call |
+| **Stale / wrong base** | Open PR targeting the wrong trunk (e.g. `dev` or `composer` in muse-monorepo, where trunk is `main`), or clearly abandoned draft — needs user call |
 | **No PR / unclear** | No PR association — do not auto-mark safe; ask |
 
 Also note **Other local housekeeping** (informational, not auto-delete):
 
 - Local trunk ahead/behind `origin` (e.g. `main` 1 commit ahead)
-- Expected long `dev`↔`main` divergence
 - Stashes from older work
 - Diverged locals on active branches (reset to remote only if user asks)
 

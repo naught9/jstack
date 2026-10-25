@@ -26,7 +26,7 @@ The Linear project is the source of truth for scope. Resolve it from the user pr
 | Parent epic + phase sub-issues | Linear issues in the project (`list_issues` with the project) |
 | Branches / PRs | Each sub-issue's `gitBranchName` and linked PRs; `gh stack view --json` for the stack |
 | Tip branch | Top of the stack, or the single work branch/PR head |
-| Trunk | `dev` unless the user specifies otherwise |
+| Trunk | `main` unless the user specifies otherwise |
 | Verification commands | Plan quality bar; else infer from changed packages and ask if unclear |
 | Known residual risks | Prior review comments on the parent issue, or user-provided |
 | Pre-existing flakes | User-provided, or none |
@@ -40,8 +40,8 @@ If the user gives only a PR or branch with no Linear project, proceed on that di
 | User says | Review surface |
 |-----------|----------------|
 | `/grind-epic MUSE-537` or a project name/URL | Cumulative epic diff: `git diff origin/{trunk}...origin/{tip-branch}` |
-| `/grind-epic pr 188 -> dev` | PR #188 diff vs `dev` (fetch PR head; base = `dev`) |
-| `/grind-epic` (no args) | Current branch vs trunk: `git diff origin/dev...HEAD` |
+| `/grind-epic pr 188 -> main` | PR #188 diff vs `main` (fetch PR head; base = `main`) |
+| `/grind-epic` (no args) | Current branch vs trunk: `git diff origin/main...HEAD` |
 | Explicit branch/base | `git diff origin/{base}...origin/{branch}` or `...HEAD` |
 
 For a stack, the cumulative diff is authoritative; per-phase PR diffs are subsets. Attribute fixes to the correct phase branch when possible.

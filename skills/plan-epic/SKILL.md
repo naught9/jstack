@@ -38,7 +38,7 @@ Use this skill only when the user explicitly asks for `/plan-epic` or otherwise 
 - **Two approval gates.** (1) Plan doc draft → user approves → save to the Linear project. (2) Linear issue set → user approves → create. GitHub stack scaffold is a third optional gate.
 - **Do not implement.** Planning only — no feature code, migrations, or phase implementation.
 - **Plan is source of truth.** Linear epic/sub-issues summarize and link to the plan document; detailed scope lives in that Linear document, not in the repo.
-- **One branch + one PR per phase** on `dev` when scaffolding (P0 base = `dev`, Pn base = P(n−1)).
+- **One branch + one PR per phase** on `main` when scaffolding (P0 base = `main`, Pn base = P(n−1)).
 
 ## Workflow overview
 
@@ -177,7 +177,7 @@ Summary:
 
 ```bash
 git fetch origin dev
-gh stack init --base dev <p0-gitBranchName>
+gh stack init --base main <p0-gitBranchName>
 # bottom-up: P0, P1, …, Pn (never commit on or push/reset dev)
 gh stack add <linear-suggested-branch>   # per later phase
 # minimal placeholder commit per phase (except P0 may include plan doc)
@@ -190,7 +190,7 @@ PR conventions:
 - **P0–Pn:** `chore(<area>): stack scaffold placeholder for P{n} (MUSE-XXX)` — draft PR, minimal diff (~placeholder marker only)
 - Follow-on phases (out of v1 scope): scaffold at stack tip but mark **do not implement** in epic
 
-Verify: `gh stack view --json` shows P0→`dev`, P1→P0, …
+Verify: `gh stack view --json` shows P0→`main`, P1→P0, …
 
 ---
 
