@@ -10,12 +10,12 @@ disable-model-invocation: true
 
 # Heal Stack
 
-Realign phase branches and GitHub stack metadata so the full stack appears as one daisy-chain on `dev`. Then submit the stack if requested.
+Realign phase branches and GitHub stack metadata so the full stack appears as one daisy-chain on `main`. Then submit the stack if requested.
 
 **Symptoms this fixes:**
 
 - A PR (e.g. mid-phase) does not appear in the GitHub stack
-- PR base is `dev` when it should be the previous phase branch (or the reverse for P0)
+- PR base is `main` when it should be the previous phase branch (or the reverse for P0)
 - Parallel branches were created instead of a linear stack
 - `gh stack view --json` disagrees with GitHub PR bases
 - Existing PR branches have correct ancestry but no GitHub stack object
@@ -24,7 +24,7 @@ Realign phase branches and GitHub stack metadata so the full stack appears as on
 
 - **GitHub Stacks only.** Repair stacks with `gh stack` plus ordinary `git`/`gh` inspection. Do not use Graphite or `gt` commands.
 - Require `gh` + `gh stack` (`gh extension install github/gh-stack` if missing).
-- **Trunk is `dev`.** Fetch only — never commit on, push, or reset `dev`. `gh stack sync` may fast-forward local `dev` to `origin/dev`; that is OK.
+- **Trunk is `main`.** Fetch only — never commit on, push, or reset `main`. `gh stack sync` may fast-forward local `main` to `origin/main`; that is OK.
 - **Bottom-up only.** Fix Git ancestry from P0 → tip, then rebuild stack metadata. Never reorder from the tip alone hoping parents fix themselves.
 - **Do not invent branch names.** Use existing phase branches / Linear `gitBranchName`.
 - **Do not merge.**
@@ -47,7 +47,7 @@ Expected end state:
 
 | Phase | Parent |
 |-------|--------|
-| P0 | `dev` |
+| P0 | `main` |
 | P1 | P0 branch |
 | Pn | P(n−1) branch |
 
@@ -66,13 +66,13 @@ Then tear down broken local/remote grouping and rebuild. `init` adopts existing 
 
 ```bash
 gh stack unstack --local    # keeps the GitHub grouping; drop --local to unstack on GitHub too
-gh stack init --base dev <p0-branch> <p1-branch> … <pn-branch>
+gh stack init --base main <p0-branch> <p1-branch> … <pn-branch>
 ```
 
 If PRs already exist but are not stacked (or bases are wrong) and Git ancestry is already correct, link them without rewriting local tracking:
 
 ```bash
-gh stack link --base dev --remote origin <p0-branch> <p1-branch> … <pn-branch>
+gh stack link --base main --remote origin <p0-branch> <p1-branch> … <pn-branch>
 gh stack checkout <p0-or-tip-pr-number>
 ```
 
@@ -91,7 +91,7 @@ gh stack submit --auto --remote origin
 
 ### 5. Verify (both views)
 
-1. `gh stack view --json` — full P0…Pn chain, P0 → `dev`
+1. `gh stack view --json` — full P0…Pn chain, P0 → `main`
 2. GitHub — each PR `baseRefName` matches the parent branch (not a sibling, not wrong trunk)
 3. The GitHub stack includes every intended PR (no orphans)
 
@@ -103,7 +103,7 @@ List before → after for each PR (old base → new base), and note any conflict
 
 ## Forbidden
 
-- Committing on, pushing, or resetting `dev`
+- Committing on, pushing, or resetting `main`
 - `gh stack modify` (no non-interactive path)
 - Creating a second parallel stack “to replace” the broken one without user approval
 - `gh stack merge`

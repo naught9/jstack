@@ -33,7 +33,7 @@ First-class **<feature>** in Muse Desktop — <one-line goal>.
 * **P1** <issue link> — <label>
 …
 
-Stack skeleton: one branch + one PR per phase, daisy-chained on `dev` per repo GitHub stack convention.
+Stack skeleton: one branch + one PR per phase, daisy-chained on `main` per repo GitHub stack convention.
 
 ## Depends on
 
@@ -79,7 +79,7 @@ Phase {n} of [<Feature> — Plan of record](<linear document url>) (§6, §<rele
 
 ## Gate (if any)
 
-<Blocked until … merges into dev. Do not work around.>
+<Blocked until … merges into main. Do not work around.>
 ```
 
 Fields:

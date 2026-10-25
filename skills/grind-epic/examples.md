@@ -2,10 +2,10 @@
 
 ## PR vs trunk
 
-User: `/grind-epic pr 188 -> dev`
+User: `/grind-epic pr 188 -> main`
 
 ```markdown
-You are the grind-epic orchestrator for `jake/some-feature` vs `dev` in muse-monorepo.
+You are the grind-epic orchestrator for `jake/some-feature` vs `main` in muse-monorepo.
 You do not implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the diff is review-clean and test-green.
 
 Follow the `grind-epic` skill.
@@ -14,7 +14,7 @@ Follow the `grind-epic` skill.
 Conduct one initial thermos audit, then fix → single-pass re-review cycles scoped as:
 
 ```bash
-git diff origin/dev...HEAD
+git diff origin/main...HEAD
 ```
 
 (after `gh pr checkout 188`)
@@ -28,7 +28,7 @@ git diff origin/dev...HEAD
 | Resource | Value |
 |----------|-------|
 | Work branch | PR #188 head |
-| Base / trunk | `dev` |
+| Base / trunk | `main` |
 | PR | #188 |
 
 ## Prior known risks
@@ -50,7 +50,7 @@ Grind until CLEAN. Do not merge.
 
 User: `/grind-epic MUSE-537`
 
-Orchestrator resolves MUSE-537's project (Audio Tracks), reads the plan document and phase sub-issues, takes the stack tip from `gh stack view --json`, and reviews the cumulative diff `git diff origin/dev...origin/{tip-branch}`.
+Orchestrator resolves MUSE-537's project (Audio Tracks), reads the plan document and phase sub-issues, takes the stack tip from `gh stack view --json`, and reviews the cumulative diff `git diff origin/main...origin/{tip-branch}`.
 
 ```markdown
 ## Ground truth
@@ -61,7 +61,7 @@ Orchestrator resolves MUSE-537's project (Audio Tracks), reads the plan document
 | Parent issue | MUSE-537 |
 | Plan document | "Audio Tracks — Plan of record" (in the project) |
 | Work branch (stack tip) | `jake/muse-619-audio-tracks-p5-agent-tools-docs` |
-| Base / trunk | `dev` |
+| Base / trunk | `main` |
 | Phase table | P0 MUSE-614 #137 … P5 MUSE-619 #142 |
 | Orchestration log | `tmp/orchestration/MUSE-537.md` (local, git-ignored) |
 ```
@@ -72,7 +72,7 @@ After each clean cycle the orchestrator comments on MUSE-537 with verdict, fix S
 
 User: `/grind-epic`
 
-Orchestrator assumes current branch vs `origin/dev`, infers verification from `git diff --stat`, runs one initial thermos audit, and uses one reviewer for each later re-review.
+Orchestrator assumes current branch vs `origin/main`, infers verification from `git diff --stat`, runs one initial thermos audit, and uses one reviewer for each later re-review.
 
 ### What works
 

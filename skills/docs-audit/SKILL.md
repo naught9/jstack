@@ -182,7 +182,7 @@ Deliver the audit report using the template below. Ask the user which findings t
 
 Only after explicit approval:
 
-1. Create a feature branch from the repository's integration branch (for Muse repos, branch from `origin/dev`; never commit directly to `dev`).
+1. Create a feature branch from the repository's integration branch (for Muse repos, branch from `origin/main`; never commit directly to `main`).
 2. Apply only approved edits. Prefer the smallest change that makes the doc true.
 3. When adding docs, pick one Diátaxis mode and match existing `docs/internal/` structure and tone.
 4. Verify links, symbol names, diagrams, and any commands or counts cited in changed docs.

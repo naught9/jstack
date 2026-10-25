@@ -6,7 +6,7 @@ Optional third deliverable. Only run after user approval (gate 3).
 
 - Plan of record saved as a Linear document in the epic's project
 - Linear sub-issues exist (for MUSE-XXX IDs and branch names)
-- `gh` + `gh stack` available (`gh extension install github/gh-stack` if missing); trunk is `dev`
+- `gh` + `gh stack` available (`gh extension install github/gh-stack` if missing); trunk is `main`
 
 ## Agent CLI rules
 
@@ -14,11 +14,11 @@ Optional third deliverable. Only run after user approval (gate 3).
 - Always pass non-interactive flags. Never run TUI commands: `gh stack modify`, `gh stack switch`, or bare `submit` / `view` / `init` / `add` / `checkout`.
 - Inspect with `gh stack view --json`. Submit with `gh stack submit --auto --remote origin`.
 - After submit, set titles/bodies with `gh pr edit` (auto titles are not enough).
-- Do **not** `git checkout dev`, commit on `dev`, or push/reset `dev` — see `AGENTS.md` (`dev` safety).
+- Do **not** `git checkout main`, commit on `main`, or push/reset `main` — see `AGENTS.md` (`main` safety).
 
 ## Workflow
 
-### 1. Fetch trunk (do not modify `dev`)
+### 1. Fetch trunk (do not modify `main`)
 
 ```bash
 git fetch origin dev
@@ -29,7 +29,7 @@ git fetch origin dev
 For each phase P0, P1, …, Pn (including follow-on placeholders if requested), use the branch name Linear attached to each sub-issue (e.g. `jake/muse-614-audio-tracks-p0-track-kind-data-contract`). Do **not** invent branch names.
 
 ```bash
-gh stack init --base dev <p0-gitBranchName>
+gh stack init --base main <p0-gitBranchName>
 # placeholder commit on P0 (see below)
 gh stack add <p1-gitBranchName>
 # placeholder commit on P1
@@ -39,7 +39,7 @@ gh stack add <p1-gitBranchName>
 `add` must run from the current top of the stack. If the phase branches already exist, adopt them in one shot instead:
 
 ```bash
-gh stack init --base dev <p0> <p1> … <pn>
+gh stack init --base main <p0> <p1> … <pn>
 ```
 
 Then check out each branch (`gh stack checkout <branch>`) and add the placeholder commit.
@@ -78,7 +78,7 @@ PR bodies: link the Linear plan document, sub-issue, parent epic. Note "scaffold
 gh stack view --json
 ```
 
-Expected: P0 → `dev`, P1 → P0 branch, …, tip = last phase (or follow-on placeholder).
+Expected: P0 → `main`, P1 → P0 branch, …, tip = last phase (or follow-on placeholder).
 
 Confirm on GitHub: each PR base is the previous phase branch, all drafts.
 
@@ -93,8 +93,8 @@ Add Linear comment listing PR numbers and branch names for orchestrator handoff.
 Prefer the dedicated skill: [heal-stack](../heal-stack/SKILL.md). Summary:
 
 1. `git fetch origin dev` and each stack branch from `origin`
-2. `gh stack unstack --local` then `gh stack init --base dev <p0> <p1> … <pn>` (or `gh stack link --base dev --remote origin …` when PRs already exist)
-3. **Do not** commit/push/reset `dev`, or run `gh stack modify`
+2. `gh stack unstack --local` then `gh stack init --base main <p0> <p1> … <pn>` (or `gh stack link --base main --remote origin …` when PRs already exist)
+3. **Do not** commit/push/reset `main`, or run `gh stack modify`
 4. `gh stack rebase --remote origin` then `gh stack submit --auto --remote origin`
 
 ---
