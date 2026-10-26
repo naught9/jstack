@@ -96,7 +96,7 @@ You are the jstack `worker` fixing thermo review findings on branch `{work-branc
 - Keep diffs minimal and localized
 
 ## Repo conventions
-- pnpm only; Node 22; strict TypeScript at module boundaries
+- pnpm only; Node 24; strict TypeScript at module boundaries
 - Don't reformat untouched files
 - Rebuild and commit `dist/` for changed packages that commit artifacts (only if orchestrator asked you to commit)
 
