@@ -182,7 +182,7 @@ test('stack skills use GitHub gh stack instead of Graphite gt', async () => {
   }
 
   const scaffold = await readFile(path.join(sourceRoot, 'skills', 'plan-epic', 'github-stack-scaffold.md'), 'utf8');
-  assert.match(scaffold, /gh stack init --base dev/);
+  assert.match(scaffold, /gh stack init --base main/);
   assert.match(scaffold, /gh stack submit --auto/);
   assert.doesNotMatch(scaffold, /\bgt /);
 

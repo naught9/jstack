@@ -21,7 +21,7 @@ Optional third deliverable. Only run after user approval (gate 3).
 ### 1. Fetch trunk (do not modify `main`)
 
 ```bash
-git fetch origin dev
+git fetch origin main
 ```
 
 ### 2. Create stack bottom-up
@@ -92,7 +92,7 @@ Add Linear comment listing PR numbers and branch names for orchestrator handoff.
 
 Prefer the dedicated skill: [heal-stack](../heal-stack/SKILL.md). Summary:
 
-1. `git fetch origin dev` and each stack branch from `origin`
+1. `git fetch origin main` and each stack branch from `origin`
 2. `gh stack unstack --local` then `gh stack init --base main <p0> <p1> … <pn>` (or `gh stack link --base main --remote origin …` when PRs already exist)
 3. **Do not** commit/push/reset `main`, or run `gh stack modify`
 4. `gh stack rebase --remote origin` then `gh stack submit --auto --remote origin`

@@ -176,7 +176,7 @@ After user opts in, follow [github-stack-scaffold.md](github-stack-scaffold.md).
 Summary:
 
 ```bash
-git fetch origin dev
+git fetch origin main
 gh stack init --base main <p0-gitBranchName>
 # bottom-up: P0, P1, …, Pn (never commit on or push/reset dev)
 gh stack add <linear-suggested-branch>   # per later phase

@@ -54,7 +54,7 @@ Expected end state:
 ### 2. Fetch
 
 ```bash
-git fetch origin dev
+git fetch origin main
 # fetch each stack branch from origin as needed
 ```
 
