@@ -95,6 +95,10 @@
       "path": "skills/walkthrough/SKILL.md"
     },
     {
+      "id": "worth-it",
+      "path": "skills/worth-it/SKILL.md"
+    },
+    {
       "id": "zen",
       "path": "skills/zen/SKILL.md"
     }
