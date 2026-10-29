@@ -1,181 +1,199 @@
 ---
 name: grind-epic
 description: >-
-  Grind an epic (a Linear project's branch, PR, or GitHub stack) to
-  review-clean and test-green via an initial thermos audit followed by fix and
-  single-pass re-review cycles in one chat. Use when the user says grind-epic,
-  grind to green, thermo grind, review-fix loop, or wants review + fix
-  specialists on an epic's diff.
+  Build an entire approved epic from plan-epic's plan of record and Linear
+  phase issues. Orchestrate implementation, verification, an initial thermos
+  review per phase, and fix / single-pass re-review loops until every in-scope
+  phase and the integrated epic are merge-ready. Also supports review/fix-only
+  runs on an existing PR or branch. Require explicit user invocation; do not
+  use it automatically.
 disable-model-invocation: true
 ---
 
 # Grind Epic
 
-You are the **review/fix orchestrator** for an epic: a Linear project whose work lives on one branch, one PR, or a GitHub stack. You do **not** implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the diff is review-clean and test-green.
+You are the **orchestrator and integrator** for a large phased feature. You do **not** implement phases yourself. You spawn specialists, keep the PR stack coherent, update Linear, and grind until every in-scope phase is merge-ready.
 
-**Related:** For a one-shot dual review without a fix loop, use [thermos](../thermos/SKILL.md). To plan the epic (project, plan document, issues), use [plan-epic](../plan-epic/SKILL.md). To repair a broken stack, use [heal-stack](../heal-stack/SKILL.md).
+## Invocation gate
+
+Use this skill only when the user explicitly asks for `/grind-epic` or otherwise clearly requests this workflow. If it looks useful but was not requested, ask whether they would like to use `/grind-epic`, then wait for their answer.
+
+**Workflow:** [plan-epic](../plan-epic/SKILL.md) uses [ask-me](../ask-me/SKILL.md) to settle decisions, then creates the approved plan and issues. `grind-epic` consumes those artifacts and builds the epic; no implementation or PR scaffold is required beforehand.
+
+## Run mode
+
+- **Epic execution (default for a project or parent issue):** implement all unfinished in-scope phases, review and fix each, then verify the cumulative epic. An empty diff or scaffold-only stack is a starting point, never completion.
+- **Resume:** inspect the actual code, issue status, PRs, prior review evidence, and orchestration log. Reuse completed work; issue labels alone do not prove acceptance or review completion. Continue the first unfinished phase without repeating satisfied approval gates.
+- **Review/fix only:** when the user explicitly targets an existing PR/branch for grinding, run the review → fix loop on that diff without initiating other phases. Linear is optional in this mode. Report this as diff completion, not completion of an unbuilt epic.
+- With no arguments, resolve the current branch's epic when possible; otherwise use review/fix-only mode on the current diff and state that scope.
 
 ## Before you start
 
-The Linear project is the source of truth for scope. Resolve it from the user prompt (project name/URL, parent issue like `MUSE-537`, or a PR/branch whose issue belongs to a project), then gather:
+Gather or confirm:
 
 | Input | Where to find it |
 |-------|------------------|
-| Linear project | `list_projects` / the parent issue's `project` |
-| Plan of record | The plan document in the project (`list_documents` with `projectId`, then `get_document`) — scope, quality bar, phase boundaries |
-| Parent epic + phase sub-issues | Linear issues in the project (`list_issues` with the project) |
-| Branches / PRs | Each sub-issue's `gitBranchName` and linked PRs; `gh stack view --json` for the stack |
-| Tip branch | Top of the stack, or the single work branch/PR head |
-| Trunk | `main` unless the user specifies otherwise |
-| Verification commands | Plan quality bar; else infer from changed packages and ask if unclear |
-| Known residual risks | Prior review comments on the parent issue, or user-provided |
-| Pre-existing flakes | User-provided, or none |
+| Parent Linear issue | e.g. MUSE-537 |
+| Linear project | The epic's project (from the parent issue's `project`) |
+| Plan of record | The plan Linear document in that project (`list_documents` with `projectId`, then `get_document`) |
+| Phase sub-issues | Linear children (P0…Pn) |
+| GitHub stack | Draft PRs + branch names, or plan to create them |
+| Out-of-scope phases | e.g. follow-on P6 — do not implement |
+| Gates / blockers | e.g. upstream stack must merge before P2 |
 
-Read the plan document's quality bar and the parent issue fully before spawning any specialist. If the project has no plan document, say so and continue from the issues and diff; suggest [plan-epic](../plan-epic/SKILL.md) afterward.
+Read the plan of record and parent issue fully before spawning any specialist. For epic execution, require the approved plan and phase issues; if missing or materially ambiguous, ask for the missing artifact/decision and route planning through [plan-epic](../plan-epic/SKILL.md). Do not silently downgrade to reviewing an empty diff. Set the project state to `started` when implementation begins.
 
-If the user gives only a PR or branch with no Linear project, proceed on that diff alone and skip the Linear steps.
-
-### Review surface
-
-| User says | Review surface |
-|-----------|----------------|
-| `/grind-epic MUSE-537` or a project name/URL | Cumulative epic diff: `git diff origin/{trunk}...origin/{tip-branch}` |
-| `/grind-epic pr 188 -> main` | PR #188 diff vs `main` (fetch PR head; base = `main`) |
-| `/grind-epic` (no args) | Current branch vs trunk: `git diff origin/main...HEAD` |
-| Explicit branch/base | `git diff origin/{base}...origin/{branch}` or `...HEAD` |
-
-For a stack, the cumulative diff is authoritative; per-phase PR diffs are subsets. Attribute fixes to the correct phase branch when possible.
-
-Bootstrap:
-
-```bash
-git fetch origin {base} {tip-branch}
-# If PR: gh pr checkout {n}   (or fetch PR head ref)
-git checkout {tip-branch}
-git diff origin/{base}...HEAD --stat
-```
+Resolve trunk from repository instructions and the actual PR/stack bases (`main` is the Muse convention); honor an explicit user base. Inventory the working tree before checkout and preserve unrelated edits. Record each phase's base/head SHA, acceptance criteria, implementation status, review evidence, verification commands, upstream gates, and any pre-existing flakes. Use local commits for unpushed work; do not review only stale remote refs.
 
 ## Orchestration log
 
-Keep a running log for the whole run. It is local scratch, **never committed** and not stored in Linear.
+Keep a running orchestration log for the whole run. It is local scratch, **never committed** and not stored in Linear.
 
-- Path: `tmp/orchestration/<parent-issue-or-branch>.md` at the repo root.
-- Before writing, confirm it is ignored: `git check-ignore -q <path>`. If not, add `tmp/orchestration/` to `$(git rev-parse --git-path info/exclude)` rather than editing a tracked `.gitignore`.
-- Start it with the ground truth (project, plan document link, phase/branch table, diff command, verification commands, flakes). Re-read it after any context loss.
-- Append per iteration: specialists spawned, findings and verdict, fix SHAs, verification results, accepted MINOR/NIT items, residual risks.
+- Path: `tmp/orchestration/<parent-issue-or-branch>.md` at the repo root (e.g. `tmp/orchestration/MUSE-537.md`).
+- Before writing, confirm it is untracked and ignored: `git check-ignore -q tmp/orchestration/<parent-issue-or-branch>.md`. If it isn't ignored, add `tmp/orchestration/` to the local exclude file (`$(git rev-parse --git-path info/exclude)`) rather than editing a tracked `.gitignore`.
+- Create it at the start with the ground truth (parent, project, plan document link, phase table, gates, out-of-scope phases). Re-read it after any context loss.
+- Append as you go: specialists spawned (role, scope, handle), review iterations and verdicts, fix SHAs, verification commands and results, gates hit, residual risks, accepted MINOR/NIT items, decisions made.
+- Specialist prompts may quote relevant log excerpts; children never get the log path as a dependency.
 
-## Definition of done
+## Stack conventions (muse-monorepo)
 
-- One initial thermos audit completed; either it is clean or the latest required re-review has zero **BLOCKER** / **MAJOR** findings
-- Scoped test / type-check gates green (orchestrator verifies output — do not trust specialist claims)
-- Local orchestration log updated; progress comment posted on the parent Linear issue (when a project is in play)
-- In-scope PRs stay **ready for review** (not draft) if they were
-- **Do not merge** unless the user explicitly asks
+- **GitHub Stacks only.** Use `gh stack` for stack operations and ordinary `git`/`gh` for standard branch and PR work. Do not use Graphite or `gt` commands.
+- One branch + one PR per phase, daisy-chained on `main` (P0 base = `main`, Pn base = P(n−1) branch).
+- Prefer **existing scaffold branches** when present — do not create parallel branches.
+- Use Linear-suggested branch names (e.g. `jake/muse-614-audio-tracks-p0-...`).
+- Restack descendants after each phase (`gh stack rebase --remote origin`, `gh stack submit --auto --remote origin` as needed). Never run `gh stack modify`. If PRs are orphaned or bases are wrong, use [heal-stack](../heal-stack/SKILL.md) first.
+- **Do not merge** unless the user explicitly asks. Deliverable = merge-ready PRs.
 
-## Review → fix loop
+Create or publish branches/PRs and update Linear within the user's authorized execution scope; respect any explicit local-only or publication boundary. Do not reset shared branches or rewrite published history without applicable authorization.
 
-Repeat until CLEAN (zero BLOCKER/MAJOR):
+## Per-phase loop
+
+Run phases **in order** (P0 → Pn). For each in-scope phase:
 
 ```
-- [ ] 1. Bootstrap — resolve project, plan, surface; fetch, checkout, orient on diff stat
-- [ ] 2. Run one initial thermos audit — two review roles in parallel, never implement
-- [ ] 3. Spawn fix specialist(s) — separate from reviewers; parallelize independent finding batches
-- [ ] 4. Verify yourself — run verification commands, inspect output
-- [ ] 5. Run one single-pass re-review on the updated diff
-- [ ] 6. Log + Linear comment + report to user
+- [ ] 1. Prepare phase branch / PR; mark issue in progress
+- [ ] 2. Spawn implementation specialist
+- [ ] 3. Verify implementation yourself, then run one initial thermos review (thermo-review + thermo-quality)
+- [ ] 4. Fix loop with single-pass re-reviews until clean
+- [ ] 5. Restack, confirm acceptance, mark PR ready + update Linear
+- [ ] 6. Verify acceptance criteria yourself
+- [ ] 7. Log progress; comment on parent issue
 ```
 
-### 1. Bootstrap
+### 1. Prepare phase branch / PR
 
-Resolve the Linear project and plan (see above), then orient on the diff. Infer verification commands from touched packages (e.g. `pnpm --filter @muse/agent type-check`, scoped vitest/cargo). Prefer the smallest relevant gates.
+When the stack is pre-scaffolded:
 
-### 2. Initial review (thermos)
+- Check out the phase branch.
+- **Rename** the PR from `chore(...): stack scaffold placeholder …` to a real conventional-commit title with `(MUSE-XXX)`.
+- Replace placeholder PR body with a proper description.
+- Remove scaffold-only placeholder files in the first real commit.
 
-Run [thermos](../thermos/SKILL.md) **once** on the full review surface (`thermo-review` + `thermo-quality` in parallel). Never let either reviewer implement fixes. This establishes the broad correctness, security, and maintainability baseline. Give reviewers the plan document's quality bar and phase boundaries so they can flag scope creep and missing coverage.
+If there is no scaffold, create the first phase branch from trunk and each later branch from its dependency phase. Open a draft PR once there is a meaningful implementation diff; do not require placeholder PRs to start execution.
 
-**Large diffs:** split the initial review by subsystem (one split per iteration), merge and dedupe findings, and escalate cross-cutting issues to epic level.
+Set the phase issue to **In Progress** when work begins, with or without a scaffold.
 
-Prompt template: [subagent-prompts.md](subagent-prompts.md#initial-review).
+### 2. Implementation specialist
 
-Classify findings: **BLOCKER**, **MAJOR**, **MINOR**, **NIT**. Verdict: **CLEAN** or **NEEDS_FIXES**.
+Spawn a **fresh** `worker` with a fully self-contained prompt (children cannot see your conversation). Fall back to host general-purpose only if `worker` is not installed. Template: [subagent-prompts.md](subagent-prompts.md#implementation).
 
-### 3. Spawn fix specialist
+Include: sub-issue ID, exact branch, base branch, plan sections, scope boundaries, definition of done, repo conventions.
 
-For BLOCKER/MAJOR batches, spawn a **`worker`** (host general-purpose only if `worker` is not installed).
+Retain the implementer handle and collect its explicit terminal handoff before starting thermos. On asynchronous runtimes such as Prime RLM, end the admission turn and resume the phase only after that handoff arrives; do not inspect or review an in-progress diff.
 
-Prompt template: [subagent-prompts.md](subagent-prompts.md#fix).
+The implementer may spawn nested exploration workers if the host allows and the phase needs it.
 
-Rules:
-- Work on the tip branch (PR head / current branch) unless a fix clearly belongs on an intermediate phase branch
-- Minimal, localized diffs; match repo conventions (pnpm-only, strict TS, no drive-by reformat in muse)
-- Run scoped tests before finishing
-- **Never** let the fix specialist run thermo review on its own work
-- **Parallelize** independent fix batches (disjoint files/subsystems) in the same iteration
-- Retain each fixer's handle and collect its explicit terminal handoff before verifying or re-reviewing. On asynchronous runtimes such as Prime RLM, end the admission turn and resume only after the handoff arrives; do not review an in-progress fix
+### 3. Verify implementation, then initial review (thermos)
 
-Cap: if the same finding survives **3** fix/review cycles, stop and escalate with evidence. If a finding reveals a plan-level problem (schema conflict, architectural mismatch), stop and report it — do not improvise; add a comment on the parent issue and leave the plan document unchanged unless the user approves an update.
+After the implementation handoff, inspect the diff against the plan and run the scoped verification commands yourself. Resolve failures before review. Include evidence for acceptance criteria (including caller wiring and observable behavior), not only passing unit tests.
 
-### 4. Verify yourself
+Spawn a **separate** review path — never let the implementer review its own work.
 
-After every fix round, **you** run the verification commands. Check pass/fail output directly. Include migration smoke tests when SQL changed.
+Run [thermos](../thermos/SKILL.md) **once** against the phase PR/branch (roles `thermo-review` + `thermo-quality` in parallel). Review the pinned phase base/head with `git diff {base-sha}...{head-sha}`; the preceding phase is the base for a stacked phase. This establishes the broad correctness, security, and maintainability baseline. Template: [subagent-prompts.md](subagent-prompts.md#initial-review).
 
-When a fix landed on an intermediate phase branch, restack descendants (`gh stack rebase --remote origin`, then `gh stack submit --auto --remote origin` as needed; never `gh stack modify`) and re-run affected tests. Use [heal-stack](../heal-stack/SKILL.md) if bases are wrong.
+### 4. Fix loop
 
-### 5. Single-pass re-review
+If the initial thermos or a later re-review reports findings:
 
-After each fix round, spawn **one fresh re-review specialist**, not another two-role thermos pair:
+1. Address BLOCKER/MAJOR findings and verification failures. Spawn a fix specialist, or send the finding list to the retained implementer handle when the runtime supports direct-child follow-up; otherwise spawn a fresh `worker`.
+2. Retain each fixer's handle and collect its explicit terminal handoff before verifying or re-reviewing. On asynchronous runtimes, end the admission/follow-up turn; do not review an in-progress fix. Inspect the resulting diff and run the verification commands yourself before re-review.
+3. Spawn **one fresh re-review specialist**, not another two-role thermos pair:
+   - Default to [quick-review](../quick-review/SKILL.md) via role `reviewer` for localized fixes and direct confirmation that reported findings are resolved.
+   - Use [thermo-nuclear-review](../thermo-nuclear-review/SKILL.md) via role `thermo-review` when the findings or fixes involve security, correctness invariants, breaking behavior, devex, feature gates, cross-cutting behavior, or otherwise remain high risk.
+4. Repeat until the selected re-review has zero BLOCKER/MAJOR findings and verification is green. Record MINOR/NIT dispositions and residual risks; do not silently drop findings.
 
-- Default to [quick-review](../quick-review/SKILL.md) via role `reviewer` for localized fixes and direct confirmation that reported findings are resolved.
-- Use [thermo-nuclear-review](../thermo-nuclear-review/SKILL.md) via role `thermo-review` when the findings or fixes involve security, correctness invariants, breaking behavior, devex, feature gates, cross-cutting behavior, or otherwise remain high risk.
+Re-run full thermos only if the fix materially expands the PR's scope, introduces substantial structural/maintainability changes that the initial quality pass did not cover, or the user explicitly requests it. Template: [subagent-prompts.md](subagent-prompts.md#re-review).
 
-The re-review must inspect the updated overall review surface, verify prior findings end to end, and check for regressions introduced by the fixes. Repeat steps 3–5 until CLEAN.
+Cap: if the same finding survives 3 fix/review cycles, stop the phase and escalate with evidence.
 
-Re-run full thermos only if a fix materially expands scope, introduces substantial structural/maintainability changes not covered by the initial quality pass, or the user explicitly requests it. Prompt template: [subagent-prompts.md](subagent-prompts.md#re-review).
+### 5. Restack + mark ready + Linear
 
-### 6. Log, comment, report
+- Restack all descendant branches (including untouched follow-on placeholders at the stack tip). Re-run affected verification after integration; re-review material conflict resolutions.
+- Confirm the phase acceptance and review gates below, then mark PR **ready for review** (not draft).
+- Linear sub-issue → **In Review** (use **Done** only if team convention defines it as implementation complete before merge); comment with PR link + shipped summary.
 
-Append the iteration to the local orchestration log. After each clean cycle, post a progress comment on the parent Linear issue (`save_comment`; retry once if Linear times out): verdict, fix SHAs, verification summary, accepted MINOR/NIT items. Then report to the user (see [Final deliverable](#final-deliverable)).
+### 6. Verify (orchestrator duty)
 
-## Thermo review rubric
+A phase is done only when **you** confirm:
 
-Customize from the plan document's quality bar and the change set. Default categories:
+- Initial thermos completed and was clean, or the latest required re-review is clean
+- Scoped tests / type-check / lint green (check output, don't trust specialist claims)
+- Acceptance criteria from sub-issue + plan doc met
+- PR title/body no longer say "scaffold"
 
-| Area | What to hunt |
-|------|--------------|
-| Correctness | Logic bugs; contract drops; math/invariants |
-| Security | Trust boundaries; path traversal; secrets; IPC |
-| Breaking changes | Defaults for existing users; migration safety |
-| Scope | Phase boundary creep; unrelated drive-bys; incomplete wiring |
-| Tests | Missing coverage for new behavior; broken gates |
-| Devex | Type-check failures; flakes introduced by the change |
+### 7. Log + parent comment
 
-For a multi-iteration run, also keep a **regression checklist** of prior fixes (SHAs + what to re-check) in the launch prompt and the log.
+Append to the local orchestration log: phase, specialists run, review iterations, risks.
+
+Post a progress comment on the parent Linear issue when the phase reaches merge-ready.
+
+## Final epic integration gate
+
+After every in-scope phase is ready, inspect the cumulative diff from trunk to the **last in-scope phase tip**, pinned to its current SHA. Run the plan's epic-level acceptance and integration checks across phases. Spawn one fresh review specialist on the cumulative surface to check missing deliverables, cross-phase contracts, caller integration, and regressions. Use `quick-review` for localized/low-risk surfaces or `thermo-nuclear-review` for high-risk integration. The per-phase thermos audits are the broad baseline; repeat full thermos only for material unreviewed scope or structural changes.
+
+Route integration findings to the owning phase, collect fix handoffs, verify, restack, and single-pass re-review until clean. Do not call the epic complete because individual PRs are green. Completion requires every in-scope acceptance criterion, clean review evidence for the final code, green scoped and epic-level gates, and a coherent ready-for-review stack. Out-of-scope placeholders are excluded from completion and cumulative review.
+
+For review/fix-only mode, apply the same initial thermos → fix → verification → single-pass re-review strategy once to the requested PR/branch surface; skip phase implementation and the epic completion claim.
+
+## Gate handling
+
+When a phase is blocked on an upstream merge (e.g. event-lane stack into `main`):
+
+1. Check gate status before starting the blocked phase.
+2. If blocked: **do not** work around the gate (no parallel schedulers, stubs, or architectural shortcuts).
+3. Report the blocker; continue only phases whose dependencies and gates are satisfied. Leave the blocked phase incomplete.
+4. Document the gate and resume plan in the orchestration log.
+
+## Integration duties (yours alone)
+
+- Resolve mechanical rebase conflicts after restacks.
+- Keep PR titles/descriptions accurate as work evolves.
+- Re-run affected tests after restacks that touch shared files.
+- If a phase reveals a plan-level problem, stop, document it in the log and as a comment on the plan document or parent issue, and surface it — don't improvise architecture. Update the Linear plan document only when the user approves the change.
+
+## Out-of-scope / tip placeholders
+
+Leave follow-on scaffold PRs (e.g. P6) **untouched** except restacking on top of completed work.
 
 ## Operating rules
 
-- Review and fix are **always separate specialists**
-- Spawn prompts must be **fully self-contained** (children cannot see parent conversation)
-- A cycle is done only when **you** verify test output and diff, not when a specialist says so
-- Initial thermos uses its two parallel roles; subsequent re-reviews use one selected review role
-- Prefer **parallel** fix batches when work is independent
-- Pre-existing flakes: ignore unless this change introduces them
-- Do not merge; deliver a green, review-clean branch/PR/stack
+- Implementation/fix workers and reviewers are separate specialists; a worker never reviews its own work.
+- Prompts are self-contained: include repository/worktree, pinned base/head, plan excerpts, phase boundaries, acceptance criteria, checks, prior findings, and publication permissions. Templates: [subagent-prompts.md](subagent-prompts.md).
+- Parallelize independent work only with disjoint file ownership or isolated worktrees. Serialize dependent phases and shared-file edits; do not switch a shared checkout under active specialists.
+- Preserve known pre-existing flakes as explicit limitations; new failures must be resolved. A blocked gate or unavailable required check means incomplete, not green.
+- Keep progressing across all in-scope phases; a clean phase is a checkpoint, not the end of the run.
 
 ## Final deliverable
 
 Report to the user:
 
-- Final verdict: CLEAN (initial thermos + re-review iteration count)
-- Fix commits (SHAs + summary) if any were made
-- Verification summary (commands run + pass/fail)
-- Remaining MINOR/NIT items (accepted or deferred)
-- Diff surface used (project/stack tip, `pr N -> base`, or `branch...base`)
-- Linear project and parent issue comment link (if any), and the local orchestration log path
-
-## Launch prompt
-
-Fill `{...}` from the user invocation and the Linear project. Full template: [subagent-prompts.md](subagent-prompts.md#orchestrator-launch).
+- Final verdict: merge-ready or incomplete/blocked, with project, plan, and parent issue links
+- Stack summary (PR numbers, branches, draft/ready status, final base/head SHAs)
+- Per-phase: implemented deliverables, acceptance evidence, review iterations, fix SHAs, verification commands and results
+- Cumulative integration verdict and checks; accepted/deferred MINOR/NIT findings and residual risks
+- Any blocked gates or plan issues needing human decision
+- Path to the local orchestration log (ignored and untracked)
 
 ## Examples
 
-See [examples.md](examples.md).
+See [examples.md](examples.md) for MUSE-537 (Audio Tracks).

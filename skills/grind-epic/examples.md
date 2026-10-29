@@ -1,82 +1,34 @@
 # Examples
 
-## PR vs trunk
-
-User: `/grind-epic pr 188 -> main`
-
-```markdown
-You are the grind-epic orchestrator for `jake/some-feature` vs `main` in muse-monorepo.
-You do not implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the diff is review-clean and test-green.
-
-Follow the `grind-epic` skill.
-
-## Mission
-Conduct one initial thermos audit, then fix → single-pass re-review cycles scoped as:
-
-```bash
-git diff origin/main...HEAD
-```
-
-(after `gh pr checkout 188`)
-
-**Review policy:** run thermos once initially. After fixes, use one `quick-review` reviewer by default or one `thermo-nuclear-review` reviewer for high-risk fixes.
-
-**Definition of done:** initial thermos complete; either it is clean or the latest required re-review has zero BLOCKER/MAJOR findings; scoped test/type-check gates green. Do not merge anything.
-
-## Ground truth
-
-| Resource | Value |
-|----------|-------|
-| Work branch | PR #188 head |
-| Base / trunk | `main` |
-| PR | #188 |
-
-## Prior known risks
-none
-
-## Verification commands
-```bash
-pnpm --filter @muse/agent type-check
-pnpm --filter muse-desktop type-check
-```
-
-## Pre-existing flakes
-none known
-
-Grind until CLEAN. Do not merge.
-```
-
-## Epic via Linear project
+## Plan → entire epic
 
 User: `/grind-epic MUSE-537`
 
-Orchestrator resolves MUSE-537's project (Audio Tracks), reads the plan document and phase sub-issues, takes the stack tip from `gh stack view --json`, and reviews the cumulative diff `git diff origin/main...origin/{tip-branch}`.
+The approved Audio Tracks plan and issues exist; no feature code or PR scaffold exists yet. The orchestrator reads the plan, MUSE-537, and its phase issues. P0–P5 are in scope; recording P6 is a follow-on.
 
-```markdown
-## Ground truth
+1. Record phase dependencies, acceptance gates, and branches in `tmp/orchestration/MUSE-537.md` (local, ignored). Resolve trunk from repo instructions.
+2. Create/reuse P0's branch, dispatch an implementation worker, and collect its terminal handoff. Inspect the implementation and run the scoped acceptance checks.
+3. Run thermos once on P0. If it finds MAJOR issues, send them to a fix worker, collect its handoff, verify, then use one fresh reviewer. Repeat until clean.
+4. Restack descendants, verify affected integration, mark P0's PR ready, update its issue, and comment on the parent. Continue P1–P5 in dependency order.
+5. Check upstream merge gates before dependent phases; do not invent stubs to bypass them. Leave P6 unimplemented, restacking its placeholder if present.
+6. Run epic acceptance checks and a fresh cumulative integration review from trunk to the P5 tip. Fix and re-review integration findings before reporting the epic merge-ready. Do not merge.
 
-| Resource | Value |
-|----------|-------|
-| Linear project | Audio Tracks — https://linear.app/muse-art/project/audio-tracks |
-| Parent issue | MUSE-537 |
-| Plan document | "Audio Tracks — Plan of record" (in the project) |
-| Work branch (stack tip) | `jake/muse-619-audio-tracks-p5-agent-tools-docs` |
-| Base / trunk | `main` |
-| Phase table | P0 MUSE-614 #137 … P5 MUSE-619 #142 |
-| Orchestration log | `tmp/orchestration/MUSE-537.md` (local, git-ignored) |
-```
+An empty starting diff is expected; reviewing it as CLEAN would not satisfy this request.
 
-After each clean cycle the orchestrator comments on MUSE-537 with verdict, fix SHAs, and verification results.
+## Resume a partially built epic
 
-## Default (current branch → dev)
+User: `/grind-epic MUSE-537 — resume`
 
-User: `/grind-epic`
+P0 has acceptance and clean-review evidence at its current SHA. P1 is half-built; P2–P5 are untouched. Reuse P0, reconcile P1's actual diff with its acceptance criteria, finish P1 with an implementation worker, then run its review loop. Continue through P5 and the cumulative integration gate. Do not stop because the existing P1 diff becomes clean while later phases remain unbuilt.
 
-Orchestrator assumes current branch vs `origin/main`, infers verification from `git diff --stat`, runs one initial thermos audit, and uses one reviewer for each later re-review.
+## Existing PR, review/fix only
 
-### What works
+User: `/grind-epic pr 188 -> main — review/fix only`
 
-- Parent never implements; review and fix specialists remain separate.
-- Initial thermos supplies the two broad parallel rubrics; later re-reviews use one selected reviewer.
-- Independent fix batches may still run in parallel.
-- Orchestrator verifies commands after every fix round instead of trusting specialist claims.
+State the limited scope, pin PR #188's head and base, and infer scoped verification from the changed packages. Run one initial thermos audit, then fix → verification → single-pass re-review cycles until clean. Preserve an already-ready PR's status. Report the reviewed diff and checks without claiming completion of an associated epic.
+
+## Planning handoff
+
+User: `/plan-epic Audio Tracks`
+
+Use ask-me to resolve the decision frontier and confirm shared understanding, then draft and obtain approval for the plan and issue set. Save the approved Linear artifacts, optionally scaffold the stack, and hand off `/grind-epic MUSE-537` to implement and review the entire in-scope epic. Planning does not implement phases.

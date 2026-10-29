@@ -1,8 +1,8 @@
 ---
 name: plan-epic
 description: >-
-  Plan large phased features interactively: clarify scope with structured
-  questions, create the epic's Linear project if missing, write the plan of
+  Plan large phased features interactively: clarify scope using the ask-me
+  requirements interview, create the epic's Linear project if missing, write the plan of
   record as a Linear document in that project, create a Linear epic with
   sub-issues, and optionally scaffold a GitHub PR stack. Use when
   starting a new epic, hardening a planning doc, creating phased Linear issues,
@@ -17,18 +17,18 @@ disable-model-invocation: true
 
 Interactive planning workflow for large features. Produce these artifacts (when requested):
 
-## Invocation gate
-
-Use this skill only when the user explicitly asks for `/plan-epic` or otherwise clearly requests this workflow. If it looks useful but was not requested, ask whether they would like to use `/plan-epic`, then wait for their answer.
-
 1. **Linear project** — one per epic; reuse it if it exists, create it first if it doesn't
 2. **Plan of record** — a Linear document belonging to that project (not a file in the repo)
 3. **Linear issues** — parent epic + one sub-issue per phase, all in the project
 4. **GitHub stack** (optional) — daisy-chained draft PRs with scaffold placeholders
 
+## Invocation gate
+
+Use this skill only when the user explicitly asks for `/plan-epic` or otherwise clearly requests this workflow. If it looks useful but was not requested, ask whether they would like to use `/plan-epic`, then wait for their answer.
+
 **When to use [plan](../plan/SKILL.md) instead:** daily / single-task planning without Linear, GitHub stacks, or a multi-phase plan of record.
 
-**Pair with:** [grind-epic](../grind-epic/SKILL.md) for review grinding once phases are implemented; [heal-stack](../heal-stack/SKILL.md) to repair the GitHub stack.
+**Pair with:** [grind-epic](../grind-epic/SKILL.md) to implement all in-scope phases from the approved plan and issues, then grind them through review and verification; [heal-stack](../heal-stack/SKILL.md) to repair the GitHub stack.
 
 ## Hard rules
 
@@ -44,7 +44,7 @@ Use this skill only when the user explicitly asks for `/plan-epic` or otherwise 
 
 ```
 1. Intake          → read context, inventory codebase if needed
-2. Clarify         → resolve open questions (may repeat)
+2. Clarify         → ask-me interview; confirm shared understanding
 3. Project         → find the Linear project; create it if missing
 4. Draft plan      → draft in chat (not saved yet)
 5. Approve plan    → structured question or explicit user OK; save as Linear document
@@ -74,20 +74,13 @@ Read related planning docs and architecture references before asking questions �
 
 ## 2. Clarify
 
-Ask the user for decisions they must make. Prefer the host structured question tool; otherwise ask in chat with clear options. **Batch related questions** (2–5 per round); run multiple rounds if needed.
+### Round A — Requirements interview
 
-### Round A — Scope & shape (before drafting)
+Use [ask-me](../ask-me/SKILL.md) as the requirements interview inside this workflow. Read it and follow its read-only facts → decision frontier → answers → recap loop. Batch currently unblocked decisions, explain context and tradeoffs, and wait for answers before advancing dependent questions. Resolve facts from the repo and connected sources yourself.
 
-Ask about anything unresolved:
+Cover unresolved epic decisions such as scope and non-goals, architecture, quality bar, phase dependencies, follow-on phases to plan but not implement, upstream/user gates, and the Linear project/team. Reuse already-confirmed decisions rather than interviewing again.
 
-- Feature goal in one sentence vs explicit non-goals
-- v1 quality bar (e.g. sample-accurate, export parity, golden tests)
-- Phase count and rough deliverables per phase
-- Follow-on phases to **plan but not implement** (e.g. P6 recording)
-- Gates: which phases block on upstream merges?
-- Desktop-only vs web; agent tools in scope?
-- Open product/technical choices that affect architecture
-- Linear project: existing project to use, or name/team/lead for a new one
+When the frontier is empty, recap and obtain confirmation of shared understanding. Because the user invoked `plan-epic`, continue into drafting and the artifact approval gates below after that confirmation; do not require a separate planning invocation. Keep the interview read-only: defer project/document/issue creation until it finishes. The interview confirmation does not replace plan or issue approval.
 
 ### Round B — Plan doc (before saving)
 
@@ -206,7 +199,7 @@ When done, report:
 | Sub-issues | P0…Pn identifiers |
 | Stack | PR numbers + branch names (if scaffolded) |
 
-Suggest next step: implement the phases (e.g. [parallelize](../parallelize/SKILL.md) per phase), then run `grind-epic` on the project.
+Hand off directly to [grind-epic](../grind-epic/SKILL.md): provide the project, approved plan document, parent and phase issue IDs, dependency order, in-scope/follow-on boundaries, acceptance gates, and any scaffold mapping. Suggest `/grind-epic <parent issue or project>` to build the entire epic through implementation and review loops. No separate implementation step or prebuilt diff is required. Stop after planning unless the user also authorized execution.
 
 ---
 

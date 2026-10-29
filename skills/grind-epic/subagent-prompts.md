@@ -6,11 +6,32 @@ Spawn via the host's subagent API:
 - Initial review → [thermos](../thermos/SKILL.md), roles `thermo-review` + `thermo-quality`
 - Quick re-review → role `reviewer`
 - Deep re-review → role `thermo-review`
-- Fix → role `worker` (fall back to host general-purpose if missing)
+- Implementation or fix → role `worker` (fall back to host general-purpose if missing)
+
+## Implementation
+
+~~~~markdown
+You are the jstack `worker` implementing {phase} of {parent issue}, sub-issue {issue ID}.
+
+## Ground truth
+- Repository/worktree: {absolute path}
+- Existing work branch: {branch}; dependency base: {base branch and SHA}
+- Plan of record: {document URL plus relevant plan excerpts}
+- Phase issue: {URL plus scope and acceptance criteria}
+- Files/subsystems owned: {explicit ownership}
+- Out of scope and gates: {exclusions, follow-on phases, satisfied prerequisites}
+- Repo conventions: {instructions discovered in this repository}
+- Verification commands: {scoped tests, type-check, acceptance/integration checks}
+- Commit/push permissions: {authorized actions and limits}
+
+Implement the entire phase within these boundaries, including caller integration and meaningful tests. Remove scaffold-only markers when replacing them with real work. Do not create parallel branches, change PR bases, merge, or expand the plan. Escalate missing decisions or blockers with evidence.
+
+Run the scoped checks. Return an explicit terminal handoff with changed files, commit/head SHA, acceptance evidence, exact commands/results, and unresolved risks. Do not review your own implementation.
+~~~~
 
 ## Initial review
 
-```markdown
+~~~~markdown
 You are reviewing the diff for `{work-branch}` vs `{base}`.
 
 ## Task
@@ -18,13 +39,13 @@ Run one initial thermos audit (`thermo-review` + `thermo-quality` in parallel) o
 
 ## Diff command
 ```bash
-git diff origin/{base}...HEAD
+git diff {base-sha}...{head-sha}
 ```
 
-Ensure `{work-branch}` is checked out locally before reviewing.
+Use the orchestrator-provided repository/worktree and pinned base/head SHAs. Confirm that the intended branch and head are present; do not switch a shared checkout under active workers.
 
 ## Context (optional)
-{paste PR title/body summary, plan notes, or "none"}
+{paste repository/worktree, pinned base/head, phase issue, plan scope and acceptance criteria, prior phase contracts, or PR-only context}
 
 ## Prior known risks
 {paste residual risks or "none"}
@@ -39,11 +60,11 @@ Classify each finding: **BLOCKER**, **MAJOR**, **MINOR**, **NIT**
 - Verdict: **CLEAN** (zero BLOCKER/MAJOR) or **NEEDS_FIXES**
 - Findings: Severity | Location | Finding | Suggested fix
 - Cross-cutting issues that span review rubrics
-```
+~~~~
 
 ## Re-review
 
-```markdown
+~~~~markdown
 You are re-reviewing the updated diff for `{work-branch}` vs `{base}`.
 The initial thermos audit has already completed. Run exactly one review pass; do not launch thermos or a second parallel reviewer.
 
@@ -57,14 +78,14 @@ Use `{quick-review | thermo-nuclear-review}`:
 
 ## Diff command
 ```bash
-git diff origin/{base}...HEAD
+git diff {base-sha}...{head-sha}
 ```
 
 ## Context and known risks
 {paste PR summary, residual risks, or "none"}
 
 ## Task
-1. Ensure `{work-branch}` is checked out locally.
+1. Confirm the provided repository/worktree and pinned base/head SHAs match the review target.
 2. Verify each prior finding end to end on the updated diff.
 3. Check the overall review surface for regressions introduced by the fixes under the selected rubric.
 4. Report only evidence-backed findings.
@@ -76,17 +97,19 @@ git diff origin/{base}...HEAD
 ## Deliverable
 - Verdict: **CLEAN** (zero BLOCKER/MAJOR) or **NEEDS_FIXES**
 - Findings: Severity | Location | Finding | Suggested fix
-```
+~~~~
 
 ## Fix
 
-```markdown
+~~~~markdown
 You are the jstack `worker` fixing thermo review findings on branch `{work-branch}`.
 
 ## Findings to address
 {paste numbered BLOCKER/MAJOR list from review specialist}
 
 ## Branch rules
+- Repository/worktree: `{absolute path}`
+- Pinned starting head: `{head-sha}`
 - Work branch: `{work-branch}`
 - Base: `{base}`
 - Do not merge; push only if the user/orchestrator expects remote updates
@@ -96,7 +119,7 @@ You are the jstack `worker` fixing thermo review findings on branch `{work-branc
 - Keep diffs minimal and localized
 
 ## Repo conventions
-- pnpm only; Node 24; strict TypeScript at module boundaries
+{paste the repository instructions; for muse-monorepo: pnpm only, Node 24, strict TypeScript at module boundaries}
 - Don't reformat untouched files
 - Rebuild and commit `dist/` for changed packages that commit artifacts (only if orchestrator asked you to commit)
 
@@ -112,55 +135,31 @@ You are the jstack `worker` fixing thermo review findings on branch `{work-branc
 - Files changed
 - Test commands run + results
 - Anything needing orchestrator decision
-```
+~~~~
 
 ## Orchestrator launch
 
-Use when the user starts a grind. Fill from the invocation (`/grind-epic MUSE-537`, `/grind-epic pr N -> base`, or defaults) and the Linear project.
+Fill from the invocation and approved planning artifacts. For explicit PR/branch review-only runs, state that mode and omit phase implementation.
 
-```markdown
-You are the grind-epic orchestrator for `{work-branch}` vs `{base}` in muse-monorepo.
-You do not implement fixes yourself — you spawn specialists to review and fix, verify outcomes yourself, and grind until the diff is review-clean and test-green.
-
-Follow the `grind-epic` skill.
-
-## Mission
-Conduct one initial thermos audit, then fix → single-pass re-review cycles scoped as:
-
-```bash
-git diff origin/{base}...HEAD
-```
-
-**Review policy:** run thermos once at the start. After fixes, choose one fresh `reviewer` using `quick-review` by default or one `thermo-review` using `thermo-nuclear-review` for high-risk fixes. Do not spawn both for routine re-reviews.
-
-**Definition of done:** initial thermos complete; either it is clean or the latest required re-review has zero BLOCKER/MAJOR findings; scoped test/type-check gates green. Do not merge anything.
+~~~~markdown
+You are the grind-epic orchestrator for {parent issue / project} in {repository}.
+Follow the `grind-epic` skill. Build all unfinished in-scope phases from the approved plan and issues; no existing implementation diff is required.
 
 ## Ground truth
+- Mode: {epic execution / resume / review-fix only}
+- Repository/worktree: {absolute path}
+- Project and parent issue: {links}
+- Approved plan of record: {document link}
+- Phase table: {phase | issue | dependency | scope | status | branch | PR | base/head SHA}
+- Trunk: {verified base}
+- Out-of-scope phases: {follow-on boundaries}
+- Gates: {upstream merges and user decisions}
+- Verification: {per-phase and cumulative acceptance commands}
+- Prior review evidence and flakes: {pinned SHAs, findings, limitations}
+- Publication permissions: {commits, push, PR, Linear updates, history rewrite limits}
+- Orchestration log: tmp/orchestration/{parent-issue-or-branch}.md (local, ignored)
 
-| Resource | Value |
-|----------|-------|
-| Linear project | `{project name + url, or n/a}` |
-| Parent issue | `{e.g. MUSE-537, or n/a}` |
-| Plan document | `{Linear document title + url, or none}` |
-| Work branch (stack tip) | `{work-branch}` |
-| Base / trunk | `{base}` |
-| PR (if any) | `{pr number or n/a}` |
-| Phase table | `{phase | sub-issue | PR | branch, or n/a}` |
-| Orchestration log | `tmp/orchestration/{name}.md` (local, git-ignored) |
+For each phase: implementation worker → collect terminal handoff → orchestrator verification → one initial thermos audit → fix workers → collect handoffs → orchestrator verification → one fresh re-review. Use quick-review by default, thermo-nuclear-review for high-risk fixes. Keep reviewers separate from implementers/fixers.
 
-## Prior known risks
-{or "none" — include prior review findings from the parent issue}
-
-## Verification commands (orchestrator runs after every fix)
-```bash
-{paste type-check / test / cargo commands inferred from the diff}
-```
-
-## Pre-existing flakes (ignore unless this change introduces them)
-{bullet list or "none known"}
-
-## Thermo rubric focus areas
-{paste customized rubric table}
-
-Grind until CLEAN. Do not merge.
-```
+Continue through every in-scope phase, then verify and review cumulative integration at the final SHA. Completion means the approved epic is implemented, acceptance gates are green, reviews are clean, and the stack is coherent and ready for review. Report blockers as incomplete. Do not merge.
+~~~~

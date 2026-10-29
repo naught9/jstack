@@ -58,5 +58,5 @@ Scaffold GitHub stack: yes/no
 ### Next step
 
 ```markdown
-Grind MUSE-537 using the `grind-epic` skill once the phases are implemented.
+Use `grind-epic` to implement MUSE-537 from the approved plan and phase issues, then review and fix every in-scope phase and the integrated epic until merge-ready. Leave P6 as a follow-on placeholder; do not merge.
 ```
